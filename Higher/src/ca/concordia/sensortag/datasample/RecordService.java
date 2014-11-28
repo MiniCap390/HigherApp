@@ -304,8 +304,14 @@ public class RecordService extends Service {
 			return false;
 		}
 		
+		//Force sensor height calibration
+		mStManager.calibrateHeight();
+		
 		return true;
 	}
+	
+	
+	
 	
 	/**
 	 * Initialise the RecordingData structure and data storage backend, and then load any data and

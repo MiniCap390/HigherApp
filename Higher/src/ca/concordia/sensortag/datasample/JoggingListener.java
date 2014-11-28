@@ -64,8 +64,9 @@ public class JoggingListener extends SensorTagLoggerListener implements SensorTa
 	/** Previous acceleration output value of the high-pass filter. */
 	private Point3D mLastFiltAcc = null;
 	/** Air Pressure at the time of the step (for altitude) **/
-	private double mLastPressure;
-	private double mHeight;
+	private double mLastAlt;
+	private double mLastFiltAlt;
+	private double mAlt;
 	
 	/**
 	 * When this value is less than ACC_EVENT_COOLDOWN_MS, we are in cooldown mode and do not detect
@@ -91,11 +92,38 @@ public class JoggingListener extends SensorTagLoggerListener implements SensorTa
 	@Override
 	public void onUpdateBarometer(SensorTagManager mgr, double pressure, double height) {
 		super.onUpdateBarometer(mgr, pressure, height);
+		
+		//Correct the values coming from the sensor, flip the sign
+		height *= -1;
+		int mPeriod = mgr.getSensorPeriod(Sensor.BAROMETER);
+		if (mLastAlt == 0) {
+			mLastAlt = height;
+			mLastFiltAlt = 0.0;
+		}
+		// Apply the high-pass filter to filter out the RMS noise of the sensor ~0.45m in cold conditions
+		mLastFiltAlt = AltFilter(mPeriod, height, mLastAlt, mLastFiltAlt);
+		mLastAlt = height;
 
-		// This is the same idea as onUpdateAmbientTemperature() above.
-		mLastPressure = pressure;
-		mHeight = height;
+	}
+	
+	//High pass filter for Altitude sensor
+	private double AltFilter(int samplePeriodMs, double newInput, double prevInput,
+			double prevOutput){
+		// Calculate the needed parameters
+			double k = (double) ACC_FILTER_TAU_MS / (ACC_FILTER_TAU_MS + samplePeriodMs);
 
+			// These variable names are used just to make the code closer to the description above
+			double yn, yn1, xn, xn1;
+			yn1 = prevOutput;
+			xn = newInput;
+			xn1 = prevInput;
+
+			// Apply the filter
+			yn = k * (yn1 + xn - xn1);
+
+			Log.v(TAG, "ALTITUDE FILTER: " + xn + " -> " + yn);
+
+			return yn;
 	}
 	
 
@@ -135,7 +163,7 @@ public class JoggingListener extends SensorTagLoggerListener implements SensorTa
 				// reset/start the cooldown timer
 				mCooldownCounterMs = 0;
 				//Notify record service with the filter data
-				mContext.onEventRecorded(mLastFiltAcc,mHeight);
+				mContext.onEventRecorded(mLastFiltAcc,mLastFiltAlt);
 			}
 		}
 		else {

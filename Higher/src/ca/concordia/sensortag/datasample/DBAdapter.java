@@ -28,51 +28,77 @@ public class DBAdapter {
 	// ///////////////////////////////////////////////////////////////////
 	// Private methods:
 	// ///////////////////////////////////////////////////////////////////
+	
+	/**
+	 * TO DO
+	 */
 	private double calculateBMI(){
 		double weight= 0;
 		double height= 0;
 		
 		return (weight/(height*height));
 	}
-
-	private double getTotalAltitudeMagnitude() {
-		insertBufferRowsStepInfo();
-		
-		
-		Cursor c = db.query(DBConstants.TABLE_STEP_INFO,
-				DBConstants.STEP_INFO_ALL_KEYS, null, null, null, null, null,
-				null);
-		double mTotalAltitudeChange = 0;
-		double mInitialAltitude = 0;
-		
-		if (c != null) {
-			c.moveToFirst();
-			mInitialAltitude = c.getDouble(DBConstants.COL_STEP_INFO_ALTITUDE);
-		}
-		//CHANGE MEEE
-		if (c.moveToFirst()) {
-			do {
-				
-				c.getDouble(DBConstants.COL_STEP_INFO_ALTITUDE);
-				
-			} while (c.moveToNext());
-		}
-		c.close();
-		return mTotalAltitudeChange;
-	}
+	
+			//
+			// ///////////////////////////////////////////////////////////////////
+			// Function that calculate the values for the SessionInfo Table
+			// ///////////////////////////////////////////////////////////////////
 
 	private double getTotalAverageSpeed(int total_step, double duration) {
 		return ((total_step)/duration);
 	}
 
+	/**
+	 * TO DO
+	 */
 	private double getTotalEnergy() {
 		// TODO Auto-generated method stub
 		return 1;
 	}
 
-	private double getTotalAltitude() {
-		// TODO Auto-generated method stub
-		return 1;
+	private double getTotalAltitudeMagnitude(Cursor allCurrentSteps) {
+
+		if (allCurrentSteps != null) {
+			allCurrentSteps.moveToFirst();
+		}
+
+		double totalAltitudeMagnitude = 0;
+		double currentAltitude = 0;
+		double lastAltitude = allCurrentSteps
+				.getDouble(DBConstants.COL_STEP_INFO_ALTITUDE);
+		double altitudeChange = 0;
+		if (allCurrentSteps.moveToNext()) {
+			do {
+				currentAltitude = allCurrentSteps
+						.getDouble(DBConstants.COL_STEP_INFO_ALTITUDE);
+				altitudeChange = currentAltitude - lastAltitude;
+
+				if (altitudeChange > 0) {
+					totalAltitudeMagnitude += altitudeChange;
+				} else {
+					totalAltitudeMagnitude -= altitudeChange;
+				}
+				lastAltitude = currentAltitude;
+			} while (allCurrentSteps.moveToNext());
+		}
+		return totalAltitudeMagnitude;
+	}
+
+	private double getTotalAltitude(Cursor allCurrentSteps) {
+
+		double totalAltitude = 0;
+
+		if (allCurrentSteps.moveToFirst()) {
+
+			totalAltitude = allCurrentSteps
+					.getDouble(DBConstants.COL_STEP_INFO_ALTITUDE);
+
+			if (allCurrentSteps.moveToLast()) {
+				totalAltitude -= allCurrentSteps
+						.getDouble(DBConstants.COL_STEP_INFO_ALTITUDE);
+			}
+		}
+		return totalAltitude;
 	}
 	
 	private int getTotalStep() {
@@ -85,11 +111,29 @@ public class DBAdapter {
 		return count;
 	}
 	
-	private double getTotalDuration() { // in seconds
-		
-		return 1;
+	private double getTotalDuration(Cursor allCurrentSteps) { // in seconds
+
+		boolean flag = true;
+		if (allCurrentSteps != null) {
+			flag = allCurrentSteps.moveToLast();
+		}
+		double totalDuration = 0;
+		if (flag) {
+			totalDuration = allCurrentSteps
+					.getDouble(DBConstants.COL_STEP_INFO_TIME_STAMP);
+		}
+		return totalDuration;
 	}
 	
+			//
+			// ///////////////////////////////////////////////////////////////////
+			// General Utility methods 
+			// ///////////////////////////////////////////////////////////////////
+	
+	/**
+	 * @returns the _id of the highest value from Workout_Session table
+	 * @author Phohawkenics
+	 */
 	private int getCurrentWorkoutID() {
 		String query = "SELECT MAX(" + DBConstants.KEY_ROWID + ") FROM " 
 								+ DBConstants.TABLE_WORKOUT_SESSION;
@@ -106,13 +150,17 @@ public class DBAdapter {
 		return today.format("%k:%M:%S");
 	}
 	
-// Inserts the buffer into DB
+	/**
+	 * Inserts all the steps in the buffer in to the StepInfo table
+	 * 
+	 * @author Phohawkenics
+	 */
 	private void insertBufferRowsStepInfo() {
 		if (stepContainer != null) {
 			for (DBContainers.StepInfo current_step : stepContainer) {
 				ContentValues initialValues = new ContentValues();
 				initialValues.put(DBConstants.STEP_INFO_SESSION_ID,
-						1);		//Temp change me to workout session info
+						1);		//Temp change me to workout session info ** 1 => getCurrentWorkoutID()
 				initialValues.put(DBConstants.STEP_INFO_TIME_STAMP,
 						current_step.getTime_stamp());
 				initialValues.put(DBConstants.STEP_INFO_ALTITUDE, 
@@ -140,15 +188,15 @@ public class DBAdapter {
 		double totaltime = (hours * HRS_TO_SEC + minutes * MIN_TO_SEC + seconds) * 1000.0;
 		double remaindertime_ms = (time_ms - totaltime) / 1;
 		seconds = seconds + remaindertime_ms;
-		return String.format("%02d:%02d:%02.1f", hours, minutes, seconds); // Added
-																			// 1
-																			// floating
-																			// point
-																			// value
+		return String.format("%02d:%02d:%02.1f", hours, minutes, seconds); // Added 1 floating point value
 	}
 
-	
-	
+	/**
+	 * Grabs all the values in the StepInfo table, converts the into a List<DBContainers.StepInfo>
+	 * 
+	 * @return a list of every step inside of the StepInfo Table
+	 * @author Phohawkenics
+	 */
 	private List<DBContainers.StepInfo> getAllCurrentRowStepInfo() {
 		insertBufferRowsStepInfo();
 		Cursor c = db.query(true, DBConstants.TABLE_STEP_INFO,
@@ -174,6 +222,12 @@ public class DBAdapter {
 		c.close();
 		return current_step_container;
 	}
+	
+			//
+			// ///////////////////////////////////////////////////////////////////
+			// The core insert functions for each table
+			// ///////////////////////////////////////////////////////////////////
+	
 	
 	private void insertRowIntoUser(String name) {
 		
@@ -207,26 +261,40 @@ public class DBAdapter {
 	}
 	
 	private void insertRowSessionInfo() {
+		String where = DBConstants.STEP_INFO_SESSION_ID + "=" + getCurrentWorkoutID();
+		Cursor c = db.query(true, DBConstants.TABLE_STEP_INFO,
+				DBConstants.STEP_INFO_ALL_KEYS, where, null, null, null, null,
+				null);
 		
 		int session_id = getCurrentWorkoutID();
 		int totalStep = getTotalStep();
-		double duration = getTotalDuration();
+		double duration = getTotalDuration(c);// In Seconds
+		double average_speed = getTotalAverageSpeed(totalStep, duration); // In steps/sec
+		double totalAltitudeMagnitude = getTotalAltitudeMagnitude(c); // In wtv it is in StepInfo
+		double totalAltitude = getTotalAltitude(c); // In wtv it is in StepInfo
+		double totalEnergy = getTotalEnergy(); // Not yet implemented
 		
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(DBConstants.KEY_ROWID, session_id);
 		// No date because it is automatically put in
-		initialValues.put(DBConstants.SESSION_INFO_AVERAGE_SPEED, getTotalAverageSpeed(totalStep, duration));
-		initialValues.put(DBConstants.SESSION_INFO_TOTAL_ENERGY, getTotalEnergy());
-		initialValues.put(DBConstants.SESSION_INFO_TOTAL_ALTITUDE_MAGNITUDE, getTotalAltitudeMagnitude());
-		initialValues.put(DBConstants.SESSION_INFO_TOTAL_ALTITUDE, getTotalAltitude());
+		initialValues.put(DBConstants.SESSION_INFO_AVERAGE_SPEED, average_speed);
+		initialValues.put(DBConstants.SESSION_INFO_TOTAL_ENERGY, totalEnergy);
+		initialValues.put(DBConstants.SESSION_INFO_TOTAL_ALTITUDE_MAGNITUDE, totalAltitudeMagnitude);
+		initialValues.put(DBConstants.SESSION_INFO_TOTAL_ALTITUDE, totalAltitude);
 		initialValues.put(DBConstants.SESSION_INFO_TOTAL_STEP, totalStep);
 		initialValues.put(DBConstants.SESSION_INFO_TOTAL_DURATION, duration);
 		
+		c.close();
 		
 		// Insert it into the database.
 		db.insert(DBConstants.TABLE_SESSION_INFO, null, initialValues);
 	}
 	
+	/**
+	 * Updates the current workout session with an end time
+	 * 
+	 * @author Phohawkenics
+	 */
 	private void updateRowWorkoutSession() {
 		String where = DBConstants.KEY_ROWID + "=" + getCurrentWorkoutID();
 		
