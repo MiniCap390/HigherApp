@@ -11,6 +11,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.format.Time;
 import android.util.Log;
 
 public class DBAdapter {
@@ -19,58 +20,108 @@ public class DBAdapter {
 	private final Context context;
 	private final DatabaseHelper myDBHelper;
 	private SQLiteDatabase db;
+	private final List<DBContainers.StepInfo> stepContainer = new ArrayList<DBContainers.StepInfo>();
+	private final int BUFFER_SIZE = 1;
+	DBContainers containers = new DBContainers();
 
 	//
 	// ///////////////////////////////////////////////////////////////////
 	// Private methods:
 	// ///////////////////////////////////////////////////////////////////
-	private final List<StepInfo> step_container = new ArrayList<StepInfo>();
-	private final int BUFFER_SIZE = 1;
-
-	private void insertBufferRowsStepInfo() {
-		if (step_container != null) {
-			for (StepInfo current_step : step_container) {
-				ContentValues initialValues = new ContentValues();
-				initialValues.put(DBConstants.STEP_INFO_ELAPSED_TIME,
-						current_step.getElapsed_time());
-				initialValues.put(DBConstants.STEP_INFO_X, current_step.getX());
-				initialValues.put(DBConstants.STEP_INFO_Y, current_step.getY());
-				initialValues.put(DBConstants.STEP_INFO_Z, current_step.getZ());
-
-				// Insert it into the database.
-				db.insert(DBConstants.TABLE_STEP_INFO, null, initialValues);
-			}
-			step_container.clear();
-		}
+	private double calculateBMI(){
+		double weight= 0;
+		double height= 0;
+		
+		return (weight/(height*height));
 	}
 
-	private List<StepInfo> getAllCurrentRowStepInfo() {
+	private double getTotalAltitudeMagnitude() {
 		insertBufferRowsStepInfo();
-		Cursor c = db.query(true, DBConstants.TABLE_STEP_INFO,
+		
+		
+		Cursor c = db.query(DBConstants.TABLE_STEP_INFO,
 				DBConstants.STEP_INFO_ALL_KEYS, null, null, null, null, null,
 				null);
+		double mTotalAltitudeChange = 0;
+		double mInitialAltitude = 0;
+		
 		if (c != null) {
 			c.moveToFirst();
+			mInitialAltitude = c.getDouble(DBConstants.COL_STEP_INFO_ALTITUDE);
 		}
-
-		List<StepInfo> current_step_container = new ArrayList<StepInfo>();
-
+		//CHANGE MEEE
 		if (c.moveToFirst()) {
 			do {
-				// Transfer Data
-				StepInfo current_step = new StepInfo();
-
-				current_step.setElapsed_time(c
-						.getDouble(DBConstants.COL_STEP_INFO_ELAPSED_TIME));
-				current_step.setXYZ(c.getDouble(DBConstants.COL_STEP_INFO_X),
-						c.getDouble(DBConstants.COL_STEP_INFO_Y),
-						c.getDouble(DBConstants.COL_STEP_INFO_Z));
-
-				current_step_container.add(current_step);
+				
+				c.getDouble(DBConstants.COL_STEP_INFO_ALTITUDE);
+				
 			} while (c.moveToNext());
 		}
 		c.close();
-		return current_step_container;
+		return mTotalAltitudeChange;
+	}
+
+	private double getTotalAverageSpeed(int total_step, double duration) {
+		return ((total_step)/duration);
+	}
+
+	private double getTotalEnergy() {
+		// TODO Auto-generated method stub
+		return 1;
+	}
+
+	private double getTotalAltitude() {
+		// TODO Auto-generated method stub
+		return 1;
+	}
+	
+	private int getTotalStep() {
+		String query = "select count(*) from " + DBConstants.TABLE_STEP_INFO
+								+ " WHERE " + DBConstants.STEP_INFO_SESSION_ID + "=" + getCurrentWorkoutID();
+		Cursor c = 	db.rawQuery(query, null);
+		c.moveToFirst();
+		int count = c.getInt(0);
+		c.close();
+		return count;
+	}
+	
+	private double getTotalDuration() { // in seconds
+		
+		return 1;
+	}
+	
+	private int getCurrentWorkoutID() {
+		String query = "SELECT MAX(" + DBConstants.KEY_ROWID + ") FROM " 
+								+ DBConstants.TABLE_WORKOUT_SESSION;
+		Cursor c = 	db.rawQuery(query, null);	
+		c.moveToFirst();	
+		int id = c.getInt(0);	
+		c.close();
+		return id;
+	}
+	
+	private String getCurrentTime() {
+		Time today = new Time(Time.getCurrentTimezone());
+		today.setToNow();
+		return today.format("%k:%M:%S");
+	}
+	
+// Inserts the buffer into DB
+	private void insertBufferRowsStepInfo() {
+		if (stepContainer != null) {
+			for (DBContainers.StepInfo current_step : stepContainer) {
+				ContentValues initialValues = new ContentValues();
+				initialValues.put(DBConstants.STEP_INFO_SESSION_ID,
+						1);		//Temp change me to workout session info
+				initialValues.put(DBConstants.STEP_INFO_TIME_STAMP,
+						current_step.getTime_stamp());
+				initialValues.put(DBConstants.STEP_INFO_ALTITUDE, 
+						current_step.getAltitude());
+				// Insert it into the database.
+				db.insert(DBConstants.TABLE_STEP_INFO, null, initialValues);
+			}
+			stepContainer.clear();
+		}
 	}
 
 	private String formatTime(double time_ms) {
@@ -96,6 +147,95 @@ public class DBAdapter {
 																			// value
 	}
 
+	
+	
+	private List<DBContainers.StepInfo> getAllCurrentRowStepInfo() {
+		insertBufferRowsStepInfo();
+		Cursor c = db.query(true, DBConstants.TABLE_STEP_INFO,
+				DBConstants.STEP_INFO_ALL_KEYS, null, null, null, null, null,
+				null);
+		if (c != null) {
+			c.moveToFirst();
+		}
+
+		List<DBContainers.StepInfo> current_step_container = new ArrayList<DBContainers.StepInfo>();
+
+		if (c.moveToFirst()) {
+			do {
+				// Transfer Data
+				DBContainers.StepInfo current_step = containers.new StepInfo();
+
+				current_step.setTime_stamp(c
+						.getDouble(DBConstants.COL_STEP_INFO_TIME_STAMP));
+				current_step.setAltitude(c.getDouble(DBConstants.COL_STEP_INFO_ALTITUDE));
+				current_step_container.add(current_step);
+			} while (c.moveToNext());
+		}
+		c.close();
+		return current_step_container;
+	}
+	
+	private void insertRowIntoUser(String name) {
+		
+		ContentValues initialValues = new ContentValues();
+		initialValues.put(DBConstants.USER_NAME, name);
+		
+		// Insert it into the database.
+		db.insert(DBConstants.TABLE_USER, null, initialValues);
+	}
+	
+	private void insertRowIntoWorkoutSession () {
+		
+		String endTime = " ";
+		
+		ContentValues initialValues = new ContentValues();
+		// No start time because it is automatically put in
+		initialValues.put(DBConstants.WORKOUT_SESSION_END_TIME, endTime);
+		
+		// Insert it into the database.
+		db.insert(DBConstants.TABLE_WORKOUT_SESSION, null, initialValues);
+	}
+	
+	private void insertRowStepInfo(double altitude) {
+		ContentValues initialValues = new ContentValues();
+		initialValues.put(DBConstants.STEP_INFO_SESSION_ID, getCurrentWorkoutID());
+		// No start time because it is automatically put in
+		initialValues.put(DBConstants.STEP_INFO_ALTITUDE, altitude);
+		
+		// Insert it into the database.
+		db.insert(DBConstants.TABLE_STEP_INFO, null, initialValues);
+	}
+	
+	private void insertRowSessionInfo() {
+		
+		int session_id = getCurrentWorkoutID();
+		int totalStep = getTotalStep();
+		double duration = getTotalDuration();
+		
+		ContentValues initialValues = new ContentValues();
+		initialValues.put(DBConstants.KEY_ROWID, session_id);
+		// No date because it is automatically put in
+		initialValues.put(DBConstants.SESSION_INFO_AVERAGE_SPEED, getTotalAverageSpeed(totalStep, duration));
+		initialValues.put(DBConstants.SESSION_INFO_TOTAL_ENERGY, getTotalEnergy());
+		initialValues.put(DBConstants.SESSION_INFO_TOTAL_ALTITUDE_MAGNITUDE, getTotalAltitudeMagnitude());
+		initialValues.put(DBConstants.SESSION_INFO_TOTAL_ALTITUDE, getTotalAltitude());
+		initialValues.put(DBConstants.SESSION_INFO_TOTAL_STEP, totalStep);
+		initialValues.put(DBConstants.SESSION_INFO_TOTAL_DURATION, duration);
+		
+		
+		// Insert it into the database.
+		db.insert(DBConstants.TABLE_SESSION_INFO, null, initialValues);
+	}
+	
+	private void updateRowWorkoutSession() {
+		String where = DBConstants.KEY_ROWID + "=" + getCurrentWorkoutID();
+		
+		ContentValues newValues = new ContentValues();
+		newValues.put(DBConstants.WORKOUT_SESSION_END_TIME, getCurrentTime());
+		
+		db.update(DBConstants.TABLE_WORKOUT_SESSION, newValues, where, null);
+	}
+	
 	//
 	// ///////////////////////////////////////////////////////////////////
 	// Public methods:
@@ -123,6 +263,16 @@ public class DBAdapter {
 	public void close() {
 		myDBHelper.close();
 	}
+	
+	public void start_workout() {
+		this.insertRowIntoWorkoutSession();
+	}
+	
+	public void stop_workout() {
+		this.insertBufferRowsStepInfo();
+		this.updateRowWorkoutSession();
+		this.insertRowSessionInfo();
+	}
 
 	public void pause_workout() {
 		insertBufferRowsStepInfo();
@@ -132,40 +282,36 @@ public class DBAdapter {
 		db.execSQL("DELETE FROM " + DBConstants.TABLE_STEP_INFO);
 	}
 
-	public void bufferStepInfo(StepInfo newStep) {
-		step_container.add(newStep);
-		if (step_container.size() > BUFFER_SIZE) {
+	public void bufferStepInfo(DBContainers.StepInfo newStep) {
+		stepContainer.add(newStep);
+		if (stepContainer.size() > BUFFER_SIZE) {
 			insertBufferRowsStepInfo();
 		}
 	}
 
 	public String getLastStepInfoString() {
-		List<StepInfo> current_step_container = getAllCurrentRowStepInfo();
-		StepInfo current_step = current_step_container
+		List<DBContainers.StepInfo> current_step_container = getAllCurrentRowStepInfo();
+		DBContainers.StepInfo current_step = current_step_container
 				.get(current_step_container.size() - 1);
 		String lastStepString = "Time : "
-				+ formatTime(current_step.getElapsed_time()) + "\n"
-				+ "Acceleration Vector in XYZ components: " + "\n" + " X: "
-				+ current_step.getX() + "\n" + " Y: " + current_step.getY()
-				+ "\n" + " Z: " + current_step.getZ() + "\n";
+				+ formatTime(current_step.getTime_stamp()) + "\n"
+				+ "Altitude: "+ current_step.getAltitude() + "\n" ;
 
 		return lastStepString;
 	}
 
 	public List<String> getCurrentAllStepInfoString() {
 		insertBufferRowsStepInfo();
-		List<StepInfo> current_step_container = getAllCurrentRowStepInfo();
+		List<DBContainers.StepInfo> current_step_container = getAllCurrentRowStepInfo();
 		List<String> displayList = new ArrayList<String>();
 		String display;
 
-		for (StepInfo current_step : current_step_container) {
+		for (DBContainers.StepInfo current_step : current_step_container) {
 
 			display = "";
 			display = display + "Time : "
-					+ formatTime(current_step.getElapsed_time()) + "\n"
-					+ "Acceleration Vector in XYZ components: " + "\n" + " X: "
-					+ current_step.getX() + "\n" + " Y: " + current_step.getY()
-					+ "\n" + " Z: " + current_step.getZ() + "\n";
+					+ formatTime(current_step.getTime_stamp()) + "\n"
+					+ "Altitude: "+ current_step.getAltitude() + "\n" ;
 
 			displayList.add(display);
 		}

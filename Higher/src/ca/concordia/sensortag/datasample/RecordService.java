@@ -109,7 +109,7 @@ public class RecordService extends Service {
 	static public final String EXTRA_DEVICE = "ca.concordia.datasample.EXTRA_RECORD_DEVICE";
 	static public final String PREFERENCE_NAME = "ca.concordia.datasample.Recording";
 	
-	static public final int UPDATE_PERIOD_ACC_MS = 100;
+	static public final int UPDATE_PERIOD_SENSOR_MS = 100;
 	static public final int NOTIF_UPDATE_RATE_MS = 1000;
 	static public final int SEC_TO_MSEC = 1000;
 	
@@ -135,6 +135,7 @@ public class RecordService extends Service {
 
 	private String mAppName = null;
 	private static DBAdapter myDb = null;
+	DBContainers containers = new DBContainers();
 	
 	private NotificationManager mNotificationManager;
 	private Runnable mNotificationUpdateRunner;
@@ -279,7 +280,7 @@ public class RecordService extends Service {
 		// SensorTag (which was obtained in initServices() above), and returns true if you can
 		// configure the sample interval (a.k.a. update period) of the specified sensor.
 		//
-		// If we can do it, great! We enable the accelerometer with period = UPDATE_PERIOD_ACC_MS.
+		// If we can do it, great! We enable the accelerometer with period = UPDATE_PERIOD_SENSOR_MS.
 		//
 		// If not, can we deal with it gracefully in our application? We can try enabling it with
 		// the default period value (1 second, again depends on SensorTag firmware version). In
@@ -287,11 +288,16 @@ public class RecordService extends Service {
 		// long between each acceleration reading.
 		boolean res;
 		if (mStManager.isPeriodSupported(Sensor.ACCELEROMETER)) {
-			res = mStManager.enableSensor(Sensor.ACCELEROMETER, UPDATE_PERIOD_ACC_MS);
+			res = mStManager.enableSensor(Sensor.ACCELEROMETER, UPDATE_PERIOD_SENSOR_MS);
 		}
 		else {
 			res = mStManager.enableSensor(Sensor.ACCELEROMETER);
 		}
+		if (mStManager.isPeriodSupported(Sensor.BAROMETER))
+			res = res && mStManager.enableSensor(Sensor.BAROMETER, UPDATE_PERIOD_SENSOR_MS);
+		else
+			res = res && mStManager.enableSensor(Sensor.BAROMETER);
+		
 		if(!res) {
 			if (mErrorSensorTag == null) mErrorSensorTag = ErrorType.SENSOR_CONFIG_FAILED;
 			setStatus(Status.ERROR_SENSORTAG);
@@ -990,7 +996,7 @@ public class RecordService extends Service {
 	 * If the current status is RECORD, adds the event to the stored data. If we have reached the
 	 * maximum samples recorded, stops the recording.
 	 */
-	public void onEventRecorded(Point3D point) {
+	public void onEventRecorded(Point3D point, double height) {
 		if(!isStarted()) {
 			Log.e(TAG, "onEventRecorded(): Service not configured. Call startService() from the Binder.");
 			return;
@@ -1003,9 +1009,9 @@ public class RecordService extends Service {
 		
 		//Add to DataBase
 		
-		StepInfo newStep = new StepInfo();
-		newStep.setElapsed_time(myDb.getElapsedTime());
-		newStep.setXYZ( point.x , point.y, point.z); //(x,y,z)
+		DBContainers.StepInfo newStep = containers.new StepInfo();
+		newStep.setTime_stamp(myDb.getElapsedTime());
+		newStep.setAltitude(height);
 		myDb.bufferStepInfo(newStep);
 		
 		myDb.addEvent(myDb.getElapsedTime());	//Not sure this is still necessary

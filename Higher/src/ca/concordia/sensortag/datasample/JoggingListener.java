@@ -63,6 +63,10 @@ public class JoggingListener extends SensorTagLoggerListener implements SensorTa
 	private Point3D mLastAcc = null;
 	/** Previous acceleration output value of the high-pass filter. */
 	private Point3D mLastFiltAcc = null;
+	/** Air Pressure at the time of the step (for altitude) **/
+	private double mLastPressure;
+	private double mHeight;
+	
 	/**
 	 * When this value is less than ACC_EVENT_COOLDOWN_MS, we are in cooldown mode and do not detect
 	 * acceleration shake events. This is set to 0 whenever an event is detected, and incremented by
@@ -77,6 +81,23 @@ public class JoggingListener extends SensorTagLoggerListener implements SensorTa
 	JoggingListener(RecordService context) {
 		mContext = context;
 	}
+	
+	/**
+	 * Called on receiving a new pressure measurement.
+	 * 
+	 * @see ca.concordia.sensortag.SensorTagLoggerListener#onUpdateBarometer(ca.concordia.sensortag.SensorTagManager,
+	 *      double, double)
+	 */
+	@Override
+	public void onUpdateBarometer(SensorTagManager mgr, double pressure, double height) {
+		super.onUpdateBarometer(mgr, pressure, height);
+
+		// This is the same idea as onUpdateAmbientTemperature() above.
+		mLastPressure = pressure;
+		mHeight = height;
+
+	}
+	
 
 	/**
 	 * Called on receiving a new accelerometer reading. This method filters the accelerometer values
@@ -114,7 +135,7 @@ public class JoggingListener extends SensorTagLoggerListener implements SensorTa
 				// reset/start the cooldown timer
 				mCooldownCounterMs = 0;
 				//Notify record service with the filter data
-				mContext.onEventRecorded(mLastFiltAcc);
+				mContext.onEventRecorded(mLastFiltAcc,mHeight);
 			}
 		}
 		else {
