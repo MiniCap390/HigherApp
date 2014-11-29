@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Data Sampler - Step Counter</string>
+    <string name="app_name">Higher</string>
     
     <string name="act_samp_form_time_limit">Duration (s)</string>
     <string name="act_samp_form_forever">Forever</string>
@@ -32,4 +32,10 @@
     <string name="act_anal_min">Minimum</string>
     <string name="act_anal_max">Maximum</string>
     <string name="act_samp_button_view">Step View</string>
+    
+    
+    <string name="menu_main_act">Higher</string>
+    <string name="menu_view_act">View</string>
+    <string name="menu_compare_act">Compare</string>
+    <string name="menu_settings_pane">Settings</string>
 </resources>

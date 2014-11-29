@@ -106,11 +106,12 @@ public class JoggingListener extends SensorTagLoggerListener implements SensorTa
 
 	}
 	
-	//High pass filter for Altitude sensor
+	//Low pass filter for Altitude sensor
 	private double AltFilter(int samplePeriodMs, double newInput, double prevInput,
 			double prevOutput){
 		// Calculate the needed parameters
-			double k = (double) ACC_FILTER_TAU_MS / (ACC_FILTER_TAU_MS + samplePeriodMs);
+			//double k = (double) ACC_FILTER_TAU_MS / (ACC_FILTER_TAU_MS + samplePeriodMs);
+			double k = (double) samplePeriodMs / (ACC_FILTER_TAU_MS + samplePeriodMs);
 
 			// These variable names are used just to make the code closer to the description above
 			double yn, yn1, xn, xn1;
@@ -118,8 +119,11 @@ public class JoggingListener extends SensorTagLoggerListener implements SensorTa
 			xn = newInput;
 			xn1 = prevInput;
 
+//			 for i from 1 to n
+//		       y[i] := y[i-1] + α * (x[i] - y[i-1])
+			
 			// Apply the filter
-			yn = k * (yn1 + xn - xn1);
+			yn = yn1 + k * (xn - yn1);
 
 			Log.v(TAG, "ALTITUDE FILTER: " + xn + " -> " + yn);
 

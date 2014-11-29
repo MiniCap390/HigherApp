@@ -19,6 +19,7 @@ import android.os.IBinder;
 import android.text.Editable;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
@@ -117,6 +118,7 @@ public class RecordActivity extends Activity implements RecordServiceListener {
 	private void setupGui() {
 		// Show the "back"/"up" button on the Action Bar (top left corner)
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayShowTitleEnabled(false);
 
 		// Get a reference to the Java object corresponding to the GUI elements on the layout. This
 		// allows us to use the variables later on to change what's shown on the GUI and respond to
@@ -145,6 +147,11 @@ public class RecordActivity extends Activity implements RecordServiceListener {
 		mButtonAnalyze.setOnClickListener(mOnClickAnalyzeListener);
 		mButtonView.setOnClickListener(mOnClickViewStepListener);
 		updateButtons(); // will disable all buttons, since the service hasn't yet loaded
+	}
+	
+	public boolean onCreateOptionsMenu (Menu menu){
+		getMenuInflater().inflate(R.menu.topmenu, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	/**
@@ -236,6 +243,18 @@ public class RecordActivity extends Activity implements RecordServiceListener {
 	}
 	
 	/**
+	 * Menu buttons functions
+	 */
+	public void menuClickView(){
+		Log.i(TAG, "Starting View Steps activity.");
+		Intent intent = new Intent(RecordActivity.this, ViewActivity.class);
+		intent .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		startActivity(intent);
+	}
+	
+	
+	
+	/**
 	 * Called when a menu item is pressed. In this case we don't have an explicit menu, but we do
 	 * have the "back" button in the Action Bar (top bar). We want it to act like the regular Back
 	 * button, that is to say, pressing either Back buttons closes the current Activity and returns
@@ -247,6 +266,15 @@ public class RecordActivity extends Activity implements RecordServiceListener {
 	    {
 	        case android.R.id.home:
 	            this.finish();
+	            return true;
+            case R.id.main_screen:
+	        	//do nothing
+	            return true;
+	        case R.id.view_activity:
+	        	menuClickView();
+	            return true;
+	        case R.id.Compare_activity:
+	        	setContentView(R.layout.activity_compare);
 	            return true;
             default:
             	return super.onOptionsItemSelected(item);

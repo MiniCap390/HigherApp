@@ -21,6 +21,7 @@ import android.text.Editable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
@@ -125,7 +126,7 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 	private void setupGui() {
 		// Show the "back"/"up" button on the Action Bar (top left corner)
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setTitle("Data Sampler - Step Info");
+		getActionBar().setDisplayShowTitleEnabled(false);
 		
 		mListAdapter =
                 new ArrayAdapter<String>(
@@ -136,6 +137,49 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 		
 		ListView listView = (ListView) findViewById(R.id.listview_steps);
         listView.setAdapter(mListAdapter);
+	}
+	
+	/**
+	 * GUI AND MENU STUFF
+	 */
+	
+	public boolean onCreateOptionsMenu (Menu menu){
+		getMenuInflater().inflate(R.menu.topmenu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	/**
+	 * Called when a menu item is pressed. In this case we don't have an explicit menu, but we do
+	 * have the "back" button in the Action Bar (top bar). We want it to act like the regular Back
+	 * button, that is to say, pressing either Back buttons closes the current Activity and returns
+	 * to the previous activity in the stack.
+	 */
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId())
+	    {
+	        case android.R.id.home:
+	            this.finish();
+	            return true;
+            case R.id.main_screen:
+	        	menuClickMain();
+	            return true;
+	        case R.id.view_activity:
+	        	//do nothing
+	            return true;
+	        case R.id.Compare_activity:
+	        	setContentView(R.layout.activity_compare);
+	            return true;
+            default:
+            	return super.onOptionsItemSelected(item);
+	    }
+	}
+	
+	public void menuClickMain(){
+		Log.i(TAG, "Starting View Steps activity.");
+		Intent intent = new Intent(ViewActivity.this, RecordActivity.class);
+		intent .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		startActivity(intent);
 	}
 	
 	/**
@@ -201,24 +245,6 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 				
 				}
 		});
-	}
-	
-	/**
-	 * Called when a menu item is pressed. In this case we don't have an explicit menu, but we do
-	 * have the "back" button in the Action Bar (top bar). We want it to act like the regular Back
-	 * button, that is to say, pressing either Back buttons closes the current Activity and returns
-	 * to the previous activity in the stack.
-	 */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId())
-	    {
-	        case android.R.id.home:
-	            this.finish();
-	            return true;
-            default:
-            	return super.onOptionsItemSelected(item);
-	    }
 	}
 
 	

@@ -171,6 +171,16 @@ public class DBAdapter {
 			stepContainer.clear();
 		}
 	}
+	
+	private Cursor getAllCurrentRowStepInfoCursor() {
+		insertBufferRowsStepInfo();
+		Cursor c = db.query(true, DBConstants.TABLE_STEP_INFO,
+				DBConstants.STEP_INFO_ALL_KEYS, null, null, null, null, null,
+				null);
+
+		return c;
+	}
+	
 
 	private String formatTime(double time_ms) {
 		final long HRS_TO_SEC = 3600;

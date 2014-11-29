@@ -34,7 +34,7 @@ import android.widget.Toast;
  * data so far on screen.
  */
 public class MainActivity extends Activity implements RecordServiceListener{
-	static public final String TAG = "AnalyzeAct"; // Tag for Android's logcat
+	static public final String TAG = "MainAct"; // Tag for Android's logcat
 	static public final Double FREQ_DISP_SCALING = 60.0; // per second --> per minute
 	static public final Double SEC_TO_MSEC = 1000.0;
 	static protected final DecimalFormat FORMAT_FREQ = new DecimalFormat("###0.00");
