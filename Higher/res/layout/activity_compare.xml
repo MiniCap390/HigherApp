@@ -1,0 +1,57 @@
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@drawable/ui_background" >
+
+<TextView
+    android:id="@+id/compare_workouts"
+    android:layout_width="match_parent" 
+  	android:layout_height="wrap_content" 
+   	android:layout_marginTop="15dp"
+   	android:layout_marginBottom="50dp"
+  	android:layout_marginLeft="35dp"
+   	android:layout_marginRight="35dp"
+   	android:textColor="#ffffff"
+   	android:gravity="center"
+   	android:textSize="32sp"
+   	android:text="Compare Workouts"
+   	android:background="@drawable/ui_title_bar"
+    android:textColorLink="#FFFFFF"
+    android:singleLine="true"/>
+
+<Button
+    android:id="@+id/compare_date_1"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentLeft="true"
+    android:text=""
+    android:textSize="16sp" />
+
+<Button
+    android:id="@+id/compare_button_bottom"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentLeft="true"
+    android:text="compare"
+    android:textSize="16sp" />
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/compare_workouts"
+    android:layout_marginBottom="50dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@+id/compare_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
+
+</RelativeLayout>

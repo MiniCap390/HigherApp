@@ -1,0 +1,35 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- MAIN -->
+	<item
+	android:title="@string/menu_main_act"
+	android:id="@+id/main_screen"
+	android:icon="@drawable/ic_menu_main"
+	android:orderInCategory="1"
+	android:showAsAction="always"/>
+	
+	<!-- VIEW HISTORY -->
+	<item
+    android:title="@string/menu_view_act"
+	android:id="@+id/view_activity"
+	android:icon="@drawable/ic_action_view"
+	android:orderInCategory="2"
+	android:showAsAction="always"/>
+	
+	<!-- COMPARE -->
+	<item
+    android:title="@string/menu_compare_act"
+	android:id="@+id/Compare_activity"
+	android:icon="@drawable/ic_menu_compare"
+	android:orderInCategory="3"
+	android:showAsAction="always"/>
+	
+	<!-- SETTINGS -->
+	<item
+    android:title="@string/menu_settings_pane"
+	android:id="@+id/Settings"
+	android:orderInCategory="4"
+	android:showAsAction="never"/>
+	
+	
+</menu>
