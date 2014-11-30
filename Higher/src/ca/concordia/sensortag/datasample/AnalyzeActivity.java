@@ -69,7 +69,7 @@ public class AnalyzeActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_analyze);
+		setContentView(R.layout.activity_view_details);
 		setupGui();
 	}
 
