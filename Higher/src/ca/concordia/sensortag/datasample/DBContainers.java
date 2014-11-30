@@ -1,14 +1,16 @@
 package ca.concordia.sensortag.datasample;
 
 public class DBContainers {
+	public static final int NO_CHANGE_FLAG = -1;
+	
 	public class User {
-		String name;
-		int age;
-		boolean gender;
-		double height;
-		double weight;
-		double bmi;
-		int list_pref;
+		String name = null;
+		int age = NO_CHANGE_FLAG;
+		Boolean gender= null; // true = male, false = female
+		double height = NO_CHANGE_FLAG;
+		double weight = NO_CHANGE_FLAG;
+		double bmi = NO_CHANGE_FLAG;
+		int list_pref = NO_CHANGE_FLAG;
 		
 		public String getName() {
 			return name;
@@ -22,7 +24,7 @@ public class DBContainers {
 		public void setAge(int age) {
 			this.age = age;
 		}
-		public boolean isGender() {
+		public Boolean getGender() {
 			return gender;
 		}
 		public void setGender(boolean gender) {
@@ -40,12 +42,14 @@ public class DBContainers {
 		public void setWeight(double weight) {
 			this.weight = weight;
 		}
-		public double getBmi() {
-			return bmi;
-		}
-		public void setBmi(double bmi) {
+		public void setBMI (double bmi) {
 			this.bmi = bmi;
 		}
+		
+		public double getBMI () {
+			return this.bmi;
+		}
+		
 		public int getList_pref() {
 			return list_pref;
 		}

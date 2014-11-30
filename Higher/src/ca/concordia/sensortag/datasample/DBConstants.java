@@ -64,7 +64,7 @@ public class DBConstants {
 	
 	public static final String[] USER_ALL_KEYS = new String[] {
 		KEY_ROWID, USER_NAME, USER_AGE, USER_GENDER, USER_WEIGHT,
-		USER_WEIGHT, USER_BMI, USER_LIST_PREF
+		USER_HEIGHT, USER_BMI, USER_LIST_PREF
 		};
 	
 	public static final int COL_USER_NAME = 1;
@@ -150,11 +150,11 @@ public class DBConstants {
 			"create table " + TABLE_USER
 			+ " (" + KEY_ROWID + " integer primary key autoincrement, "
 			+ USER_NAME + " text not null, "
-			+ USER_AGE + " integer, "
-			+ USER_GENDER + " boolean, "
-			+ USER_WEIGHT + " double, "
-			+ USER_HEIGHT + " double, "
-			+ USER_BMI + " double,"
+			+ USER_AGE + " integer default 25, "
+			+ USER_GENDER + " boolean default 1, "
+			+ USER_WEIGHT + " double default 70, "
+			+ USER_HEIGHT + " double default 1.8, "
+			+ USER_BMI + " double default 21.6,"
 			+ USER_LIST_PREF + " int default 5"
 			+ ");";
 	

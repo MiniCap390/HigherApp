@@ -30,13 +30,26 @@ public class DBAdapter {
 	// ///////////////////////////////////////////////////////////////////
 	
 	/**
-	 * TO DO
+	 * @param height(m)
+	 * @param weight(kg)
+	 * @return
 	 */
-	private double calculateBMI(){
-		double weight= 0;
-		double height= 0;
+	private double calculateBMI(double height, double weight) {
+		double bmi = weight/(height*height);
 		
-		return (weight/(height*height));
+		return bmi;
+	}
+	
+	/**
+	 * @param weight(kg)
+	 * @param time(ms)
+	 * @return
+	 */
+	private double calculateEnergy(double weight, double time) {
+		//formula reverse-engineered from http://www.dietcombat.com/best-exercise-to-lose-weight
+		//rate = calories/min
+		double rate = (weight*2.2-100)*0.93/15.0 + 6.4;
+		return (double) time * 1000 * rate / 60;
 	}
 	
 			//
@@ -48,18 +61,13 @@ public class DBAdapter {
 		return ((total_step)/duration);
 	}
 
-	/**
-	 * TO DO
-	 */
-	private double getTotalEnergy() {
-		// TODO getWeight()
-		double weight = 0.0;
-		long time = getRecordDuration(); //in msec
+	private double getTotalEnergy() {		
+		Cursor currentUserSettings = getUserSetting();
 		
-		//formula reverse-engineered from http://www.dietcombat.com/best-exercise-to-lose-weight
-		//rate = calories/min
-		double rate = (weight*2.2-100)*0.93/15.0 + 6.4;
-		return (double) time * 1000 * rate / 60;
+		double weight = currentUserSettings.getDouble(DBConstants.COL_USER_WEIGHT);
+		long time = getRecordDuration();
+		
+		return calculateEnergy(weight, time);
 	}
 
 	private double getTotalAltitudeMagnitude(Cursor allCurrentSteps) {
@@ -136,6 +144,21 @@ public class DBAdapter {
 			// General Utility methods 
 			// ///////////////////////////////////////////////////////////////////
 	
+	private Cursor getUserSetting() {
+		// Hard coded to 1 since only 1 user
+		String where = DBConstants.KEY_ROWID + "=1";
+		
+		// Get current values from the DB
+		Cursor currentUserSettings = db.query(true, DBConstants.TABLE_USER,
+				DBConstants.USER_ALL_KEYS, where, null, null, null, null,
+				null);
+		if (currentUserSettings != null) {
+			currentUserSettings.moveToFirst();
+		}
+		
+		return currentUserSettings;
+	}
+	
 	/**
 	 * @returns the _id of the highest value from Workout_Session table
 	 * @author Phohawkenics
@@ -150,6 +173,9 @@ public class DBAdapter {
 		return id;
 	}
 	
+	/**
+	 * @returns the time in standard 11:33:10 format
+	 */
 	private String getCurrentTime() {
 		Time today = new Time(Time.getCurrentTimezone());
 		today.setToNow();
@@ -178,6 +204,10 @@ public class DBAdapter {
 		}
 	}
 	
+	/**
+	 * @returns a cursor containing all the rows of the StepInfo Table
+	 *  (might be dead code)
+	 */
 	private Cursor getAllCurrentRowStepInfoCursor() {
 		insertBufferRowsStepInfo();
 		Cursor c = db.query(true, DBConstants.TABLE_STEP_INFO,
@@ -278,16 +308,16 @@ public class DBAdapter {
 	
 	private void insertRowSessionInfo() {
 		String where = DBConstants.STEP_INFO_SESSION_ID + "=" + getCurrentWorkoutID();
-		Cursor c = db.query(true, DBConstants.TABLE_STEP_INFO,
+		Cursor allCurrentSteps = db.query(true, DBConstants.TABLE_STEP_INFO,
 				DBConstants.STEP_INFO_ALL_KEYS, where, null, null, null, null,
 				null);
 		
 		int session_id = getCurrentWorkoutID();
 		int totalStep = getTotalStep();
-		double duration = getTotalDuration(c);// In Seconds
+		double duration = getTotalDuration(allCurrentSteps);// In Seconds
 		double average_speed = getTotalAverageSpeed(totalStep, duration); // In steps/sec
-		double totalAltitudeMagnitude = getTotalAltitudeMagnitude(c); // In wtv it is in StepInfo
-		double totalAltitude = getTotalAltitude(c); // In wtv it is in StepInfo
+		double totalAltitudeMagnitude = getTotalAltitudeMagnitude(allCurrentSteps); // In wtv it is in StepInfo
+		double totalAltitude = getTotalAltitude(allCurrentSteps); // In wtv it is in StepInfo
 		double totalEnergy = getTotalEnergy(); // Not yet implemented
 		
 		ContentValues initialValues = new ContentValues();
@@ -300,7 +330,7 @@ public class DBAdapter {
 		initialValues.put(DBConstants.SESSION_INFO_TOTAL_STEP, totalStep);
 		initialValues.put(DBConstants.SESSION_INFO_TOTAL_DURATION, duration);
 		
-		c.close();
+		allCurrentSteps.close();
 		
 		// Insert it into the database.
 		db.insert(DBConstants.TABLE_SESSION_INFO, null, initialValues);
@@ -348,10 +378,16 @@ public class DBAdapter {
 		myDBHelper.close();
 	}
 	
+	/**
+	 *  The flow of the DB fucntion calls to start a workout
+	 */
 	public void start_workout() {
 		this.insertRowIntoWorkoutSession();
 	}
 	
+	/**
+	 * The flow of the DB fucntion calls to stop a workout
+	 */
 	public void stop_workout() {
 		this.insertBufferRowsStepInfo();
 		this.updateRowWorkoutSession();
@@ -364,6 +400,22 @@ public class DBAdapter {
 
 	public void deleteAllTableValues() {
 		db.execSQL("DELETE FROM " + DBConstants.TABLE_STEP_INFO);
+		
+		/*Might be need for deleting table values during testing
+		 * 
+		 * sqlite_sequence also needs to be cleared to reset
+		 * the autoincrementors of the tables eg. "_id" colomn
+		 * 
+		db.execSQL("DELETE FROM " + DBConstants.TABLE_USER);
+		db.execSQL("DELETE FROM " + DBConstants.TABLE_WORKOUT_SESSION);
+		db.execSQL("DELETE FROM " + DBConstants.TABLE_STEP_INFO);
+		db.execSQL("DELETE FROM " + DBConstants.TABLE_SESSION_INFO);
+		
+		db.execSQL("DELETE FROM sqlite_sequence WHERE name = '"+DBConstants.TABLE_USER+"'");
+		db.execSQL("DELETE FROM sqlite_sequence WHERE name = '"+DBConstants.TABLE_WORKOUT_SESSION+"'");
+		db.execSQL("DELETE FROM sqlite_sequence WHERE name = '"+DBConstants.TABLE_STEP_INFO+"'");
+		db.execSQL("DELETE FROM sqlite_sequence WHERE name = '"+DBConstants.TABLE_SESSION_INFO+"'");
+		*/
 	}
 
 	public void bufferStepInfo(DBContainers.StepInfo newStep) {
@@ -401,6 +453,99 @@ public class DBAdapter {
 		}
 
 		return displayList;
+	}
+	
+	/**
+	 * @returns A cursor containing all the rows the in WorkoutSession Table
+	 */
+	public Cursor getAllWorkoutSessions() {
+		Cursor allWorkoutSessions = db.query(true, DBConstants.TABLE_WORKOUT_SESSION,
+				DBConstants.WORKOUT_SESSION_ALL_KEYS, null, null, null, null, null,
+				null);
+		if (allWorkoutSessions != null) {
+			allWorkoutSessions.moveToFirst();
+		}
+		
+		return allWorkoutSessions;
+	}
+	
+	/**
+	 * Simply creates the row for
+	 * the one and only user, should only be called once
+	 * 
+	 * @author Phohawkenics
+	 */
+	public void userInit () {
+		insertRowIntoUser("Phohawkenics");
+	}
+	
+	/**
+	 * Takes a user container and updates the db in the fields where the
+	 * user has been set
+	 * 
+	 * 		eg. passing a user where setHeight has been called will only
+	 * push the newHeight that has been added and will not affect the others
+	 * 
+	 * 		eg. passing a user where setHeight and set age has been called
+	 * will only push the height and age
+	 * 
+	 * To modify all settings, obviously setHeight,setWeight, setAge,
+	 * setGender and setListPref will have to be called by the user container
+	 * 
+	 * THIS DOES NOT SUPPORT NAME CHANGE, it can easily be modified for it though
+	 * 
+	 * @author Phohawkenics
+	 */
+	public void setUser (DBContainers.User user) {
+		// Get current values from the DB
+		Cursor currentUserSettings = getUserSetting();
+		
+		double height = currentUserSettings.getDouble(DBConstants.COL_USER_HEIGHT);
+		double weight = currentUserSettings.getDouble(DBConstants.COL_USER_WEIGHT);
+		
+		// Check which values have been set in the user container
+		boolean heightChange = user.getHeight() != DBContainers.NO_CHANGE_FLAG;
+		boolean weightChange = user.getWeight() != DBContainers.NO_CHANGE_FLAG;
+		boolean ageChange = user.getAge() != DBContainers.NO_CHANGE_FLAG;
+		boolean genderChange = user.getGender() != null;
+		boolean listPrefChange = user.getList_pref() != DBContainers.NO_CHANGE_FLAG;
+		
+		ContentValues newValues = new ContentValues();
+
+		if(heightChange) {
+			double newHeight = user.getHeight();
+			newValues.put(DBConstants.USER_HEIGHT, newHeight);
+			height = newHeight;
+		}
+		
+		if (weightChange) {
+			double newWeight = user.getWeight();
+			newValues.put(DBConstants.USER_WEIGHT, newWeight);
+			weight = newWeight;
+		}
+		
+		if(ageChange) {
+			int newAge = user.getAge();
+			newValues.put(DBConstants.USER_AGE, newAge);
+		}
+		
+		if(genderChange) {
+			boolean newGender = user.getGender();
+			newValues.put(DBConstants.USER_GENDER, newGender);
+		}
+		
+		if(listPrefChange) {
+			newValues.put(DBConstants.USER_LIST_PREF, user.getList_pref());
+		}
+		
+		if( heightChange || weightChange)
+			newValues.put(DBConstants.USER_BMI, calculateBMI(height, weight));
+		
+		currentUserSettings.close();
+		
+		
+		String where = DBConstants.KEY_ROWID + "=1";
+		db.update(DBConstants.TABLE_USER, newValues, where, null);
 	}
 
 	// ///////////////////////////////////////////////////////////////////
