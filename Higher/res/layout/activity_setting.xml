@@ -29,7 +29,6 @@
 	    android:layout_height="wrap_content"
 	    android:gravity="left|center_vertical"
 	    android:paddingLeft="15dp"
-	    android:paddingRight="15dp"
 	    android:text="Height"
 	    android:textSize="16sp"
 	    android:textColor="#ffffff"	    
@@ -42,7 +41,6 @@
 	    android:text="Weight"
 	    android:gravity="left|center_vertical"
 	    android:paddingLeft="15dp"
-	    android:paddingRight="15dp"
 	    android:textSize="16sp"
 	    android:textColor="#ffffff"	 
 	    android:background="@drawable/setting_button_background" 
@@ -53,7 +51,6 @@
 	    android:layout_height="wrap_content"
 	    android:gravity="left|center_vertical"
 	    android:paddingLeft="15dp"
-	    android:paddingRight="15dp"
 	    android:text="Age"
 	    android:textSize="16sp"
     	android:textColor="#ffffff"	 
@@ -65,7 +62,6 @@
 	    android:layout_height="wrap_content"
 	    android:gravity="left|center_vertical"
 	    android:paddingLeft="15dp"
-	    android:paddingRight="15dp"
 	    android:text="Gender"
 	    android:textSize="16sp"
 	    android:textColor="#ffffff"	 
@@ -79,11 +75,10 @@
 	    android:layout_height="wrap_content"
 	    android:gravity="left|center_vertical"
 	    android:paddingLeft="15dp"
-	    android:paddingRight="15dp"
-	    android:text="Comparison range"
+	    android:text="Comparison"
 	    android:textSize="16sp"
 	    android:textColor="#ffffff"	 
 	    android:background="@drawable/setting_button_background"
-	    android:onClick="setCompareRange"/>
+	    android:onClick="setGender"/>
 </LinearLayout>
 </RelativeLayout>

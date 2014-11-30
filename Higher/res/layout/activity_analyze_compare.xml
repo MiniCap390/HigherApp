@@ -106,14 +106,14 @@
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/textTitleAverage"
+            android:id="@+id/textTitleEnergy"
             style="@style/title_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/act_anal_average" />
+            android:text="@string/act_anal_energy" />
 
         <TextView
-            android:id="@+id/textValueAverage"
+            android:id="@+id/textValueEnergy"
             style="@style/value_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -126,14 +126,14 @@
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/textTitleRmsVar"
+            android:id="@+id/textTitleTotalDistance"
             style="@style/title_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/act_anal_rmsvar" />
+            android:text="@string/act_anal_total_distance" />
 
         <TextView
-            android:id="@+id/textValueRmsVar"
+            android:id="@+id/textValueTotalDistance"
             style="@style/value_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -146,39 +146,21 @@
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/textTitleMax"
+            android:id="@+id/textTitleAbsoluteDistance"
             style="@style/title_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/act_anal_max" />
+            android:text="@string/act_anal_absolute_distance" />
 
         <TextView
-            android:id="@+id/textValueMax"
+            android:id="@+id/textValueAbsoluteDistance"
             style="@style/value_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="" />
     </TableRow>
 
-    <TableRow
-        android:id="@+id/tableRow7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/textTitleMin"
-            style="@style/title_cell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/act_anal_min" />
-
-        <TextView
-            android:id="@+id/textValueMin"
-            style="@style/value_cell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-    </TableRow>
+   
 
 </TableLayout>
 <LinearLayout
@@ -268,14 +250,14 @@
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/second_textTitleAverage"
+            android:id="@+id/second_textTitleEnergy"
             style="@style/title_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/act_anal_average" />
+            android:text="@string/act_anal_energy" />
 
         <TextView
-            android:id="@+id/second_textValueAverage"
+            android:id="@+id/second_textValueEnergy"
             style="@style/value_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -288,14 +270,14 @@
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/second_textTitleRmsVar"
+            android:id="@+id/second_textTitleTotalDistance"
             style="@style/title_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/act_anal_rmsvar" />
+            android:text="@string/act_anal_total_distance" />
 
         <TextView
-            android:id="@+id/second_textValueRmsVar"
+            android:id="@+id/second_textValueTotalDistance"
             style="@style/value_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -308,39 +290,21 @@
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/second_textTitleMax"
+            android:id="@+id/second_textTitleAbsoluteDistance"
             style="@style/title_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/act_anal_max" />
+            android:text="@string/act_anal_absolute_distance" />
 
         <TextView
-            android:id="@+id/second_textValueMax"
+            android:id="@+id/second_textValueAbsoluteDistance"
             style="@style/value_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="" />
     </TableRow>
 
-    <TableRow
-        android:id="@+id/second_tableRow7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
 
-        <TextView
-            android:id="@+id/second_textTitleMin"
-            style="@style/title_cell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/act_anal_min" />
-
-        <TextView
-            android:id="@+id/second_textValueMin"
-            style="@style/value_cell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-    </TableRow>
 
 </TableLayout>
 
