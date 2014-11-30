@@ -15,6 +15,7 @@ int drawable buttonsonoff 0x7f020005
 int drawable buttonsonon 0x7f020006
 int drawable gyroscope 0x7f020007
 int drawable humidity 0x7f020008
+<<<<<<< Updated upstream
 int drawable ic_action_start_dark 0x7f020009
 int drawable ic_action_start_light 0x7f02000a
 int drawable ic_action_stop_dark 0x7f02000b
@@ -103,6 +104,81 @@ int id pb_progress 0x7f0a0024
 int id services_browser_layout 0x7f0a0046
 int id status 0x7f0a0043
 int id statusPanel 0x7f0a0057
+=======
+int drawable ic_launcher 0x7f020009
+int drawable ic_media_pause 0x7f02000a
+int drawable ic_media_play 0x7f02000b
+int drawable ic_menu_revert 0x7f02000c
+int drawable ic_menu_view 0x7f02000d
+int drawable irtemperature 0x7f02000e
+int drawable list_item_normal 0x7f02000f
+int drawable sensortag 0x7f020010
+int drawable sensortag_magnetometer 0x7f020011
+int drawable sensortag_simplekeys 0x7f020012
+int drawable temperature 0x7f020013
+int drawable ti_stk_2c_pos_rgb_png 0x7f020014
+int drawable tible 0x7f020015
+int drawable unknown 0x7f020016
+int id accPanel 0x7f0a0044
+int id accelerometerTxt 0x7f0a0045
+int id ambPanel 0x7f0a004c
+int id ambientTemperatureTxt 0x7f0a004d
+int id barPanel 0x7f0a0050
+int id barometerTxt 0x7f0a0051
+int id btnConnect 0x7f0a0038
+int id btn_confirm 0x7f0a0016
+int id btn_load_a 0x7f0a0019
+int id btn_load_b 0x7f0a001a
+int id btn_load_c 0x7f0a001b
+int id btn_scan 0x7f0a003f
+int id btn_start 0x7f0a001f
+int id buttonAnalyze 0x7f0a002c
+int id buttonGraph 0x7f0a0021
+int id buttonOK 0x7f0a0033
+int id buttonRecordPause 0x7f0a0029
+int id buttonReset 0x7f0a002b
+int id buttonView 0x7f0a002d
+int id buttons 0x7f0a0043
+int id checkboxForever 0x7f0a0024
+int id checkboxInfiniteSamples 0x7f0a0028
+int id content 0x7f0a0031
+int id descr 0x7f0a0037
+int id device_list 0x7f0a003b
+int id footer 0x7f0a0032
+int id gyrPanel 0x7f0a0048
+int id gyroscopeTxt 0x7f0a0049
+int id header 0x7f0a0030
+int id humPanel 0x7f0a004e
+int id humidityTxt 0x7f0a004f
+int id info 0x7f0a0036
+int id inputSamples 0x7f0a0026
+int id inputTime 0x7f0a0023
+int id keyPanel 0x7f0a0042
+int id layout 0x7f0a0020
+int id linearLayout1 0x7f0a002a
+int id list_item_step_textview 0x7f0a0040
+int id listview_steps 0x7f0a002e
+int id lw_file 0x7f0a0015
+int id magPanel 0x7f0a0046
+int id magnetometerTxt 0x7f0a0047
+int id name 0x7f0a0034
+int id no_device 0x7f0a003d
+int id objPanel 0x7f0a004a
+int id objTemperatureText 0x7f0a004b
+int id opt_about 0x7f0a0055
+int id opt_bt 0x7f0a0056
+int id opt_e2e 0x7f0a0057
+int id opt_exit 0x7f0a0059
+int id opt_fwupdate 0x7f0a0054
+int id opt_prefs 0x7f0a0053
+int id opt_sthome 0x7f0a0058
+int id pager 0x7f0a003a
+int id pb_busy 0x7f0a003c
+int id pb_progress 0x7f0a001d
+int id services_browser_layout 0x7f0a0041
+int id status 0x7f0a003e
+int id statusPanel 0x7f0a0052
+>>>>>>> Stashed changes
 int id tableRow1 0x7f0a0000
 int id tableRow2 0x7f0a0003
 int id tableRow3 0x7f0a0006
@@ -110,9 +186,15 @@ int id tableRow4 0x7f0a0008
 int id tableRow5 0x7f0a000b
 int id tableRow6 0x7f0a000e
 int id tableRow7 0x7f0a0011
+<<<<<<< Updated upstream
 int id textDuration 0x7f0a0027
 int id textOr 0x7f0a002a
 int id textSamples 0x7f0a002c
+=======
+int id textDuration 0x7f0a0022
+int id textOr 0x7f0a0025
+int id textSamples 0x7f0a0027
+>>>>>>> Stashed changes
 int id textTitleAverage 0x7f0a0009
 int id textTitleEventFrequency 0x7f0a0007
 int id textTitleEvents 0x7f0a0004
@@ -126,6 +208,7 @@ int id textValueMax 0x7f0a0010
 int id textValueMin 0x7f0a0013
 int id textValueRmsVar 0x7f0a000d
 int id textValueTime 0x7f0a0002
+<<<<<<< Updated upstream
 int id title 0x7f0a0034
 int id topLayout 0x7f0a0014
 int id tw_directory 0x7f0a001b
@@ -157,6 +240,31 @@ int layout fragment_scan 0x7f03000f
 int layout list_item_step 0x7f030010
 int layout main 0x7f030011
 int layout services_browser 0x7f030012
+=======
+int id title 0x7f0a002f
+int id tw_directory 0x7f0a0014
+int id tw_file 0x7f0a0018
+int id tw_info 0x7f0a001c
+int id tw_log 0x7f0a001e
+int id tw_target 0x7f0a0017
+int id uuid 0x7f0a0035
+int id webpage 0x7f0a0039
+int layout activity_analyze 0x7f030000
+int layout activity_file 0x7f030001
+int layout activity_fwupdate 0x7f030002
+int layout activity_main 0x7f030003
+int layout activity_record 0x7f030004
+int layout activity_view 0x7f030005
+int layout dialog_about 0x7f030006
+int layout element_characteristic 0x7f030007
+int layout element_device 0x7f030008
+int layout element_file 0x7f030009
+int layout fragment_help 0x7f03000a
+int layout fragment_pager 0x7f03000b
+int layout fragment_scan 0x7f03000c
+int layout list_item_step 0x7f03000d
+int layout services_browser 0x7f03000e
+>>>>>>> Stashed changes
 int menu device_activity_actions 0x7f090000
 int menu main_activity_actions 0x7f090001
 int menu topmenu 0x7f090002

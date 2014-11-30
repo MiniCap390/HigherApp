@@ -32,6 +32,7 @@ public final class R {
 		public static final int unknown = 0x7f020020;
 	}
 	public static final class id {
+<<<<<<< Updated upstream
 		public static final int accPanel = 0x7f0a0049;
 		public static final int accelerometerTxt = 0x7f0a004a;
 		public static final int ambPanel = 0x7f0a0051;
@@ -98,6 +99,74 @@ public final class R {
 		public static final int fragment_pager = 0x7f03000e;
 		public static final int fragment_scan = 0x7f03000f;
 		public static final int services_browser = 0x7f030012;
+=======
+		public static final int accPanel = 0x7f0a0044;
+		public static final int accelerometerTxt = 0x7f0a0045;
+		public static final int ambPanel = 0x7f0a004c;
+		public static final int ambientTemperatureTxt = 0x7f0a004d;
+		public static final int barPanel = 0x7f0a0050;
+		public static final int barometerTxt = 0x7f0a0051;
+		public static final int btnConnect = 0x7f0a0038;
+		public static final int btn_confirm = 0x7f0a0016;
+		public static final int btn_load_a = 0x7f0a0019;
+		public static final int btn_load_b = 0x7f0a001a;
+		public static final int btn_load_c = 0x7f0a001b;
+		public static final int btn_scan = 0x7f0a003f;
+		public static final int btn_start = 0x7f0a001f;
+		public static final int buttonOK = 0x7f0a0033;
+		public static final int buttons = 0x7f0a0043;
+		public static final int content = 0x7f0a0031;
+		public static final int descr = 0x7f0a0037;
+		public static final int device_list = 0x7f0a003b;
+		public static final int footer = 0x7f0a0032;
+		public static final int gyrPanel = 0x7f0a0048;
+		public static final int gyroscopeTxt = 0x7f0a0049;
+		public static final int header = 0x7f0a0030;
+		public static final int humPanel = 0x7f0a004e;
+		public static final int humidityTxt = 0x7f0a004f;
+		public static final int info = 0x7f0a0036;
+		public static final int keyPanel = 0x7f0a0042;
+		public static final int lw_file = 0x7f0a0015;
+		public static final int magPanel = 0x7f0a0046;
+		public static final int magnetometerTxt = 0x7f0a0047;
+		public static final int name = 0x7f0a0034;
+		public static final int no_device = 0x7f0a003d;
+		public static final int objPanel = 0x7f0a004a;
+		public static final int objTemperatureText = 0x7f0a004b;
+		public static final int opt_about = 0x7f0a0055;
+		public static final int opt_bt = 0x7f0a0056;
+		public static final int opt_e2e = 0x7f0a0057;
+		public static final int opt_exit = 0x7f0a0059;
+		public static final int opt_fwupdate = 0x7f0a0054;
+		public static final int opt_prefs = 0x7f0a0053;
+		public static final int opt_sthome = 0x7f0a0058;
+		public static final int pager = 0x7f0a003a;
+		public static final int pb_busy = 0x7f0a003c;
+		public static final int pb_progress = 0x7f0a001d;
+		public static final int services_browser_layout = 0x7f0a0041;
+		public static final int status = 0x7f0a003e;
+		public static final int statusPanel = 0x7f0a0052;
+		public static final int title = 0x7f0a002f;
+		public static final int tw_directory = 0x7f0a0014;
+		public static final int tw_file = 0x7f0a0018;
+		public static final int tw_info = 0x7f0a001c;
+		public static final int tw_log = 0x7f0a001e;
+		public static final int tw_target = 0x7f0a0017;
+		public static final int uuid = 0x7f0a0035;
+		public static final int webpage = 0x7f0a0039;
+	}
+	public static final class layout {
+		public static final int activity_file = 0x7f030001;
+		public static final int activity_fwupdate = 0x7f030002;
+		public static final int dialog_about = 0x7f030006;
+		public static final int element_characteristic = 0x7f030007;
+		public static final int element_device = 0x7f030008;
+		public static final int element_file = 0x7f030009;
+		public static final int fragment_help = 0x7f03000a;
+		public static final int fragment_pager = 0x7f03000b;
+		public static final int fragment_scan = 0x7f03000c;
+		public static final int services_browser = 0x7f03000e;
+>>>>>>> Stashed changes
 	}
 	public static final class menu {
 		public static final int device_activity_actions = 0x7f090000;

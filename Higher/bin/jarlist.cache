@@ -1,5 +1,10 @@
 # cache for current jar dependency. DO NOT EDIT.
 # format is <lastModified> <length> <SHA-1> <path>
 # Encoding is UTF-8
+<<<<<<< Updated upstream
 1401856634000 621451 5896b0a4e377ac4242eb2bc785220c1c4fc052f4 /home/vincent/Code/Higher/SensorTagLib/libs/android-support-v4.jar
 1416537323000 621451 5896b0a4e377ac4242eb2bc785220c1c4fc052f4 /home/vincent/Code/Higher/Higher/libs/android-support-v4.jar
+=======
+1417114642000 621451 5896b0a4e377ac4242eb2bc785220c1c4fc052f4 /home/janice/git/HigherApp/SensorTagLib/libs/android-support-v4.jar
+1417114642000 621451 5896b0a4e377ac4242eb2bc785220c1c4fc052f4 /home/janice/git/HigherApp/Higher/libs/android-support-v4.jar
+>>>>>>> Stashed changes
