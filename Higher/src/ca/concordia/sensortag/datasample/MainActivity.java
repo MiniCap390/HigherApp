@@ -12,11 +12,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.GraphView.GraphViewData;
-import com.jjoe64.graphview.GraphViewSeries;
-import com.jjoe64.graphview.LineGraphView;
-
 import ca.concordia.sensortag.datasample.RecordService.RecordServiceListener;
 import ca.concordia.sensortag.datasample.RecordService.Status;
 import android.app.Activity;
@@ -31,7 +26,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,8 +51,6 @@ public class MainActivity extends Activity implements RecordServiceListener{
 	private TextView mValueMax;
 	private TextView mValueMin;
 	private Button mButtonRecordPause;
-	private Button mButtonGraph;
-	private Context mContext;
 	
 	/* Data analysis */
 	private List<Long> mEventTimestamps = null;
@@ -155,9 +147,7 @@ public class MainActivity extends Activity implements RecordServiceListener{
 		// Show the "back"/"up" button on the Action Bar (top left corner)
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		//JAN: change ids
-		mContext = this.getApplicationContext();
 		mButtonRecordPause = (Button) findViewById(R.id.buttonRecordPause);
-		mButtonGraph = (Button) findViewById(R.id.buttonGraph);
 		
 		mValueTime = (TextView) findViewById(R.id.textValueTime);
 		mValueEvents = (TextView) findViewById(R.id.textValueEvents);
@@ -173,7 +163,6 @@ public class MainActivity extends Activity implements RecordServiceListener{
 		mValueMin.setText("-.--");
 		mValueMax.setText("-.--");
 		
-		mButtonGraph.setOnClickListener(mOnClickGraph);
 	}
 	
 	/**
@@ -479,27 +468,7 @@ public class MainActivity extends Activity implements RecordServiceListener{
 		}
 		
 	};
-	private Button.OnClickListener mOnClickGraph = new Button.OnClickListener() {
 
-		/**
-		 * Called when the Graph button is clicked. Displays position graph
-		 * 
-		 */
-		@Override
-		public void onClick(View v) {
-			//Add steps: altitude & timestamp as series data
-			GraphViewData[] stepData = new GraphViewData[]{   //X, Y
-											new GraphViewData(1.00, 2.00),
-											new GraphViewData(2.00, 3.00)};
-			GraphViewSeries stepSeries = new GraphViewSeries( stepData );
-			GraphView posGraph = new LineGraphView(mContext, "Position");
-			posGraph.addSeries( stepSeries );
-			
-			LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
-			layout.addView(posGraph);
-		}
-		
-	};
 	@Override
 	public void onStatusChanged(Status s) {
 		runOnUiThread(new Runnable() {
