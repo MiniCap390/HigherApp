@@ -1,7 +1,89 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@drawable/ui_background" >
+<LinearLayout
+    android:id="@+id/Title_Layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    
+    android:layout_height="match_parent"
+    android:layout_marginBottom="30dp"
+    android:orientation="vertical" >
+	<TextView
+    android:id="@+id/Settings"
+    android:layout_width="match_parent" 
+  	android:layout_height="wrap_content" 
+   	android:layout_marginTop="15dp"
+   	android:layout_marginBottom="50dp"
+  	android:layout_marginLeft="35dp"
+   	android:layout_marginRight="35dp"
+    android:background="@drawable/ui_title_bar"
+   	android:textColor="#ffffff"
+   	android:gravity="center"
+   	android:textSize="26sp"
+   	android:text="Settings" />
 
+    <Button
+	    android:id="@+id/Height_button"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="left|center_vertical"
+	    android:paddingLeft="15dp"
+	    android:paddingRight="15dp"
+	    android:text="Height"
+	    android:textSize="16sp"
+	    android:textColor="#ffffff"	    
+	    android:background="@drawable/setting_button_background"
+	    android:onClick="setHeight" />
+    <Button
+	    android:id="@+id/Weight_button"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:text="Weight"
+	    android:gravity="left|center_vertical"
+	    android:paddingLeft="15dp"
+	    android:paddingRight="15dp"
+	    android:textSize="16sp"
+	    android:textColor="#ffffff"	 
+	    android:background="@drawable/setting_button_background" 
+	    android:onClick="setWeight"/>
+    <Button
+	    android:id="@+id/Age_button"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="left|center_vertical"
+	    android:paddingLeft="15dp"
+	    android:paddingRight="15dp"
+	    android:text="Age"
+	    android:textSize="16sp"
+    	android:textColor="#ffffff"	 
+	    android:background="@drawable/setting_button_background"
+	    android:onClick="setAge" />
+    <Button
+	    android:id="@+id/Gender_button"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="left|center_vertical"
+	    android:paddingLeft="15dp"
+	    android:paddingRight="15dp"
+	    android:text="Gender"
+	    android:textSize="16sp"
+	    android:textColor="#ffffff"	 
+	    android:background="@drawable/setting_button_background"
+	    android:onClick="setGender"
+	    android:layout_marginBottom="120dp"/>
+    
+    <Button
+	    android:id="@+id/Comparison_range_button"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="left|center_vertical"
+	    android:paddingLeft="15dp"
+	    android:paddingRight="15dp"
+	    android:text="Comparison range"
+	    android:textSize="16sp"
+	    android:textColor="#ffffff"	 
+	    android:background="@drawable/setting_button_background"
+	    android:onClick="setCompareRange"/>
+</LinearLayout>
 </RelativeLayout>
