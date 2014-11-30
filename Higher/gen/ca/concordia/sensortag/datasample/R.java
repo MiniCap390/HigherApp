@@ -305,10 +305,11 @@ public final class R {
         public static final int prefs=0x7f05000e;
         public static final int prog_ogoing=0x7f05002b;
         public static final int scan_advice=0x7f05000d;
+        public static final int setting_gender_prompt=0x7f05005c;
         public static final int settings_age=0x7f050056;
         public static final int settings_age_prompt=0x7f05005b;
         public static final int settings_comp_rng=0x7f050058;
-        public static final int settings_compare_range_prompt=0x7f05005c;
+        public static final int settings_compare_range_prompt=0x7f05005d;
         public static final int settings_gender=0x7f050057;
         public static final int settings_height=0x7f050054;
         public static final int settings_height_prompt=0x7f050059;

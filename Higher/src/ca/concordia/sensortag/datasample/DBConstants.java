@@ -94,16 +94,18 @@ public class DBConstants {
 	// For Step_Info table
 	// ///////////////////////////////////////////////////////////////////
 	public static final String STEP_INFO_SESSION_ID = "session_id";
-	public static final String STEP_INFO_TIME_STAMP = "time_stamp";
+	//public static final String STEP_INFO_TIME_STAMP = "time_stamp";
+	public static final String STEP_INFO_ELAPSED_TIME = "elapsed_time";
 	public static final String STEP_INFO_ALTITUDE = "altitude";
 	
 	public static final String[] STEP_INFO_ALL_KEYS = new String[] {
 		KEY_ROWID, STEP_INFO_SESSION_ID,
-		STEP_INFO_TIME_STAMP, STEP_INFO_ALTITUDE
+		STEP_INFO_ELAPSED_TIME, STEP_INFO_ALTITUDE
 		};
 	
 	public static final int COL_STEP_INFO_SESSION_ID = 1;
-	public static final int COL_STEP_INFO_TIME_STAMP = 2;
+	//public static final int COL_STEP_INFO_TIME_STAMP = 2;
+	public static final int COL_STEP_INFO_ELAPSED_TIME = 2;
 	public static final int COL_STEP_INFO_ALTITUDE = 3;
 	
 	//
@@ -169,7 +171,7 @@ public class DBConstants {
 			"create table " + TABLE_STEP_INFO
 			+ " (" + KEY_ROWID + " integer primary key autoincrement, "
 			+ STEP_INFO_SESSION_ID + " integer not null, "
-			+ STEP_INFO_TIME_STAMP + " text default (time('now','localtime')), "
+			+ STEP_INFO_ELAPSED_TIME + " double not null, "
 			+ STEP_INFO_ALTITUDE + " double not null"
 			+ ");";
 	

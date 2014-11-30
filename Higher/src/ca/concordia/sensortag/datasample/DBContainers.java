@@ -2,6 +2,7 @@ package ca.concordia.sensortag.datasample;
 
 public class DBContainers {
 	public static final int NO_CHANGE_FLAG = -1;
+	public static DBContainers containers = new DBContainers();
 	
 	public class User {
 		String name = null;

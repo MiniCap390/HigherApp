@@ -135,7 +135,6 @@ public class RecordService extends Service {
 
 	private String mAppName = null;
 	private static DBAdapter myDb = null;
-	DBContainers containers = new DBContainers();
 	
 	private NotificationManager mNotificationManager;
 	private Runnable mNotificationUpdateRunner;
@@ -237,6 +236,7 @@ public class RecordService extends Service {
 	private void openDB() {
 		myDb = new DBAdapter(this);
 		myDb.open();
+		myDb.userInit();
 	}
 	private void closeDB() {
 		myDb.savePreferences();
@@ -698,6 +698,11 @@ public class RecordService extends Service {
 			Log.d(TAG, "Binder.reset()");
 			return mService.reset();
 		}
+		
+		public void setUser (DBContainers.User usr){
+			Log.d(TAG, "Binder.setUser()");
+			myDb.setUser(usr);
+		}
 
 	}
 
@@ -1015,7 +1020,7 @@ public class RecordService extends Service {
 		
 		//Add to DataBase
 		
-		DBContainers.StepInfo newStep = containers.new StepInfo();
+		DBContainers.StepInfo newStep = DBContainers.containers.new StepInfo();
 		newStep.setTime_stamp(myDb.getElapsedTime());
 		newStep.setAltitude(height);
 		myDb.bufferStepInfo(newStep);

@@ -22,7 +22,6 @@ public class DBAdapter {
 	private SQLiteDatabase db;
 	private final List<DBContainers.StepInfo> stepContainer = new ArrayList<DBContainers.StepInfo>();
 	private final int BUFFER_SIZE = 1;
-	DBContainers containers = new DBContainers();
 
 	//
 	// ///////////////////////////////////////////////////////////////////
@@ -134,7 +133,7 @@ public class DBAdapter {
 		double totalDuration = 0;
 		if (flag) {
 			totalDuration = allCurrentSteps
-					.getDouble(DBConstants.COL_STEP_INFO_TIME_STAMP);
+					.getDouble(DBConstants.COL_STEP_INFO_ELAPSED_TIME);
 		}
 		return totalDuration;
 	}
@@ -193,7 +192,7 @@ public class DBAdapter {
 				ContentValues initialValues = new ContentValues();
 				initialValues.put(DBConstants.STEP_INFO_SESSION_ID,
 						1);		//Temp change me to workout session info ** 1 => getCurrentWorkoutID()
-				initialValues.put(DBConstants.STEP_INFO_TIME_STAMP,
+				initialValues.put(DBConstants.STEP_INFO_ELAPSED_TIME,
 						current_step.getTime_stamp());
 				initialValues.put(DBConstants.STEP_INFO_ALTITUDE, 
 						current_step.getAltitude());
@@ -257,10 +256,9 @@ public class DBAdapter {
 		if (c.moveToFirst()) {
 			do {
 				// Transfer Data
-				DBContainers.StepInfo current_step = containers.new StepInfo();
+				DBContainers.StepInfo current_step = DBContainers.containers.new StepInfo();
 
-				current_step.setTime_stamp(c
-						.getDouble(DBConstants.COL_STEP_INFO_TIME_STAMP));
+				current_step.setTime_stamp(c.getDouble(DBConstants.COL_STEP_INFO_ELAPSED_TIME));
 				current_step.setAltitude(c.getDouble(DBConstants.COL_STEP_INFO_ALTITUDE));
 				current_step_container.add(current_step);
 			} while (c.moveToNext());
@@ -470,6 +468,55 @@ public class DBAdapter {
 	}
 	
 	/**
+	 * Returns a list of StepInfo Containers which contains all the steps
+	 * of a workout selected by the index
+	 * 
+	 */
+	public List<DBContainers.StepInfo> getAllWorkoutSteps(int index) {
+		String where = DBConstants.STEP_INFO_SESSION_ID + "=" + index;
+		
+		Cursor c = db.query(true, DBConstants.TABLE_STEP_INFO,
+				DBConstants.STEP_INFO_ALL_KEYS, where, null, null, null, null,
+				null);
+		
+		List<DBContainers.StepInfo> allWorkoutSteps = new ArrayList<DBContainers.StepInfo>();
+		DBContainers.StepInfo aStep = DBContainers.containers.new StepInfo();
+		
+		if (c.moveToFirst()) {
+			do {
+				aStep.setSession_id(index);
+				aStep.setTime_stamp(c.getDouble(DBConstants.COL_STEP_INFO_ELAPSED_TIME));
+				aStep.setAltitude(c.getDouble(DBConstants.COL_STEP_INFO_ALTITUDE));
+				
+				allWorkoutSteps.add(aStep);
+			} while (c.moveToNext());
+		} else {
+			Log.d(TAG,"sessionInfo Cursor is Empty!");
+		}
+		
+		return allWorkoutSteps;
+	}
+	
+	/**
+	 * Returns a cursor with a the calculated values from SessionInfo
+	 * table of a single workout session
+	 */
+	public Cursor getSessionInfo(int index) {
+		String where = DBConstants.KEY_ROWID + "=" + index;
+		
+		Cursor sessionInfo = db.query(true, DBConstants.TABLE_SESSION_INFO,
+				DBConstants.SESSION_INFO_ALL_KEYS, where, null, null, null, null,
+				null);
+		if(sessionInfo != null) {
+			sessionInfo.moveToFirst();
+		} else {
+			Log.d(TAG,"sessionInfo Cursor is Empty!");
+		}
+		
+		return sessionInfo;
+	}
+	
+	/**
 	 * Simply creates the row for
 	 * the one and only user, should only be called once
 	 * 
@@ -504,11 +551,11 @@ public class DBAdapter {
 		double weight = currentUserSettings.getDouble(DBConstants.COL_USER_WEIGHT);
 		
 		// Check which values have been set in the user container
-		boolean heightChange = user.getHeight() != DBContainers.NO_CHANGE_FLAG;
-		boolean weightChange = user.getWeight() != DBContainers.NO_CHANGE_FLAG;
-		boolean ageChange = user.getAge() != DBContainers.NO_CHANGE_FLAG;
-		boolean genderChange = user.getGender() != null;
-		boolean listPrefChange = user.getList_pref() != DBContainers.NO_CHANGE_FLAG;
+		boolean heightChange = ( user.getHeight() != DBContainers.NO_CHANGE_FLAG );
+		boolean weightChange = ( user.getWeight() != DBContainers.NO_CHANGE_FLAG );
+		boolean ageChange = ( user.getAge() != DBContainers.NO_CHANGE_FLAG );
+		boolean genderChange = ( user.getGender() != null );
+		boolean listPrefChange = ( user.getList_pref() != DBContainers.NO_CHANGE_FLAG );
 		
 		ContentValues newValues = new ContentValues();
 
@@ -851,8 +898,11 @@ public class DBAdapter {
 
 		@Override
 		public void onCreate(SQLiteDatabase _db) {
-			_db.execSQL(DBConstants.CREATE_STEP_INFO_SQL);
 			_db.execSQL(DBConstants.CREATE_PREFERENCES_SQL);
+			_db.execSQL(DBConstants.CREATE_USER_SQL);
+			_db.execSQL(DBConstants.CREATE_WORKOUT_SESSION_SQL);
+			_db.execSQL(DBConstants.CREATE_STEP_INFO_SQL);
+			_db.execSQL(DBConstants.CREATE_SESSION_INFO_SQL);
 		}
 
 		@Override
@@ -862,8 +912,11 @@ public class DBAdapter {
 					+ ", which will destroy all old data!");
 
 			// Destroy old database:
-			_db.execSQL("DROP TABLE IF EXISTS " + DBConstants.TABLE_STEP_INFO);
 			_db.execSQL("DROP TABLE IF EXISTS " + DBConstants.TABLE_PREFERENCES);
+			_db.execSQL("DROP TABLE IF EXISTS " + DBConstants.TABLE_USER);
+			_db.execSQL("DROP TABLE IF EXISTS " + DBConstants.TABLE_WORKOUT_SESSION);
+			_db.execSQL("DROP TABLE IF EXISTS " + DBConstants.TABLE_STEP_INFO);
+			_db.execSQL("DROP TABLE IF EXISTS " + DBConstants.TABLE_SESSION_INFO);
 
 			// Recreate new database:
 			onCreate(_db);

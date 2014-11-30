@@ -143,6 +143,10 @@ application do (permissions which the user has to accept when installing the app
                 <!--category android:name="android.intent.category.LAUNCHER" /-->
             </intent-filter>
         </activity>
+        <activity android:name="ca.concordia.sensortag.datasample.SettingsActivity"
+            	  android:screenOrientation="portrait">
+        </activity>
+        		  
     </application>
 
 </manifest>

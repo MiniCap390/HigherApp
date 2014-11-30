@@ -47,5 +47,6 @@
     <string name="settings_height_prompt">Please select your height in meters</string>
     <string name="settings_weight_prompt">Please select your weight in kg</string>
     <string name="settings_age_prompt">Please select your age</string>
+    <string name="setting_gender_prompt">Please indicate your sex</string>
     <string name="settings_compare_range_prompt">Select the number of workouts</string>
     </resources>

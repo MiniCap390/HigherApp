@@ -252,6 +252,11 @@ public class RecordActivity extends Activity implements RecordServiceListener {
 		startActivity(intent);
 	}
 	
+	public void menuClickSettings(){
+		Log.i(TAG, "Starting View Steps activity.");
+		Intent intent = new Intent(RecordActivity.this, SettingsActivity.class);
+		startActivity(intent);
+	}
 	
 	
 	/**
@@ -276,6 +281,9 @@ public class RecordActivity extends Activity implements RecordServiceListener {
 	        case R.id.Compare_activity:
 	        	setContentView(R.layout.activity_compare);
 	            return true;
+	        case R.id.Settings:
+	        	menuClickSettings();
+	        	return true;
             default:
             	return super.onOptionsItemSelected(item);
 	    }
