@@ -52,8 +52,14 @@ public class DBAdapter {
 	 * TO DO
 	 */
 	private double getTotalEnergy() {
-		// TODO Auto-generated method stub
-		return 1;
+		// TODO getWeight()
+		double weight = 0.0;
+		long time = getRecordDuration(); //in msec
+		
+		//formula reverse-engineered from http://www.dietcombat.com/best-exercise-to-lose-weight
+		//rate = calories/min
+		double rate = (weight*2.2-100)*0.93/15.0 + 6.4;
+		return (double) time * 1000 * rate / 60;
 	}
 
 	private double getTotalAltitudeMagnitude(Cursor allCurrentSteps) {
