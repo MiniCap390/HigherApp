@@ -214,6 +214,7 @@ public class DBAdapter {
 	 * @author Phohawkenics
 	 */
 	//JAN: I need to change this to public so I can use the data, I don't want it as a string
+	
 	public List<DBContainers.StepInfo> getAllCurrentRowStepInfo() {
 		insertBufferRowsStepInfo();
 		Cursor c = db.query(true, DBConstants.TABLE_STEP_INFO,

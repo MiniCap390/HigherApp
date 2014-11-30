@@ -498,7 +498,6 @@ public class MainActivity extends Activity implements RecordServiceListener{
 				stepData[i] = new GraphViewData(liSteps.get(i).getTime_stamp(), liSteps.get(i).getAltitude());
 			}
 			
-			
 			GraphViewSeries stepSeries = new GraphViewSeries( stepData );
 			GraphView posGraph = new LineGraphView(mContext, "Position");
 			posGraph.addSeries( stepSeries );

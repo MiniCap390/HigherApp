@@ -612,7 +612,7 @@ public class RecordService extends Service {
 			
 			return mService.getData().getCurrentAllStepInfoString();
 		}
-		public List<StepInfo> getAllStepInfo() {
+		public List<StepInfo> getAllStepInfo() { 
 			Log.d(TAG, "Binder.getDisplay()");
 			
 			return mService.getData().getAllCurrentRowStepInfo();
