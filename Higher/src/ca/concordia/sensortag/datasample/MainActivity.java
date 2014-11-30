@@ -17,6 +17,7 @@ import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 
+import ca.concordia.sensortag.datasample.DBContainers.StepInfo;
 import ca.concordia.sensortag.datasample.RecordService.RecordServiceListener;
 import ca.concordia.sensortag.datasample.RecordService.Status;
 import android.app.Activity;
@@ -491,6 +492,13 @@ public class MainActivity extends Activity implements RecordServiceListener{
 			GraphViewData[] stepData = new GraphViewData[]{   //X, Y
 											new GraphViewData(1.00, 2.00),
 											new GraphViewData(2.00, 3.00)};
+			
+			List<StepInfo> liSteps = mRecSvc.getAllStepInfo();
+			for (int i = 0; i< liSteps.size()-1; i++){
+				stepData[i] = new GraphViewData(liSteps.get(i).getTime_stamp(), liSteps.get(i).getAltitude());
+			}
+			
+			
 			GraphViewSeries stepSeries = new GraphViewSeries( stepData );
 			GraphView posGraph = new LineGraphView(mContext, "Position");
 			posGraph.addSeries( stepSeries );

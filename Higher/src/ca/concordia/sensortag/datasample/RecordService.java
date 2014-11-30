@@ -15,6 +15,7 @@ import ca.concordia.sensortag.SensorTagListener;
 import ca.concordia.sensortag.SensorTagManager;
 import ca.concordia.sensortag.SensorTagManager.ErrorType;
 import ca.concordia.sensortag.SensorTagManager.StatusType;
+import ca.concordia.sensortag.datasample.DBContainers.StepInfo;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -610,6 +611,11 @@ public class RecordService extends Service {
 			Log.d(TAG, "Binder.getDisplay()");
 			
 			return mService.getData().getCurrentAllStepInfoString();
+		}
+		public List<StepInfo> getAllStepInfo() {
+			Log.d(TAG, "Binder.getDisplay()");
+			
+			return mService.getData().getAllCurrentRowStepInfo();
 		}
 		
 		public String getLastStep() {
