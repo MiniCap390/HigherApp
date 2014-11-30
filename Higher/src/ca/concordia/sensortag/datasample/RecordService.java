@@ -612,6 +612,12 @@ public class RecordService extends Service {
 			return mService.getData().getCurrentAllStepInfoString();
 		}
 		
+		public List<DBContainers.StepInfo> getAllStepInfo(int index) {
+			Log.d(TAG, "Binder.getDisplay()");
+			
+			return mService.getData().getAllWorkoutSteps(index);
+		}
+		
 		public String getLastStep() {
 			Log.d(TAG, "Binder.getDisplay()");
 			
