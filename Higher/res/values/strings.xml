@@ -38,4 +38,14 @@
     <string name="menu_view_act">View</string>
     <string name="menu_compare_act">Compare</string>
     <string name="menu_settings_pane">Settings</string>
-</resources>
+    <string name="settings_height">Height (m)</string>
+    <string name="settings_weight">Weight (Kg)</string>
+    <string name="settings_age">Age</string>
+    <string name="settings_gender">Gender</string>
+    <string name="settings_comp_rng">Workout Comparison Range</string>
+    
+    <string name="settings_height_prompt">Please select your height in meters</string>
+    <string name="settings_weight_prompt">Please select your weight in kg</string>
+    <string name="settings_age_prompt">Please select your age</string>
+    <string name="settings_compare_range_prompt">Select the number of workouts</string>
+    </resources>

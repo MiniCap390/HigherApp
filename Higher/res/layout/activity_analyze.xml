@@ -1,9 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ui_background">
+    
+<LinearLayout 
+    android:id="@+id/topLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/workout_details"
+    	android:layout_width="match_parent" 
+    	android:layout_height="wrap_content" 
+    	android:gravity="center"
+    	android:textSize="32sp"
+    	android:layout_marginTop="10dp"
+	   	android:layout_marginBottom="10dp"
+	  	android:layout_marginLeft="25dp"
+	   	android:layout_marginRight="25dp"
+    	android:text="Workout Details"
+    	android:background="@drawable/workout_details_background"
+        android:textColor="#F8F8FF"
+        android:singleLine="true"/>
+    <TextView
+        android:id="@+id/workout_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+		android:gravity="center"
+	   	android:layout_marginBottom="10dp"
+	  	android:layout_marginLeft="25dp"
+	   	android:layout_marginRight="25dp"
+	   	android:textSize="15sp"
+		android:singleLine="true"
+		android:background="@drawable/workout_details_background"
+        android:textColor="#F8F8FF"
+        android:text=" first workout detail date " /> 
+</LinearLayout>
+    
+<TableLayout 
     style="@style/table_analyze"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:stretchColumns="1" >
+    android:stretchColumns="1" 
+    android:background="@android:color/white"
+    android:layout_below="@id/topLayout">
 
     <TableRow
         android:id="@+id/tableRow1"
@@ -55,8 +99,14 @@
             style="@style/header_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_span="2"
             android:text="@string/act_anal_freq" />
+        
+        <TextView
+            android:id="@+id/textValueEventFrequency"
+            style="@style/value_cell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
     </TableRow>
 
     <TableRow
@@ -140,3 +190,5 @@
     </TableRow>
 
 </TableLayout>
+
+</RelativeLayout>
