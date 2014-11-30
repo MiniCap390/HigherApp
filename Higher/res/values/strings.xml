@@ -28,9 +28,9 @@
     <string name="act_anal_events">Steps taken</string>
     <string name="act_anal_freq">Steps per minute</string>
     <string name="act_anal_average">Average</string>
-    <string name="act_anal_rmsvar">RMS of variation</string>
-    <string name="act_anal_min">Minimum</string>
-    <string name="act_anal_max">Maximum</string>
+    <string name="act_anal_energy">Energy</string>
+    <string name="act_anal_total_distance">Total Distance</string>
+    <string name="act_anal_absolute_distance">Absolute Distance</string>
     <string name="act_samp_button_view">Step View</string>
     
     
@@ -49,4 +49,5 @@
     <string name="settings_age_prompt">Please select your age</string>
     <string name="setting_gender_prompt">Please indicate your sex</string>
     <string name="settings_compare_range_prompt">Select the number of workouts</string>
+    
     </resources>
