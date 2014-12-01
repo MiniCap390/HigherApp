@@ -78,7 +78,8 @@
 			    android:id="@+id/tableRow_past_time"
 			    android:layout_width="match_parent"
 			    android:layout_height="wrap_content"
-			    android:gravity="center" >
+			    android:gravity="center"
+			    android:background="@drawable/border" >
 
 			    <TextView
 			        android:id="@+id/textValuePastTime"
@@ -92,7 +93,8 @@
 		        android:id="@+id/tableRow_past_events"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:gravity="center" >
+		        android:gravity="center"
+		        android:background="@drawable/border" >
 		
 		        <TextView
 		            android:id="@+id/textValuePastEvents"
@@ -107,7 +109,8 @@
 		        android:id="@+id/tableRow_past_speed"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:gravity="center" >
+		        android:gravity="center"
+		        android:background="@drawable/border" >
 		
 		        <TextView
 		            android:id="@+id/textValuePastSpeed"
@@ -122,7 +125,8 @@
 		        android:id="@+id/tableRow_past_energy"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:gravity="center" >
+		        android:gravity="center"
+		        android:background="@drawable/border" >
 		        
 		        <TextView
 		            android:id="@+id/textValuePastEnergy"
@@ -148,7 +152,8 @@
 		        android:id="@+id/tableRow_present_time"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:gravity="center" >
+		        android:gravity="center"
+		        android:background="@drawable/border" >
 		        <TextView
 		            android:id="@+id/textValuePresentTime"
 		            style="@style/value_cell"
@@ -162,7 +167,8 @@
 		        android:id="@+id/tableRow_present_events"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:gravity="center" >
+		        android:gravity="center"
+		        android:background="@drawable/border" >
 		        <TextView
 		            android:id="@+id/textValuePresentEvents"
 		            style="@style/value_cell"
@@ -176,7 +182,8 @@
 		        android:id="@+id/tableRow_present_speed"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:gravity="center" >
+		        android:gravity="center"
+		        android:background="@drawable/border" >
 		
 		         <TextView
 		            android:id="@+id/textValuePresentSpeed"
@@ -191,7 +198,8 @@
 		        android:id="@+id/tableRow_present_energy"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:gravity="center" >
+		        android:gravity="center" 
+		        android:background="@drawable/border">
 		        <TextView
 		            android:id="@+id/textValuePresentEnergy"
 		            style="@style/value_cell"

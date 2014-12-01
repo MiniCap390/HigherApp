@@ -52,7 +52,8 @@
     <TableRow
         android:id="@+id/tableRow1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@drawable/border" >
 
         <TextView
             android:id="@+id/textTitleTime"
@@ -72,7 +73,8 @@
     <TableRow
         android:id="@+id/tableRow2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@drawable/border" >
 
         <TextView
             android:id="@+id/textTitleEvents"
@@ -92,7 +94,8 @@
     <TableRow
         android:id="@+id/tableRow3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@drawable/border" >
 
         <TextView
             android:id="@+id/textTitleEventFrequency"
@@ -112,7 +115,8 @@
     <TableRow
         android:id="@+id/tableRow4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@drawable/border" >
 
         <TextView
             android:id="@+id/textTitleEnergy"
@@ -132,7 +136,8 @@
     <TableRow
         android:id="@+id/tableRow5"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@drawable/border" >
 
         <TextView
             android:id="@+id/textTitleTotalDistance"
@@ -152,7 +157,8 @@
     <TableRow
         android:id="@+id/tableRow6"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content" 
+        android:background="@drawable/border">
 
         <TextView
             android:id="@+id/textTitleAbsoluteDistance"
