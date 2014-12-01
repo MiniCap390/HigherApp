@@ -51,8 +51,8 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 	// This is the Adapter being used to display the list's data
 	private ArrayAdapter<String> mListAdapter;
 	
-	//GUI list of steps , Init to non-null
-	private List<String> StepEvents = new ArrayList<String>();
+	//GUI list of workouts , Init to non-null
+	private List<String> liSessions = new ArrayList<String>();
 	
 	/**
 	 * Called by Android when the Activity is first created. This sets up the GUI for the Activity,
@@ -110,14 +110,14 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 	};
 	
 	/**
-	 * Called after service is connected to get the Events from the DB
+	 * Called after service is connected to get the Workouts from the DB
 	 */
 	private void setList(RecordService.Binder service){
-		StepEvents.add("Testing testing!");
+		liSessions.add("Testing testing!");
 		List<String> temp = service.getAllSessions();	//Construct temporary list of events
 		Collections.reverse(temp);					//Reverse the order so that the most recent is first
 		for(String i: temp) {						//Add each element in the new order to the StepEvents list
-			StepEvents.add(i);
+			liSessions.add(i);
 			mListAdapter.notifyDataSetChanged();	//Notify the adapter
 		}	
 	}
@@ -137,7 +137,7 @@ public class ViewActivity extends Activity implements RecordServiceListener {
                         this, // The current context (this activity)
                         R.layout.list_item_step, // The name of the layout ID.
                         R.id.list_item_step_textview, // The ID of the textview to populate.
-                        StepEvents);
+                        liSessions);
 		
 		ListView listView = (ListView) findViewById(R.id.listview_steps);
         listView.setAdapter(mListAdapter);
@@ -148,7 +148,6 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO Auto-generated method stub
 				/**
 				 * Called when an item in the list is clicked on
 				 */
@@ -176,6 +175,38 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 	 * to the previous activity in the stack.
 	 */
 	
+		/**
+	 * Menu buttons functions
+	 */
+	public void menuClickMain(){
+		Log.i(TAG, "Starting Main activity.");
+		Intent intent = new Intent(ViewActivity.this, MainActivity.class);
+		intent .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		startActivity(intent);
+	}
+	
+	public void menuClickSettings(){
+		Log.i(TAG, "Starting Settings activity.");
+		Intent intent = new Intent(ViewActivity.this, SettingsActivity.class);
+		startActivity(intent);
+	}
+	
+	public void menuClickCompare(){
+		Log.i(TAG, "Starting Compare activity.");
+		Intent intent = new Intent(ViewActivity.this, CompareActivity.class);
+		intent .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		startActivity(intent);
+	}
+	
+	
+	
+	/**
+	 * Called when a menu item is pressed. In this case we don't have an explicit menu, but we do
+	 * have the "back" button in the Action Bar (top bar). We want it to act like the regular Back
+	 * button, that is to say, pressing either Back buttons closes the current Activity and returns
+	 * to the previous activity in the stack.
+	 */
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId())
 	    {
@@ -191,34 +222,15 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 	        case R.id.Compare_activity:
 	        	menuClickCompare();
 	            return true;
+	        case R.id.Settings:
+	        	menuClickSettings();
+	        	return true;
             default:
             	return super.onOptionsItemSelected(item);
 	    }
 	}
 	
-	/**
-	 * Menu buttons functions
-	 */
-	public void menuClickMain(){
-		Log.i(TAG, "Starting View Steps activity.");
-		Intent intent = new Intent(ViewActivity.this, MainActivity.class);
-		intent .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-		startActivity(intent);
-	}
-	
-	public void menuClickSettings(){
-		Log.i(TAG, "Starting View Steps activity.");
-		Intent intent = new Intent(ViewActivity.this, SettingsActivity.class);
-		startActivity(intent);
-	}
-	
-	public void menuClickCompare(){
-		Log.i(TAG, "Starting View Steps activity.");
-		Intent intent = new Intent(ViewActivity.this, CompareActivity.class);
-		intent .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-		startActivity(intent);
-	}
-	
+
 	/**
 	 * Called by Android when the Activity comes back into the foreground (i.e. on-screen). When
 	 * called, reconnect to the service in order to update the analysis.
@@ -268,6 +280,7 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 	/**
 	 * Called when RecordService's receives a Step event.
 	 * @param s The new status value.
+	 * JAN: remove this later
 	 */
 	@Override
 	public void onStepEvent() {
@@ -277,7 +290,7 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 				
 				String lastStep = mRecSvc.getLastStep();
 
-				StepEvents.add(0, lastStep);
+				liSessions.add(0, lastStep);
 				mListAdapter.notifyDataSetChanged();
 				
 				}
