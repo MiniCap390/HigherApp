@@ -113,7 +113,8 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 	 * Called after service is connected to get the Events from the DB
 	 */
 	private void setList(RecordService.Binder service){
-		List<String> temp = service.getAllSteps();	//Construct temporary list of events
+		StepEvents.add("Testing testing!");
+		List<String> temp = service.getAllSessions();	//Construct temporary list of events
 		Collections.reverse(temp);					//Reverse the order so that the most recent is first
 		for(String i: temp) {						//Add each element in the new order to the StepEvents list
 			StepEvents.add(i);

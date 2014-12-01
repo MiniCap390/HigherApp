@@ -611,6 +611,10 @@ public class RecordService extends Service {
 			return mService.getData().getCurrentAllStepInfoString();
 		}
 		
+		public List<String> getAllSessions(){
+			return mService.getData().getAllWorkoutSessionsInfo();
+		}
+		
 		public List<DBContainers.StepInfo> getAllCurrentStepInfo(){
 			return mService.getData().getAllCurrentStepInfo();
 		}

@@ -2,10 +2,10 @@ package ca.concordia.sensortag.datasample;
 
 //------------------------------------ DBADapter.java ---------------------------------------------
 import java.util.ArrayList;
-
 import java.util.Collections;
 import java.util.List;
 
+import ca.concordia.sensortag.datasample.DBContainers.SessionInfo;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -244,6 +244,32 @@ public class DBAdapter {
 		}
 		c.close();
 		return current_step_container;
+	}
+	/**
+	 * Return a SessionInfo list of all workout sessions
+	 * @author: jaygustin
+	 * @return
+	 */
+	private List<SessionInfo> getAllCurrentWorkoutSessionInfo() {
+		Cursor c = getAllWorkoutSessions();
+		if (c != null) {
+			c.moveToFirst();
+		}
+		List<DBContainers.SessionInfo> current_session_container = new ArrayList<DBContainers.SessionInfo>();
+		if (c.moveToFirst()) {
+			do {
+				// Transfer Data
+				DBContainers.SessionInfo current_session = DBContainers.containers.new SessionInfo();
+
+				current_session.setDate(c.getString(DBConstants.COL_SESSION_INFO_DATE));
+				current_session.setSession_id(c.getInt(DBConstants.COL_STEP_INFO_SESSION_ID));
+				current_session.setTotal_step(c.getInt(DBConstants.COL_SESSION_INFO_TOTAL_STEP));
+				current_session.setAverage_speed(c.getDouble(DBConstants.COL_SESSION_INFO_AVERAGE_SPEED));
+				current_session_container.add(current_session);
+			} while (c.moveToNext());
+		}
+		c.close();
+		return current_session_container;
 	}
 	
 	/**
@@ -1038,4 +1064,23 @@ public class DBAdapter {
 			onCreate(_db);
 		}
 	}
+
+	public List<String> getAllWorkoutSessionsInfo() {
+		List<DBContainers.SessionInfo> current_session_container = getAllCurrentWorkoutSessionInfo();
+		List<String> displayList = new ArrayList<String>();
+		String display;
+
+		for (DBContainers.SessionInfo current_session : current_session_container) {
+
+			display = "";
+			display = display + "Date : "
+					+ current_session.getDate() + "\n"
+					+ "total steps: "+ current_session.getTotal_step() + "\n" ;
+
+			displayList.add(display);
+		}
+
+		return displayList;
+	}
+
 }
