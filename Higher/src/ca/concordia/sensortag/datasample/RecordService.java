@@ -22,6 +22,7 @@ import android.app.Service;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
@@ -736,6 +737,9 @@ public class RecordService extends Service {
 			Log.d(TAG, "Binder.setUser()");
 			myDb.setUser(usr);
 		}
+		public Cursor getAllWorkoutSessionsCursor(){
+			return myDb.getAllWorkoutSessionInfo();
+		}
 
 	}
 
@@ -909,11 +913,12 @@ public class RecordService extends Service {
 		// before it's closed manually (except extreme circumstances)
 		startForeground(R.string.id_notif_svc_record, makeNotification());
 		startNotificationUpdateTimer();
+		myDb.setNewRecording(0, 0);
+		myDb.start_workout();
 		updateNotification();
 		
 		myDb.setStatus(DBAdapter.Status.RECORDING);
 		myDb.savePreferences();
-		myDb.start_workout();
 		mStManager.enableUpdates();
 		setStatus(Status.RECORD);
 		return true;
@@ -975,7 +980,7 @@ public class RecordService extends Service {
 		myDb.setStatus(DBAdapter.Status.FINISHED);
 		myDb.savePreferences();
 		myDb.stop_workout();
-		myDb.setNewRecording(0,0);
+		
 		mStManager.disableUpdates();
 		setStatus(Status.FINISHED);
 		
@@ -1127,4 +1132,5 @@ public class RecordService extends Service {
 		Log.i(TAG, "Status:" + type.name() + "; message: " + text);
 		if (text != null) Toast.makeText(this, text, Toast.LENGTH_LONG).show();
 	}
+
 }

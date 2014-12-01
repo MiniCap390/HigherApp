@@ -20,6 +20,7 @@ public class ViewDetailsActivity extends Activity {
 	static public final Double FREQ_DISP_SCALING = 60.0; // per second --> per minute
 	static public final Double SEC_TO_MSEC = 1000.0;
 	static protected final DecimalFormat FORMAT_FREQ = new DecimalFormat("###0.00");
+	public long SESSION_ID;
 
 	/* Service */
 	private RecordService.Binder mRecSvc = null;
@@ -56,6 +57,11 @@ public class ViewDetailsActivity extends Activity {
 		bindService(recordIntent, mSvcConnection, Context.BIND_ABOVE_CLIENT);
 	}
 	private void setupGui() {
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			SESSION_ID = extras.getLong("SESSION_ID");
+		}
+		
 		// Show the "back"/"up" button on the Action Bar (top left corner)
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		//JAN: change ids

@@ -42,14 +42,11 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class ViewActivity extends Activity implements RecordServiceListener {
+public class ViewActivity extends Activity {
 	static public final String TAG = "ViewAct"; // Tag for Android's logcat
 	
 	/* Service */
 	private RecordService.Binder mRecSvc = null;
-	
-	// This is the Adapter being used to display the list's data
-	private ArrayAdapter<String> mListAdapter;
 	
 	//GUI list of workouts , Init to non-null
 	private List<String> liSessions = new ArrayList<String>();
@@ -65,7 +62,7 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view);
-		setupGui();
+		
 	}
 	
 	/**
@@ -93,10 +90,7 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			Log.i(TAG, "RecordService connected.");
 			mRecSvc = (RecordService.Binder) service;
-			mRecSvc.addStepListener(ViewActivity.this);
-			//Call repopulation of the List
-			setList(mRecSvc);
-			
+			setupGui();
 		}
 
 		/**
@@ -113,13 +107,14 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 	 * Called after service is connected to get the Workouts from the DB
 	 */
 	private void setList(RecordService.Binder service){
-		liSessions.add("Testing testing!");
+/*		liSessions.add("Testing testing!");
 		List<String> temp = service.getAllSessions();	//Construct temporary list of events
 		Collections.reverse(temp);					//Reverse the order so that the most recent is first
 		for(String i: temp) {						//Add each element in the new order to the StepEvents list
 			liSessions.add(i);
 			mListAdapter.notifyDataSetChanged();	//Notify the adapter
 		}	
+*/
 	}
 	
 	
@@ -132,16 +127,17 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setDisplayShowTitleEnabled(false);
 		
-		mListAdapter =
-                new ArrayAdapter<String>(
-                        this, // The current context (this activity)
-                        R.layout.list_item_step, // The name of the layout ID.
-                        R.id.list_item_step_textview, // The ID of the textview to populate.
-                        liSessions);
+		Cursor c = mRecSvc.getAllWorkoutSessionsCursor();
 		
-		ListView listView = (ListView) findViewById(R.id.listview_steps);
-        listView.setAdapter(mListAdapter);
-        listView.setChoiceMode(listView.CHOICE_MODE_SINGLE);
+		String[] from = new String[] {"date"};
+		int[] to = new int[] {R.id.list_item_step_textview};
+		
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(getApplicationContext(),
+				R.layout.list_item_step, c, from, to, 0);
+
+		final ListView listView = (ListView) findViewById(R.id.listview_steps);
+
+        listView.setAdapter(adapter);
         listView.setOnItemClickListener( new OnItemClickListener(){
 
 
@@ -153,6 +149,7 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 				 */
 				Log.i(TAG, "Starting ViewDetails Activity.");
 				Intent intent = new Intent(ViewActivity.this, ViewDetailsActivity.class);
+				intent.putExtra("SESSION_ID", id);
 				startActivity(intent);
 			}
         	
@@ -229,8 +226,6 @@ public class ViewActivity extends Activity implements RecordServiceListener {
             	return super.onOptionsItemSelected(item);
 	    }
 	}
-	
-
 	/**
 	 * Called by Android when the Activity comes back into the foreground (i.e. on-screen). When
 	 * called, reconnect to the service in order to update the analysis.
@@ -267,21 +262,14 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 		super.onDestroy();
 	}
 	
-	
-	/**
-	 * Called when RecordService's status changes.
-	 * @param s The new status value.
-	 */
-	@Override
-	public void onStatusChanged(Status s) {
-		//Ignore
-	}
+
 	
 	/**
 	 * Called when RecordService's receives a Step event.
 	 * @param s The new status value.
 	 * JAN: remove this later
 	 */
+	/*
 	@Override
 	public void onStepEvent() {
 		runOnUiThread(new Runnable() {
@@ -295,7 +283,7 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 				
 				}
 		});
+		*/
 	}
 
 	
-}
