@@ -162,6 +162,7 @@ public class MainActivity extends Activity implements RecordServiceListener {
 			mRecSvc.addListener(MainActivity.this);
 			mRecSvc.addStepListener(MainActivity.this);
 			mRecSvc.startService(mBtDevice);
+			caculateAvgLastSessions();
 			
 		}
 
@@ -289,6 +290,7 @@ public class MainActivity extends Activity implements RecordServiceListener {
 	    } else {
 	    	mRecSvc.stop();
 	    	((Chronometer) findViewById(R.id.chronometer1)).stop();
+	    	caculateAvgLastSessions();
 	    }
 	}
 
@@ -362,6 +364,20 @@ public class MainActivity extends Activity implements RecordServiceListener {
 		mPresentEnergy.setText(String.format("%02.2f", energy) + " Cal");
 	}
 	
-	
+	private void caculateAvgLastSessions(){
+		DBContainers.SessionInfo avg = mRecSvc.getLatestSessionInfosForMainPage();
+		double steps = avg.total_step;
+		double time = avg.getTotal_duration();
+		double altitude = avg.getTotal_altitude();
+		double energy = avg.getTotal_energy();
+		
+		double stepsPerMinute = (steps/time)*60*1000 ;
+		double metersSecond = (altitude/time)*60;
+		
+		mPastStepsMin.setText(String.format("%02.2f", stepsPerMinute) + " Steps/Min");
+		mPastTotalSteps.setText(String.valueOf(steps) + " Steps");
+		mPastAvgSpeed.setText(String.format("%02.2f", metersSecond) + " m/s");
+		mPastEnergy.setText(String.format("%02.2f", energy) + " Cal");
+	}
 	
 }

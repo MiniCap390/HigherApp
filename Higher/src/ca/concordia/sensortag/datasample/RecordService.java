@@ -740,6 +740,13 @@ public class RecordService extends Service {
 		public Cursor getAllWorkoutSessionsCursor(){
 			return myDb.getAllWorkoutSessionInfo();
 		}
+		
+		
+		
+		
+		public DBContainers.SessionInfo getLatestSessionInfosForMainPage(){
+			return myDb.getLastSessionsInfo();
+		}
 
 	}
 
