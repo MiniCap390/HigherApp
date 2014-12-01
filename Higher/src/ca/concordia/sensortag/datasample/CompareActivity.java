@@ -52,7 +52,7 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 	private ArrayAdapter<String> mListAdapter;
 	
 	//GUI list of steps , Init to non-null
-	private List<String> StepEvents = new ArrayList<String>();
+	private List<String> liSessions = new ArrayList<String>();
 	private Button mButtonCompare;
 	
 	/**
@@ -111,13 +111,14 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 	};
 	
 	/**
-	 * Called after service is connected to get the Events from the DB
+	 * Called after service is connected to get the Workouts from the DB
 	 */
 	private void setList(RecordService.Binder service){
-		List<String> temp = service.getAllSteps();	//Construct temporary list of events
+		liSessions.add("Testing testing!");
+		List<String> temp = service.getAllSessions();	//Construct temporary list of events
 		Collections.reverse(temp);					//Reverse the order so that the most recent is first
 		for(String i: temp) {						//Add each element in the new order to the StepEvents list
-			StepEvents.add(i);
+			liSessions.add(i);
 			mListAdapter.notifyDataSetChanged();	//Notify the adapter
 		}	
 	}
@@ -140,7 +141,7 @@ public class CompareActivity extends Activity implements RecordServiceListener {
                         this, // The current context (this activity)
                         R.layout.list_item_step, // The name of the layout ID.
                         R.id.list_item_step_textview, // The ID of the textview to populate.
-                        StepEvents);
+                        liSessions);
 		
 		ListView listView = (ListView) findViewById(R.id.compare_list);
         listView.setAdapter(mListAdapter);
@@ -185,12 +186,37 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 	}
 	
 	/**
+	 * Menu buttons functions
+	 */
+	public void menuClickView(){
+		Log.i(TAG, "Starting View Steps activity.");
+		Intent intent = new Intent(CompareActivity.this, ViewActivity.class);
+		intent .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		startActivity(intent);
+	}
+	
+	public void menuClickSettings(){
+		Log.i(TAG, "Starting Settings activity.");
+		Intent intent = new Intent(CompareActivity.this, SettingsActivity.class);
+		startActivity(intent);
+	}
+	
+	public void menuClickMain(){
+		Log.i(TAG, "Starting Main activity.");
+		Intent intent = new Intent(CompareActivity.this, CompareActivity.class);
+		intent .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		startActivity(intent);
+	}
+	
+	
+	
+	/**
 	 * Called when a menu item is pressed. In this case we don't have an explicit menu, but we do
 	 * have the "back" button in the Action Bar (top bar). We want it to act like the regular Back
 	 * button, that is to say, pressing either Back buttons closes the current Activity and returns
 	 * to the previous activity in the stack.
 	 */
-	
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId())
 	    {
@@ -201,22 +227,19 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 	        	menuClickMain();
 	            return true;
 	        case R.id.view_activity:
-	        	setContentView(R.layout.activity_view);
+	        	menuClickView();
 	            return true;
 	        case R.id.Compare_activity:
 	        	//do nothing
 	            return true;
+	        case R.id.Settings:
+	        	menuClickSettings();
+	        	return true;
             default:
             	return super.onOptionsItemSelected(item);
 	    }
 	}
 	
-	public void menuClickMain(){
-		Log.i(TAG, "Starting View Steps activity.");
-		Intent intent = new Intent(CompareActivity.this, RecordActivity.class);
-		intent .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-		startActivity(intent);
-	}
 	
 	/**
 	 * Called by Android when the Activity comes back into the foreground (i.e. on-screen). When
@@ -276,7 +299,7 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 				
 				String lastStep = mRecSvc.getLastStep();
 
-				StepEvents.add(0, lastStep);
+				liSessions.add(0, lastStep);
 				mListAdapter.notifyDataSetChanged();
 				
 				}
