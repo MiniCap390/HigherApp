@@ -10,24 +10,44 @@
 	     android:layout_height="wrap_content"
 	     android:orientation="vertical">
 	     
-	     <TextView
-	         android:id="@+id/graph_name"
-	         android:layout_width="match_parent"
-	         android:layout_height="55dp"
-	         android:layout_marginTop="15dp"
-	         android:layout_marginLeft="35dp"
-   		   	 android:layout_marginRight="35dp"
-	         android:background="@drawable/ui_title_bar"
-	         android:gravity="center"
-	         android:text="Graph title"
-	         android:textColor="#ffffff"
-	         android:textSize="26sp" />
+	<TextView
+    	android:layout_width="match_parent" 
+    	android:layout_height="wrap_content" 
+    	android:gravity="center"
+    	android:textSize="32sp"
+    	android:layout_marginTop="10dp"
+	   	android:layout_marginBottom="10dp"
+	  	android:layout_marginLeft="25dp"
+	   	android:layout_marginRight="25dp"
+    	android:text="You are Here!"
+    	android:background="@drawable/workout_details_background"
+        android:textColor="#F8F8FF"
+        android:singleLine="true"/>
 
+	 <TextView
+        android:id="@+id/workout_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+		android:gravity="center"
+	   	android:layout_marginBottom="10dp"
+	  	android:layout_marginLeft="25dp"
+	   	android:layout_marginRight="25dp"
+	   	android:textSize="15sp"
+		android:singleLine="true"
+		android:background="@drawable/workout_details_background"
+        android:textColor="#F8F8FF"
+        android:text=" workout detail date " /> 
 	  </LinearLayout>
+
 	 <LinearLayout
 	     android:id="@+id/graph"
 	     android:layout_width="fill_parent"
-	     android:layout_height="370dp"
-	     android:orientation="vertical" />
+	     android:layout_height="match_parent"
+	     android:paddingRight="15dp"
+	     android:paddingLeft="15dp"
+	     android:paddingTop="15dp"
+	     android:paddingBottom="15dp"
+	     android:background="#ffffff"
+	     android:orientation="vertical"/>
 
 </LinearLayout>

@@ -8,7 +8,6 @@
     android:id="@+id/topLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignParentLeft="true"
     android:layout_alignParentTop="true"
     android:orientation="vertical" >
 
@@ -18,80 +17,150 @@
     	android:layout_height="wrap_content" 
     	android:gravity="center"
     	android:textSize="32sp"
+     	android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="15dp"
     	android:text="Workout Details"
     	android:background="@android:color/white"
         android:textColorLink="#FFFFFF"
-        android:layout_marginBottom="15dp"
         android:singleLine="true"/>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/workout_date"
+    <LinearLayout
+        android:id="@+id/past_present_Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:background="@android:color/white"
+        android:layout_below="@id/topLayout"
         android:gravity="center"
-        android:singleLine="true"
-        android:text=" first workout detail date "
-        android:textColorLink="#FFFFFF" />
-    
-</LinearLayout>
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/first_workout_date"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:text=" first date"
+            android:layout_marginLeft="25dp"
+	   		android:layout_marginRight="25dp"
+            android:textColorLink="#FFFFFF"
+  			android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/second_workout_date"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:text=" second date"
+            android:layout_marginLeft="25dp"
+	   		android:layout_marginRight="25dp"
+            android:textColorLink="#FFFFFF"
+  			android:layout_weight="1"/>
+
+
+    </LinearLayout>
 
 <TableLayout
-    style="@style/table_analyze"
     android:id="@+id/first_table_layout"
+    style="@style/table_analyze"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:stretchColumns="1" 
+    android:layout_alignParentBottom="true"
+    android:layout_below="@+id/past_present_Layout"
     android:background="@android:color/white"
-    android:layout_below="@id/topLayout">
-    
+    android:stretchColumns="1" >
 
     <TableRow
         android:id="@+id/tableRow1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:gravity="center" >
 
         <TextView
             android:id="@+id/textTitleTime"
             style="@style/title_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center" 
             android:text="@string/act_anal_time" />
+
+    </TableRow>
+    
+        <TableRow
+        android:id="@+id/text_tableRow1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
         <TextView
             android:id="@+id/textTotalTime1"
             style="@style/value_cell"
+            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:text=""
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/textTotalTime2"
+            style="@style/value_cell"
+            android:background="@drawable/border"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" 
+            android:layout_weight="1"/>
+
     </TableRow>
 
     <TableRow
         android:id="@+id/tableRow2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content" 
+        android:background="@drawable/border"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/textTitleEvents"
             style="@style/title_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="@string/act_anal_events" />
 
+
+    </TableRow>
+    
+    
+    <TableRow
+        android:id="@+id/text_tableRow2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
         <TextView
             android:id="@+id/textSteps1"
             style="@style/value_cell"
+            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:text="" 
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/textSteps2"
+            style="@style/value_cell"
+            android:background="@drawable/border"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" 
+            android:layout_weight="1"/>
+
     </TableRow>
 
     <TableRow
         android:id="@+id/tableRow3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@drawable/border" >
 
         <TextView
             android:id="@+id/textTitleSpeed"
@@ -100,230 +169,150 @@
             android:layout_height="wrap_content"
             android:text="@string/act_anal_freq" />
 
+    </TableRow>
+    
+            <TableRow
+        android:id="@+id/test_tableRow3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
         <TextView
             android:id="@+id/textSpeed1"
             style="@style/value_cell"
+            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:text="" 
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/textSpeed2"
+            style="@style/value_cell"
+            android:background="@drawable/border"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_weight="1" />
+
     </TableRow>
 
     <TableRow
         android:id="@+id/tableRow4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:gravity="center" >
 
         <TextView
             android:id="@+id/textTitleEnergy"
             style="@style/title_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="@string/act_anal_energy" />
 
+
+    </TableRow>
+            <TableRow
+        android:id="@+id/text_tableRow4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
         <TextView
             android:id="@+id/textEnergy1"
             style="@style/value_cell"
+            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:text="" 
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/textEnergy2"
+            style="@style/value_cell"
+            android:background="@drawable/border"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" 
+            android:layout_weight="1"/>
     </TableRow>
 
     <TableRow
         android:id="@+id/tableRow5"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:gravity="center" >
 
         <TextView
             android:id="@+id/textTitleTotalDistance"
             style="@style/title_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/act_anal_total_distance" />
+            android:text="@string/act_anal_total_distance" 
+            android:gravity="center"/>
 
+
+    </TableRow>
+            <TableRow
+        android:id="@+id/text_tableRow5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
         <TextView
             android:id="@+id/textTotalDistance1"
             style="@style/value_cell"
+            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:text="" 
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/textTotalDistance2"
+            style="@style/value_cell"
+            android:background="@drawable/border"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" 
+            android:layout_weight="1"/>
     </TableRow>
 
     <TableRow
         android:id="@+id/tableRow6"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:gravity="center" >
 
         <TextView
             android:id="@+id/textTitleAbsoluteDistance"
             style="@style/title_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/act_anal_absolute_distance" />
+            android:text="@string/act_anal_absolute_distance" 
+            android:gravity="center"/>
 
+
+    </TableRow>
+    <TableRow
+        android:id="@+id/text_tableRow6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
         <TextView
             android:id="@+id/textAbsoluteDistance1"
             style="@style/value_cell"
+            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="" />
-    </TableRow>
-
-   
-
-</TableLayout>
-<LinearLayout
-    android:id="@+id/second_workout_detail_Layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/first_table_layout"
-    android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/second_workout_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-		android:gravity="center"
-		android:singleLine="true"
-		android:background="@android:color/white"
-        android:textColorLink="#FFFFFF"
-        android:text="second workout detail date" />
-    
-</LinearLayout>
-<TableLayout
-    style="@style/table_analyze"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:stretchColumns="1" 
-    android:background="@android:color/white"
-    android:layout_below="@id/second_workout_detail_Layout">
-    
-
-    <TableRow
-        android:id="@+id/second_tableRow1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/second_textTitleTime"
-            style="@style/title_cell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/act_anal_time" />
-
-        <TextView
-            android:id="@+id/textTotalTime2"
-            style="@style/value_cell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/second_tableRow2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/second_textTitleEvents"
-            style="@style/title_cell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/act_anal_events" />
-
-        <TextView
-            android:id="@+id/textSteps2"
-            style="@style/value_cell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/second_tableRow3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/second_textTitleEventFrequency"
-            style="@style/title_cell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/act_anal_freq" />
-
-        <TextView
-            android:id="@+id/textSpeed2"
-            style="@style/value_cell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/second_tableRow4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/second_textTitleEnergy"
-            style="@style/title_cell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/act_anal_energy" />
-
-        <TextView
-            android:id="@+id/textEnergy2"
-            style="@style/value_cell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/second_tableRow5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/second_textTitleTotalDistance"
-            style="@style/title_cell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/act_anal_total_distance" />
-
-        <TextView
-            android:id="@+id/textTotalDistance2"
-            style="@style/value_cell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/second_tableRow6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/second_textTitleAbsoluteDistance"
-            style="@style/title_cell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/act_anal_absolute_distance" />
-
+            android:text="" 
+            android:layout_weight="1"/>
         <TextView
             android:id="@+id/textAbsoluteDistance2"
             style="@style/value_cell"
+            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:text="" 
+            android:layout_weight="1"/>
     </TableRow>
-
-
-
 </TableLayout>
-
-
-
 </RelativeLayout>
