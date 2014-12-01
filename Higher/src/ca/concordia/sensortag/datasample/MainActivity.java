@@ -191,12 +191,12 @@ public class MainActivity extends Activity implements RecordServiceListener{
 		startActivity(intent);
 	}
 	
-//	public void menuClickCompare(){
-//		Log.i(TAG, "Starting View Steps activity.");
-//		Intent intent = new Intent(MainActivity.this, CompareActivity.class);
-//		intent .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//		startActivity(intent);
-//	}
+	public void menuClickCompare(){
+		Log.i(TAG, "Starting View Steps activity.");
+		Intent intent = new Intent(MainActivity.this, CompareActivity.class);
+		intent .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		startActivity(intent);
+	}
 	
 	
 	/**
@@ -219,7 +219,7 @@ public class MainActivity extends Activity implements RecordServiceListener{
 	        	menuClickView();
 	            return true;
 	        case R.id.Compare_activity:
-	        	//menuCLickCompare();
+	        	menuClickCompare();
 	            return true;
 	        case R.id.Settings:
 	        	menuClickSettings();
@@ -535,7 +535,7 @@ public class MainActivity extends Activity implements RecordServiceListener{
 	    if (on) {
 	    	mRecSvc.record();
 	    } else {
-	    	mRecSvc.stop();
+	    	//mRecSvc.stop();
 	    }
 	}
 

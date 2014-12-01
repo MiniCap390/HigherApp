@@ -24,7 +24,7 @@ public class DeviceSelectActivity extends ti.android.ble.sensortag.DeviceSelectA
 	 */
 	@Override
 	protected Intent getDeviceActivityIntent() {
-		return new Intent(this, RecordActivity.class);
+		return new Intent(this, MainActivity.class);
 	}
 
 }
