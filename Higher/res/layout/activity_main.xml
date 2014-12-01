@@ -140,7 +140,7 @@
 		        android:id="@+id/tableRow_present_time"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content" >
-		        <TextView
+		        <Chronometer
 		            android:id="@+id/textValuePresentTime"
 		            style="@style/value_cell"
 		            android:layout_width="wrap_content"

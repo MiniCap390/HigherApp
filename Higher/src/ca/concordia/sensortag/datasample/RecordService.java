@@ -607,19 +607,20 @@ public class RecordService extends Service {
 		}
 		
 		public List<String> getAllSteps() {
-			Log.d(TAG, "Binder.getDisplay()");
 			
 			return mService.getData().getCurrentAllStepInfoString();
 		}
 		
+		public List<DBContainers.StepInfo> getAllCurrentStepInfo(){
+			return mService.getData().getAllCurrentStepInfo();
+		}
+		
 		public List<DBContainers.StepInfo> getAllStepInfo(int index) {
-			Log.d(TAG, "Binder.getDisplay()");
 			
 			return mService.getData().getAllWorkoutSteps(index);
 		}
 		
 		public String getLastStep() {
-			Log.d(TAG, "Binder.getDisplay()");
 			
 			return mService.getData().getLastStepInfoString();
 		}

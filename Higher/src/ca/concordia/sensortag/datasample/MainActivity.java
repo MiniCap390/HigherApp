@@ -23,6 +23,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -44,13 +45,14 @@ public class MainActivity extends Activity implements RecordServiceListener{
 	BluetoothDevice mBtDevice = null;
 	
 	/* GUI */
-	private TextView mValueTime;
-	private TextView mValueEvents;
-	private TextView mValueAverage;
-	private TextView mValueRmsvar;
-	private TextView mValueMax;
-	private TextView mValueMin;
-	private Button mButtonRecordPause;
+	private TextView mPastStepsMin;
+	private TextView mPresentStepsMin;
+	private TextView mPastTotalSteps;
+	private TextView mPresentTotalSteps;
+	private TextView mPastAvgSpeed;
+	private TextView mPresentAvgSpeed;
+	private TextView mPastEnergy;
+	private TextView mPresentEnergy;
 	
 	/* Data analysis */
 	private List<Long> mEventTimestamps = null;
@@ -59,7 +61,6 @@ public class MainActivity extends Activity implements RecordServiceListener{
 	private List<Double> mEventFrequencyTime = null;
 	
 	/* Calculated data */
-	private boolean mIsAnalyzed = false;
 	private long mTotalTime = 0;
 	private int mNumSteps = 0;
 	private Double mFreqAvg = null;
@@ -124,8 +125,6 @@ public class MainActivity extends Activity implements RecordServiceListener{
 			mRecSvc = (RecordService.Binder) service;
 			mRecSvc.addStepListener(MainActivity.this);
 			mRecSvc.startService(mBtDevice);
-			analyzeData();
-			displayData();
 		}
 
 		/**
@@ -135,7 +134,6 @@ public class MainActivity extends Activity implements RecordServiceListener{
 		public void onServiceDisconnected(android.content.ComponentName name) {
 			Log.i(TAG, "RecordService disconnected.");
 			mRecSvc = null;
-			updateButtons();
 		}
 	};
 	
@@ -145,24 +143,89 @@ public class MainActivity extends Activity implements RecordServiceListener{
 	 */
 	private void setupGui() {
 		// Show the "back"/"up" button on the Action Bar (top left corner)
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		//JAN: change ids
-		mButtonRecordPause = (Button) findViewById(R.id.buttonRecordPause);
+		//getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayShowTitleEnabled(false);
 		
+<<<<<<< Updated upstream
 		mValueTime = (TextView) findViewById(R.id.textValueTime);
 		mValueEvents = (TextView) findViewById(R.id.textValueEvents);
 //		mValueAverage = (TextView) findViewById(R.id.textValueAverage);
 //		mValueRmsvar = (TextView) findViewById(R.id.textValueRmsVar);
 //		mValueMin = (TextView) findViewById(R.id.textValueMin);
 //		mValueMax = (TextView) findViewById(R.id.textValueMax);
+=======
+		//JAN: change ids
+		//mButtonRecordPause = (Button) findViewById(R.id.buttonRecordPause);
+>>>>>>> Stashed changes
 		
-		mValueTime.setText("-.-- s");
-		mValueEvents.setText("-");
-		mValueAverage.setText("-.--");
-		mValueRmsvar.setText("-.--");
-		mValueMin.setText("-.--");
-		mValueMax.setText("-.--");
+		mPastStepsMin = (TextView) findViewById(R.id.textValuePastTime) ;
+		mPresentStepsMin = (TextView) findViewById(R.id.textValuePresentTime) ;
+		mPastTotalSteps = (TextView) findViewById(R.id.textValuePastEvents);
+		mPresentTotalSteps = (TextView) findViewById(R.id.textValuePresentEvents);
+		mPastAvgSpeed = (TextView) findViewById(R.id.textValuePastSpeed);
+		mPresentAvgSpeed = (TextView) findViewById(R.id.textValuePresentSpeed);
+		mPastEnergy = (TextView) findViewById(R.id.textValuePastEnergy);
+		mPresentEnergy = (TextView) findViewById(R.id.textValuePresentEnergy);
 		
+	}
+	
+	public boolean onCreateOptionsMenu (Menu menu){
+		getMenuInflater().inflate(R.menu.topmenu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	/**
+	 * Menu buttons functions
+	 */
+	public void menuClickView(){
+		Log.i(TAG, "Starting View Steps activity.");
+		Intent intent = new Intent(MainActivity.this, ViewActivity.class);
+		intent .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		startActivity(intent);
+	}
+	
+	public void menuClickSettings(){
+		Log.i(TAG, "Starting View Steps activity.");
+		Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+		startActivity(intent);
+	}
+	
+//	public void menuClickCompare(){
+//		Log.i(TAG, "Starting View Steps activity.");
+//		Intent intent = new Intent(MainActivity.this, CompareActivity.class);
+//		intent .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//		startActivity(intent);
+//	}
+	
+	
+	/**
+	 * Called when a menu item is pressed. In this case we don't have an explicit menu, but we do
+	 * have the "back" button in the Action Bar (top bar). We want it to act like the regular Back
+	 * button, that is to say, pressing either Back buttons closes the current Activity and returns
+	 * to the previous activity in the stack.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId())
+	    {
+	        case android.R.id.home:
+	            this.finish();
+	            return true;
+            case R.id.main_screen:
+	        	//do nothing
+	            return true;
+	        case R.id.view_activity:
+	        	menuClickView();
+	            return true;
+	        case R.id.Compare_activity:
+	        	//menuCLickCompare();
+	            return true;
+	        case R.id.Settings:
+	        	menuClickSettings();
+	        	return true;
+            default:
+            	return super.onOptionsItemSelected(item);
+	    }
 	}
 	
 	/**
@@ -285,34 +348,33 @@ public class MainActivity extends Activity implements RecordServiceListener{
 		
 		// Now calculate the RMS about the variable
 		mFreqRmsVar = Math.sqrt(freqSquareIntegral / mTotalTime);
-		mIsAnalyzed = true;
 	}
 	
 	/**
 	 * Takes the analysed data, as calculated by analyzeData(), and displays it on the GUI.
 	 */
-	private void displayData() {
-		// Reset everything to blank values - in case some of the values analysed aren't valid
-		mValueTime.setText("-.-- s");
-		mValueEvents.setText("-");
-		mValueAverage.setText("-.--");
-		mValueRmsvar.setText("-.--");
-		mValueMin.setText("-.--");
-		mValueMax.setText("-.--");
-		
-		// Format the time into hh:mm:ss.xx format. We don't use a date formatter since this is a
-		// time interval, not a time-of-day - a date formatter will wrap above 12 or 24 hours.
-		double secondsDecimal = (double)(mTotalTime % 60000)/1000;
-		long minutes = (long) ((mTotalTime / (1000*60)) % 60);
-		long hours   = (long) (mTotalTime / (1000*60*60));
-		
-		mValueTime.setText(String.format("%02d:%02d:%03.1f", hours, minutes, secondsDecimal));
-		mValueEvents.setText(Integer.toString(mNumSteps, 10));
-		if(mFreqAvg != null)  mValueAverage.setText(FORMAT_FREQ.format(mFreqAvg*FREQ_DISP_SCALING));
-		if(mFreqRmsVar != null)mValueRmsvar.setText(FORMAT_FREQ.format(mFreqRmsVar*FREQ_DISP_SCALING));
-		if(mFreqMin != null)  mValueMin.setText(FORMAT_FREQ.format(mFreqMin*FREQ_DISP_SCALING));
-		if(mFreqMax != null)  mValueMax.setText(FORMAT_FREQ.format(mFreqMax*FREQ_DISP_SCALING));
-	}
+//	private void displayData() {
+//		// Reset everything to blank values - in case some of the values analysed aren't valid
+//		mValueTime.setText("-.-- s");
+//		mValueEvents.setText("-");
+//		mValueAverage.setText("-.--");
+//		mValueRmsvar.setText("-.--");
+//		mValueMin.setText("-.--");
+//		mValueMax.setText("-.--");
+//		
+//		// Format the time into hh:mm:ss.xx format. We don't use a date formatter since this is a
+//		// time interval, not a time-of-day - a date formatter will wrap above 12 or 24 hours.
+//		double secondsDecimal = (double)(mTotalTime % 60000)/1000;
+//		long minutes = (long) ((mTotalTime / (1000*60)) % 60);
+//		long hours   = (long) (mTotalTime / (1000*60*60));
+//		
+//		mValueTime.setText(String.format("%02d:%02d:%03.1f", hours, minutes, secondsDecimal));
+//		mValueEvents.setText(Integer.toString(mNumSteps, 10));
+//		if(mFreqAvg != null)  mValueAverage.setText(FORMAT_FREQ.format(mFreqAvg*FREQ_DISP_SCALING));
+//		if(mFreqRmsVar != null)mValueRmsvar.setText(FORMAT_FREQ.format(mFreqRmsVar*FREQ_DISP_SCALING));
+//		if(mFreqMin != null)  mValueMin.setText(FORMAT_FREQ.format(mFreqMin*FREQ_DISP_SCALING));
+//		if(mFreqMax != null)  mValueMax.setText(FORMAT_FREQ.format(mFreqMax*FREQ_DISP_SCALING));
+//	}
 
 	/**
 	 * Called by Android when the Activity comes back into the foreground (i.e. on-screen). When
@@ -323,7 +385,7 @@ public class MainActivity extends Activity implements RecordServiceListener{
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if(!mIsAnalyzed) connectService();
+		connectService();
 	}
 
 	/**
@@ -351,138 +413,139 @@ public class MainActivity extends Activity implements RecordServiceListener{
 	}
 	
 	/**
-	 * Called when a menu item is pressed. In this case we don't have an explicit menu, but we do
-	 * have the "back" button in the Action Bar (top bar). We want it to act like the regular Back
-	 * button, that is to say, pressing either Back buttons closes the current Activity and returns
-	 * to the previous activity in the stack.
+	 * Update text view with average steps/minute
 	 */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId())
-	    {
-	        case android.R.id.home:
-	            this.finish();
-	            return true;
-            default:
-            	return super.onOptionsItemSelected(item);
-	    }
+	private void updateAvgSteps(){
+		int totalSteps  = mRecSvc.getAllSteps().size();
+		double elapsedTimeSeconds = (mRecSvc.getElapsedTime() * 1000);
+		double stepsPerMinute = (double)totalSteps/elapsedTimeSeconds;
+		stepsPerMinute *= 60;
+		
+		mPresentStepsMin.setText(String.format("%02.2f", stepsPerMinute) + " Steps/Min");
 	}
-
-
-	/**
-	 * Update the state of all buttons, based on the current RecordService state. For example,
-	 * while stopped, the main button is Record, but while running it is Pause.
-	 * 
-	 * Requires service connection. If the RecordService is not connected, disables all buttons.
-	 */
 	
-	protected void updateButtons() {
-		if (mRecSvc == null) {
-			Log.w(TAG, "updateButtons(): No RecordService connection; disabling buttons");
-			mButtonRecordPause.setEnabled(false);
-			mButtonRecordPause.setClickable(false);		
-			return;
-		}
-
-		RecordService.Status svcStatus = mRecSvc.getStatus();
-		String logPre = "updateButtons(): Service state is " + svcStatus.name();
-
-		switch (svcStatus) {
-		case ERROR: // fallthrough
-		case ERROR_SENSORTAG: // fallthrough
-		case ERROR_SENSORTAG_NULL:
-			Log.w(TAG, logPre + "(\"" + mRecSvc.getLastError() + "\"); disabling buttons.");
-			mButtonRecordPause.setEnabled(false);
-			mButtonRecordPause.setClickable(false);		
-			break;
-
-		case FINISHED:
-			Log.i(TAG, logPre + "; RecordPauseButton=Record; AnalyzeButton=enabled; ResetButton=enabled");
-			mButtonRecordPause.setEnabled(false);
-			mButtonRecordPause.setClickable(false);
-			mButtonRecordPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_media_play, 0,
-					0, 0);
-			mButtonRecordPause.setText(R.string.act_samp_button_record_complete);
-			mButtonRecordPause.setOnClickListener(mOnClickRecordListener);
-			break;
-			
-		case STANDBY:
-			Log.i(TAG, logPre + "; RecordPauseButton=Record; AnalyzeButton=disabled; ResetButton=disabled");
-			mButtonRecordPause.setEnabled(true);
-			mButtonRecordPause.setClickable(true);
-			mButtonRecordPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_media_play, 0,
-					0, 0);
-			mButtonRecordPause.setText(R.string.act_samp_button_record);
-			mButtonRecordPause.setOnClickListener(mOnClickRecordListener);
-			break;
-			
-		case PAUSE:
-			Log.i(TAG, logPre + "; RecordPauseButton=Resume; AnalyzeButton=enabled; ResetButton=enabled");
-			mButtonRecordPause.setEnabled(true);
-			mButtonRecordPause.setClickable(true);
-			mButtonRecordPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_media_play, 0,
-					0, 0);
-			mButtonRecordPause.setText(R.string.act_samp_button_resume);
-			mButtonRecordPause.setOnClickListener(mOnClickRecordListener);
-			break;
-			
-		case RECORD:
-			Log.i(TAG, logPre + "; RecordPauseButton=Pause; AnalyzeButton=disabled; ResetButton=disabled");
-			mButtonRecordPause.setEnabled(true);
-			mButtonRecordPause.setClickable(true);
-			mButtonRecordPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_media_pause, 0,
-					0, 0);
-			mButtonRecordPause.setText(R.string.act_samp_button_pause);
-			mButtonRecordPause.setOnClickListener(mOnClickPauseListener);
-			break;
-
-		case NOT_STARTED:
-		default:
-			Log.i(TAG, "updateButtons(): unknown Service state; disabling buttons.");
-			mButtonRecordPause.setEnabled(false);
-			mButtonRecordPause.setClickable(false);
-		break;
-		}
+	private void updateStepCount(){
+		int totalSteps = mRecSvc.getAllSteps().size();
+		mPresentTotalSteps.setText(String.valueOf(totalSteps) + " Steps");
 	}
-	private Button.OnClickListener mOnClickRecordListener = new Button.OnClickListener() {
-
-		/**
-		 * Called when the Record button is clicked (not the Pause button). Calls the RecordService
-		 * to start recording.
-		 */
-		@Override
-		public void onClick(View v) {
-			mRecSvc.record();
-		}
+	
+	private void updateAvgSpeed(){
+		List<DBContainers.StepInfo> current_step_infos = mRecSvc.getAllCurrentStepInfo();
+		int numberOfSteps = current_step_infos.size();
+		double lastStepAltitude = current_step_infos.get(numberOfSteps-1).getAltitude();
 		
-	};
-	private Button.OnClickListener mOnClickPauseListener = new Button.OnClickListener() {
-
-		/**
-		 * Called when the Pause button is clicked (not the Record button). Calls the RecordService
-		 * to pause recording.
-		 */
-		@Override
-		public void onClick(View v) {
-			mRecSvc.pause();
-		}
+		double elapsedTimeSeconds = (mRecSvc.getElapsedTime() * 1000);
 		
-	};
+		double avgSpeed = lastStepAltitude/elapsedTimeSeconds;
+		avgSpeed *= 60;
+		
+		mPresentAvgSpeed.setText(String.valueOf(avgSpeed) + "m/s");
+		
+	}
+	
+	private void calculateEnergy() {
+		//formula reverse-engineered from http://www.dietcombat.com/best-exercise-to-lose-weight
+		//rate = calories/min
+		double weight = 70;
+		double rate = (weight*2.2-100)*0.93/15.0 + 6.4;
+		double energy = (mRecSvc.getElapsedTime() * 1000) * 1000 * rate / 60;
+		mPresentEnergy.setText(String.valueOf(energy) + " Calories");
+	}
+
+//
+//	/**
+//	 * Update the state of all buttons, based on the current RecordService state. For example,
+//	 * while stopped, the main button is Record, but while running it is Pause.
+//	 * 
+//	 * Requires service connection. If the RecordService is not connected, disables all buttons.
+//	 */
+//	
+//	protected void updateButtons() {
+//		if (mRecSvc == null) {
+//			Log.w(TAG, "updateButtons(): No RecordService connection; disabling buttons");
+//			mButtonRecordPause.setEnabled(false);
+//			mButtonRecordPause.setClickable(false);		
+//			return;
+//		}
+//
+//		RecordService.Status svcStatus = mRecSvc.getStatus();
+//		String logPre = "updateButtons(): Service state is " + svcStatus.name();
+//
+//		switch (svcStatus) {
+//		case ERROR: // fallthrough
+//		case ERROR_SENSORTAG: // fallthrough
+//		case ERROR_SENSORTAG_NULL:
+//			Log.w(TAG, logPre + "(\"" + mRecSvc.getLastError() + "\"); disabling buttons.");
+//			mButtonRecordPause.setEnabled(false);
+//			mButtonRecordPause.setClickable(false);		
+//			break;
+//
+//		case FINISHED:
+//			Log.i(TAG, logPre + "; RecordPauseButton=Record; AnalyzeButton=enabled; ResetButton=enabled");
+//			mButtonRecordPause.setEnabled(false);
+//			mButtonRecordPause.setClickable(false);
+//			mButtonRecordPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_media_play, 0,
+//					0, 0);
+//			mButtonRecordPause.setText(R.string.act_samp_button_record_complete);
+//			mButtonRecordPause.setOnClickListener(mOnClickRecordListener);
+//			break;
+//			
+//		case STANDBY:
+//			Log.i(TAG, logPre + "; RecordPauseButton=Record; AnalyzeButton=disabled; ResetButton=disabled");
+//			mButtonRecordPause.setEnabled(true);
+//			mButtonRecordPause.setClickable(true);
+//			mButtonRecordPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_media_play, 0,
+//					0, 0);
+//			mButtonRecordPause.setText(R.string.act_samp_button_record);
+//			mButtonRecordPause.setOnClickListener(mOnClickRecordListener);
+//			break;
+//			
+//		case PAUSE:
+//			Log.i(TAG, logPre + "; RecordPauseButton=Resume; AnalyzeButton=enabled; ResetButton=enabled");
+//			mButtonRecordPause.setEnabled(true);
+//			mButtonRecordPause.setClickable(true);
+//			mButtonRecordPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_media_play, 0,
+//					0, 0);
+//			mButtonRecordPause.setText(R.string.act_samp_button_resume);
+//			mButtonRecordPause.setOnClickListener(mOnClickRecordListener);
+//			break;
+//			
+//		case RECORD:
+//			Log.i(TAG, logPre + "; RecordPauseButton=Pause; AnalyzeButton=disabled; ResetButton=disabled");
+//			mButtonRecordPause.setEnabled(true);
+//			mButtonRecordPause.setClickable(true);
+//			mButtonRecordPause.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_media_pause, 0,
+//					0, 0);
+//			mButtonRecordPause.setText(R.string.act_samp_button_pause);
+//			mButtonRecordPause.setOnClickListener(mOnClickPauseListener);
+//			break;
+//
+//		case NOT_STARTED:
+//		default:
+//			Log.i(TAG, "updateButtons(): unknown Service state; disabling buttons.");
+//			mButtonRecordPause.setEnabled(false);
+//			mButtonRecordPause.setClickable(false);
+//		break;
+//		}
+//	}
 
 	@Override
 	public void onStatusChanged(Status s) {
-		runOnUiThread(new Runnable() {
-
-			@Override
-			public void run() {
-				updateButtons();
-			}
-			
-		});
+	//MAYBE CHANGE THE BUTTON HERE
 	}
 
 	@Override
 	public void onStepEvent() {
-		// Ignore StepEvent
+		runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				updateAvgSteps();
+				updateStepCount();
+				updateAvgSpeed();
+				calculateEnergy();
+			}
+			
+		});
 	}
 }

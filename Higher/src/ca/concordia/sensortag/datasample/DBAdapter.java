@@ -453,6 +453,12 @@ public class DBAdapter {
 		return displayList;
 	}
 	
+	public List<DBContainers.StepInfo> getAllCurrentStepInfo(){
+		insertBufferRowsStepInfo();
+		List<DBContainers.StepInfo> current_step_container = getAllCurrentRowStepInfo();
+		return current_step_container;
+	}
+	
 	/**
 	 * @returns A cursor containing all the rows the in WorkoutSession Table
 	 */
@@ -514,6 +520,16 @@ public class DBAdapter {
 		}
 		
 		return sessionInfo;
+	}
+	
+	
+	//NEED A METHOD TO GIVE ME THE AVERAGE OF THE X NUMBERS OF LAST WORKOUT SESSIONS FOR THE MAIN PAGE
+	//ARGUMENT IS THE NUMBER OF WORKOUTS FOR THE AVERAGE
+	//RETURNS A SESSION INFO CONTAINER WITH AVERAGE X VALUES
+	public DBContainers.SessionInfo getLastSessionsInfo(int number){
+		
+		
+		
 	}
 	
 	/**
