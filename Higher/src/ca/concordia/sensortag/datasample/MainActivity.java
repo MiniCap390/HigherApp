@@ -29,6 +29,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 /**
  * Activity that reads data from the RecordService and shows some statistics about the recorded
@@ -146,17 +147,17 @@ public class MainActivity extends Activity implements RecordServiceListener{
 		//getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setDisplayShowTitleEnabled(false);
 		
-<<<<<<< Updated upstream
-		mValueTime = (TextView) findViewById(R.id.textValueTime);
-		mValueEvents = (TextView) findViewById(R.id.textValueEvents);
+
+//		mValueTime = (TextView) findViewById(R.id.textValueTime);
+//		mValueEvents = (TextView) findViewById(R.id.textValueEvents);
 //		mValueAverage = (TextView) findViewById(R.id.textValueAverage);
 //		mValueRmsvar = (TextView) findViewById(R.id.textValueRmsVar);
 //		mValueMin = (TextView) findViewById(R.id.textValueMin);
 //		mValueMax = (TextView) findViewById(R.id.textValueMax);
-=======
+
 		//JAN: change ids
 		//mButtonRecordPause = (Button) findViewById(R.id.buttonRecordPause);
->>>>>>> Stashed changes
+
 		
 		mPastStepsMin = (TextView) findViewById(R.id.textValuePastTime) ;
 		mPresentStepsMin = (TextView) findViewById(R.id.textValuePresentTime) ;
@@ -528,6 +529,15 @@ public class MainActivity extends Activity implements RecordServiceListener{
 //		break;
 //		}
 //	}
+	
+	public void onToggleClicked (View v){
+		boolean on = ((ToggleButton) v).isChecked();
+	    if (on) {
+	    	mRecSvc.record();
+	    } else {
+	    	mRecSvc.stop();
+	    }
+	}
 
 	@Override
 	public void onStatusChanged(Status s) {

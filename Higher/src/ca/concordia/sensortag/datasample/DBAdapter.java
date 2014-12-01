@@ -526,11 +526,11 @@ public class DBAdapter {
 	//NEED A METHOD TO GIVE ME THE AVERAGE OF THE X NUMBERS OF LAST WORKOUT SESSIONS FOR THE MAIN PAGE
 	//ARGUMENT IS THE NUMBER OF WORKOUTS FOR THE AVERAGE
 	//RETURNS A SESSION INFO CONTAINER WITH AVERAGE X VALUES
-	public DBContainers.SessionInfo getLastSessionsInfo(int number){
-		
-		
-		
-	}
+//	public DBContainers.SessionInfo getLastSessionsInfo(int number){
+//		
+//		
+//		
+//	}
 	
 	/**
 	 * Simply creates the row for

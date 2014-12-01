@@ -706,6 +706,11 @@ public class RecordService extends Service {
 			return mService.reset();
 		}
 		
+		public boolean stop(){
+			Log.d(TAG, "Binder.stopt()");
+			return mService.stop();
+		}
+		
 		public void setUser (DBContainers.User usr){
 			Log.d(TAG, "Binder.setUser()");
 			myDb.setUser(usr);
