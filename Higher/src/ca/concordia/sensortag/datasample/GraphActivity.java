@@ -42,7 +42,7 @@ public class GraphActivity extends Activity {
 		GraphView posGraph = new LineGraphView(mContext, "Position");
 		posGraph.addSeries( stepSeries );
 		
-		LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
-		layout.addView(posGraph);
+//		LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
+//		layout.addView(posGraph);
 	}
 }

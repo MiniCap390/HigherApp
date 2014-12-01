@@ -24,8 +24,11 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -137,6 +140,23 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 		
 		ListView listView = (ListView) findViewById(R.id.listview_steps);
         listView.setAdapter(mListAdapter);
+        listView.setChoiceMode(listView.CHOICE_MODE_SINGLE);
+        listView.setOnItemClickListener( new OnItemClickListener(){
+
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				/**
+				 * Called when an item in the list is clicked on
+				 */
+				Log.i(TAG, "Starting ViewDetails Activity.");
+				Intent intent = new Intent(ViewActivity.this, ViewDetailsActivity.class);
+				startActivity(intent);
+			}
+        	
+        });
 	}
 	
 	/**

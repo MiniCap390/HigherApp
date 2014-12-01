@@ -38,7 +38,7 @@ public class ViewDetailsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "onCreate");
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_view_details);
 		// Get the Bluetooth device selected by the user - should be set by DeviceSelectActivity
 		// upon launching this application
 		Intent receivedIntent = getIntent();
@@ -67,7 +67,7 @@ public class ViewDetailsActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		//JAN: change ids
 		mContext = this.getApplicationContext();
-		mButtonGraph = (Button) findViewById(R.id.buttonGraph);
+//		mButtonGraph = (Button) findViewById(R.id.buttonGraph);
 		mButtonGraph.setOnClickListener(mOnClickGraph);
 	}
 	private ServiceConnection mSvcConnection = new ServiceConnection() {

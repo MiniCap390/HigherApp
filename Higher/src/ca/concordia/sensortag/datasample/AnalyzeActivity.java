@@ -122,10 +122,10 @@ public class AnalyzeActivity extends Activity {
 		
 		mValueTime = (TextView) findViewById(R.id.textValueTime);
 		mValueEvents = (TextView) findViewById(R.id.textValueEvents);
-		mValueAverage = (TextView) findViewById(R.id.textValueAverage);
-		mValueRmsvar = (TextView) findViewById(R.id.textValueRmsVar);
-		mValueMin = (TextView) findViewById(R.id.textValueMin);
-		mValueMax = (TextView) findViewById(R.id.textValueMax);
+//		mValueAverage = (TextView) findViewById(R.id.textValueAverage);
+//		mValueRmsvar = (TextView) findViewById(R.id.textValueRmsVar);
+//		mValueMin = (TextView) findViewById(R.id.textValueMin);
+//		mValueMax = (TextView) findViewById(R.id.textValueMax);
 		
 		mValueTime.setText("-.-- s");
 		mValueEvents.setText("-");
