@@ -67,12 +67,13 @@
     <Button
     android:id="@+id/Compare_selected_activities"
     android:layout_alignParentBottom="true"
-    android:background="@drawable/ui_title_bar"
+    android:background="@drawable/setting_button_background"
     android:layout_marginLeft="15dp"
     android:layout_marginRight="15dp"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:text="Compare"
     android:textSize="16sp" 
+    android:textColor="#ffffff"
     android:onClick="Compare" />
 </RelativeLayout>

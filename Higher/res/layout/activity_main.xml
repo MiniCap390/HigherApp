@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/ui_background"
     android:orientation="vertical" >
+    
     <RelativeLayout 
 	    android:layout_width="match_parent"
 	    android:layout_height="100dp"
@@ -45,8 +46,8 @@
   		android:layout_weight="1"
    		android:layout_marginTop="50dp"
    		android:layout_marginBottom="15dp"
-  		android:layout_marginLeft="35dp"
-	   	android:layout_marginRight="35dp"
+  		android:layout_marginLeft="25dp"
+	   	android:layout_marginRight="25dp"
 	   	android:textColor="#ffffff"
 	   	android:gravity="center"
 	   	android:textSize="26sp"
@@ -60,7 +61,7 @@
 	<LinearLayout
 		android:layout_width="match_parent"
 	    android:layout_height="match_parent"
-	    android:layout_marginBottom="90dp"
+	    android:layout_marginBottom="30dp"
 	    android:background="@drawable/ui_background"
 	    android:orientation="horizontal" >
     	
@@ -72,20 +73,18 @@
 		    android:layout_height="wrap_content"
 		    android:stretchColumns="1" 
 		    android:background="@android:color/white">
-		    
-		
-		    <TableRow
-		        android:id="@+id/tableRow_past_time"
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content" >
-		
-		        <TextView
-		            android:id="@+id/textValuePastTime"
-		            style="@style/value_cell"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="" />
-		    </TableRow>
+
+			<TableRow
+			    android:id="@+id/tableRow_past_time"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content" >
+
+			    <TextView
+			        android:id="@+id/textValuePastTime"
+			        style="@style/value_cell"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content" />
+			</TableRow>
 		
 		    <TableRow
 		        android:id="@+id/tableRow_past_events"
@@ -187,16 +186,18 @@
 		    </TableRow>
 		</TableLayout>
 	</LinearLayout>
-	
-	
-
-<ToggleButton 
-    android:id="@+id/togglebutton"
-    android:layout_width="match_parent"
+<LinearLayout
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:textOn="Start"
-    android:textOff="Stop"
-    android:onClick="onToggleClicked"/>
-
+    android:gravity="center">
+	<ToggleButton
+    android:id="@+id/togglebutton"
+    style="@style/toggleButton"
+    android:layout_width="150dp"
+    android:layout_height="105dp"
+    android:gravity="center"	       
+    android:background="@drawable/ic_toggle_bg"
+    android:onClick="onToggleClicked" />
+	</LinearLayout>
 
 </LinearLayout>

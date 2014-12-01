@@ -172,5 +172,15 @@
 
 
 </TableLayout>
-
+<Button
+	    android:id="@+id/show_graph_button"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    android:layout_alignParentBottom="true"
+	    android:text="Show Graph"
+	    android:textSize="16sp"
+	    android:textColor="#ffffff"	    
+	    android:background="@drawable/setting_button_background"
+	    android:onClick="showgraph" />
 </RelativeLayout>

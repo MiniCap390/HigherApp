@@ -23,16 +23,18 @@
         android:textColorLink="#FFFFFF"
         android:layout_marginBottom="15dp"
         android:singleLine="true"/>
+
     <TextView
         android:id="@+id/workout_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-		android:gravity="center"
-		android:singleLine="true"
-		android:background="@android:color/white"
-        android:textColorLink="#FFFFFF"
-        android:text=" first workout detail date " />
-    
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text=" first workout detail date "
+        android:textColorLink="#FFFFFF" />
     
 </LinearLayout>
 
@@ -174,6 +176,8 @@
         android:id="@+id/second_workout_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
 		android:gravity="center"
 		android:singleLine="true"
 		android:background="@android:color/white"
