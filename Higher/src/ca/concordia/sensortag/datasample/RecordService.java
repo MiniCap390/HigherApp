@@ -396,7 +396,7 @@ public class RecordService extends Service {
 	 * @param time_ms A time interval in milliseconds.
 	 * @return A string representing the time interval in h:mm:ss format.
 	 */
-	private String formatTime(double time_ms) {
+	private String formatTimeFloating(double time_ms) {
 		final long HRS_TO_SEC = 3600;
 		final long MIN_TO_SEC = 60;
 		
@@ -412,6 +412,23 @@ public class RecordService extends Service {
 		double remaindertime_ms = (time_ms - totaltime)/1;
 		seconds = seconds + remaindertime_ms;
 		return String.format("%02d:%02d:%02.1f", hours, minutes, seconds);		//Added 1 floating point value
+	}
+	
+	private String formatTime(long time_ms) {
+		final long HRS_TO_SEC = 3600;
+		final long HRS_TO_MIN = 60;
+		final long MIN_TO_SEC = 60;
+		
+		long time_s = time_ms / SEC_TO_MSEC;
+		int hours = (int)(time_s / HRS_TO_SEC);
+		
+		long time_s_mod_hour = time_s - (hours * HRS_TO_SEC);
+		int minutes = (int)(time_s_mod_hour / MIN_TO_SEC);
+		
+		long time_s_mod_min = time_s_mod_hour - (minutes * MIN_TO_SEC);
+		int seconds = (int)(time_s_mod_min);
+		
+		return String.format("%02d:%02d:%02d", hours, minutes, seconds);
 	}
 	
 	/**
@@ -880,10 +897,10 @@ public class RecordService extends Service {
 			return false;
 		}
 		
-		if(getStatus() != Status.STANDBY && getStatus() != Status.PAUSE) {
-			Log.e(TAG, "record(): cannot record from current state: " + getStatus().name());
-			return false;
-		}
+//		if(getStatus() != Status.STANDBY && getStatus() != Status.PAUSE) {
+//			Log.e(TAG, "record(): cannot record from current state: " + getStatus().name());
+//			return false;
+//		}
 		
 		Log.i(TAG, "Starting recording...");
 		Toast.makeText(this, mAppName + ": Starting recording...", Toast.LENGTH_SHORT).show();
@@ -1045,11 +1062,11 @@ public class RecordService extends Service {
 		
 		notifyStepListeners();
 		
-		if(myDb.getRecordMaxSamples() != RECORD_SAMPLES_INFINITE &&
-				myDb.getSamplesStored() >= myDb.getRecordMaxSamples()) {
-			Log.i(TAG, "Max samples recorded. Stopping.");
-			stop();
-		}
+//		if(myDb.getRecordMaxSamples() != RECORD_SAMPLES_INFINITE &&
+//				myDb.getSamplesStored() >= myDb.getRecordMaxSamples()) {
+//			Log.i(TAG, "Max samples recorded. Stopping.");
+//			stop();
+//		}
 		saveDataOccasional();
 	}
 
@@ -1072,11 +1089,11 @@ public class RecordService extends Service {
 		}
 		
 		myDb.addElapsedTime(timeDelta);
-		if(myDb.getRecordDuration() != RECORD_DURATION_INFINITE &&
-				myDb.getElapsedTime() >= myDb.getRecordDuration()) {
-			Log.i(TAG, "Recording duration elapsed. Stopping.");
-			stop();
-		}
+//		if(myDb.getRecordDuration() != RECORD_DURATION_INFINITE &&
+//				myDb.getElapsedTime() >= myDb.getRecordDuration()) {
+//			Log.i(TAG, "Recording duration elapsed. Stopping.");
+//			stop();
+//		}
 		saveDataOccasional();
 	}
 
