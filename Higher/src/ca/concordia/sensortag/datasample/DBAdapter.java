@@ -546,10 +546,10 @@ public class DBAdapter {
 	}
 	
 	/**
-	 * @Returns a cursor with a the calculated values from SessionInfo
+	 * @Returns SessionInfo with a the calculated values from SessionInfo
 	 * table of a single workout session
 	 */
-	public Cursor getSessionInfo(int _id) {
+	public SessionInfo getSessionInfo(int _id) {
 		String where = DBConstants.KEY_ROWID + "=" + _id;
 		
 		Cursor c = db.query(true, DBConstants.TABLE_SESSION_INFO,
@@ -565,10 +565,28 @@ public class DBAdapter {
 		sessionInfo.setSession_id(c.getInt(DBConstants.COL_KEY_ROWID));
 		sessionInfo.setDate(c.getString(DBConstants.COL_SESSION_INFO_DATE));
 		sessionInfo.setAverage_speed(c.getDouble(DBConstants.COL_SESSION_INFO_AVERAGE_SPEED));
+		sessionInfo.setTotal_energy(c.getDouble(DBConstants.COL_SESSION_INFO_TOTAL_ENERGY));
+		sessionInfo.setTotal_step(c.getInt(DBConstants.COL_SESSION_INFO_TOTAL_STEP));
+		sessionInfo.setTotal_altitude_magnitude(c.getInt(DBConstants.COL_SESSION_INFO_TOTAL_ALTITUDE_MAGNITUDE));
+		sessionInfo.setTotal_altitude(c.getInt(DBConstants.COL_SESSION_INFO_TOTAL_ALTITUDE));
+		
+		return sessionInfo;
+	}
+	public Cursor getSessionInfoCursor(int _id) {
+		String where = DBConstants.KEY_ROWID + "=" + _id;
+		
+		Cursor c = db.query(true, DBConstants.TABLE_SESSION_INFO,
+				DBConstants.SESSION_INFO_ALL_KEYS, where, null, null, null, null,
+				null);
+		if(c != null) {
+			c.moveToFirst();
+		} else {
+			Log.d(TAG,"sessionInfo Cursor is Empty!");
+		}
+		
 		
 		return c;
 	}
-
 	/**
 	 * @returns a SessionInfo container which contains avg of last x SessionsInfo
 	 *  where x is specified in the UserSettings a.k.a. the User table
@@ -587,7 +605,7 @@ public class DBAdapter {
 		if (currentWorkoutSession.moveToLast()) {
 			for (int i = 0; i < listPref; i++) {
 				lastSessionInfos.add(
-						getSessionInfo(currentWorkoutSession.getInt(DBConstants.COL_KEY_ROWID))
+						getSessionInfoCursor(currentWorkoutSession.getInt(DBConstants.COL_KEY_ROWID))
 						);
 				if(currentWorkoutSession.moveToPrevious()) {
 					// move to previous-- this line just has to be here

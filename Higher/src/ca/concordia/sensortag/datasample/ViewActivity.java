@@ -149,7 +149,7 @@ public class ViewActivity extends Activity {
 				 */
 				Log.i(TAG, "Starting ViewDetails Activity.");
 				Intent intent = new Intent(ViewActivity.this, ViewDetailsActivity.class);
-				intent.putExtra("SESSION_ID", id);
+				intent.putExtra("SESSION_ID", (int) id);
 				startActivity(intent);
 			}
         	

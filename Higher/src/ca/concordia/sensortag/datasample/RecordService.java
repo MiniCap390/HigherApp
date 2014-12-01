@@ -741,11 +741,12 @@ public class RecordService extends Service {
 			return myDb.getAllWorkoutSessionInfo();
 		}
 		
-		
-		
-		
 		public DBContainers.SessionInfo getLatestSessionInfosForMainPage(){
 			return myDb.getLastSessionsInfo();
+		}
+		
+		public DBContainers.SessionInfo getSessionInfo(int id){
+			return myDb.getSessionInfo(id);
 		}
 
 	}

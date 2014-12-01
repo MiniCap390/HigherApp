@@ -14,13 +14,23 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class ViewDetailsActivity extends Activity {
 	static public final String TAG = "ViewDetAct"; // Tag for Android's logcat
 	static public final Double FREQ_DISP_SCALING = 60.0; // per second --> per minute
 	static public final Double SEC_TO_MSEC = 1000.0;
 	static protected final DecimalFormat FORMAT_FREQ = new DecimalFormat("###0.00");
-	public long SESSION_ID;
+	public int SESSION_ID;
+	
+	/* GUI objects */
+	private TextView mDate;
+	private TextView mSteps;
+	private TextView mSpeed;
+	private TextView mEnergy;
+	private TextView mDistance;
+	private TextView mDisplacement;
+	private TextView mDuration;
 
 	/* Service */
 	private RecordService.Binder mRecSvc = null;
@@ -59,14 +69,33 @@ public class ViewDetailsActivity extends Activity {
 	private void setupGui() {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			SESSION_ID = extras.getLong("SESSION_ID");
+			SESSION_ID = extras.getInt("SESSION_ID");
 		}
+		
+		DBContainers.SessionInfo session = mRecSvc.getSessionInfo(SESSION_ID);
+		
 		
 		// Show the "back"/"up" button on the Action Bar (top left corner)
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		//JAN: change ids
 		mButtonGraph = (Button) findViewById(R.id.show_graph_button);
 		mButtonGraph.setOnClickListener(mOnClickGraph);
+		
+		mDate = (TextView) findViewById(R.id.workout_date) ;
+		mSteps = (TextView) findViewById(R.id.textValueEvents) ;
+		mSpeed = (TextView) findViewById(R.id.textValueEventFrequency);
+		mEnergy = (TextView) findViewById(R.id.textValueEnergy);
+		mDistance = (TextView) findViewById(R.id.textValueTotalDistance);
+		mDisplacement = (TextView) findViewById(R.id.textValueAbsoluteDistance);
+		mDuration = (TextView) findViewById(R.id.textValueTime);
+		
+		mDate.setText(session.getDate());
+		mSteps.setText(session.getTotal_step());
+		mSpeed.setText(String.format("%02.2f", session.getAverage_speed()));
+		mEnergy.setText(String.format("%02.2f", session.getTotal_energy()));
+		mDistance.setText(String.format("%02.2f", session.getTotal_altitude()));
+		mDisplacement.setText(String.format("%02.2f", session.getTotal_altitude()));
+		mDuration.setText(String.format("%02.2f", session.getTotal_duration()));
 	}
 	private ServiceConnection mSvcConnection = new ServiceConnection() {
 		/**
