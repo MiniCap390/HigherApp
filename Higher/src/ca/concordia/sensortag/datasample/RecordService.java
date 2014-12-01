@@ -743,8 +743,13 @@ public class RecordService extends Service {
 		
 		public DBContainers.SessionInfo getLatestSessionInfosForMainPage(){
 			return myDb.getLastSessionsInfo();
+			
+		}
+		public boolean checkIfWorkoutSessionsExist(){
+			return myDb.checkIfWorkoutSessionsExist();
 		}
 		
+
 		public DBContainers.SessionInfo getSessionInfo(int id){
 			return myDb.getSessionInfo(id);
 		}

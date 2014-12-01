@@ -42,7 +42,7 @@ public class ViewDetailsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_details);
-		setupGui();
+		
 	}
 	@Override
 	protected void onResume() {
@@ -105,6 +105,7 @@ public class ViewDetailsActivity extends Activity {
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			Log.i(TAG, "RecordService connected.");
 			mRecSvc = (RecordService.Binder) service;
+			setupGui();
 		}
 
 		/**

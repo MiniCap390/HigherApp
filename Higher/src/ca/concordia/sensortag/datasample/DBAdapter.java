@@ -137,7 +137,7 @@ public class DBAdapter {
 			totalDuration = allCurrentSteps
 					.getDouble(DBConstants.COL_STEP_INFO_ELAPSED_TIME);
 		}
-		return totalDuration;
+		return getElapsedTime();//totalDuration;
 	}
 	
 			//
@@ -543,6 +543,14 @@ public class DBAdapter {
 		insertBufferRowsStepInfo();
 		List<DBContainers.StepInfo> current_step_container = getAllCurrentRowStepInfo();
 		return current_step_container;
+	}
+	
+	public boolean checkIfWorkoutSessionsExist () {
+		Cursor c = db.query(true, DBConstants.TABLE_WORKOUT_SESSION,
+				DBConstants.WORKOUT_SESSION_ALL_KEYS, null, null, null, null, null,
+				null);
+		
+		return c != null;
 	}
 	
 	/**

@@ -162,7 +162,8 @@ public class MainActivity extends Activity implements RecordServiceListener {
 			mRecSvc.addListener(MainActivity.this);
 			mRecSvc.addStepListener(MainActivity.this);
 			mRecSvc.startService(mBtDevice);
-			caculateAvgLastSessions();
+			
+			if(mRecSvc.checkIfWorkoutSessionsExist()) caculateAvgLastSessions();
 			
 		}
 
