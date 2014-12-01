@@ -77,52 +77,60 @@
 			<TableRow
 			    android:id="@+id/tableRow_past_time"
 			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content" >
+			    android:layout_height="wrap_content"
+			    android:gravity="center" >
 
 			    <TextView
 			        android:id="@+id/textValuePastTime"
 			        style="@style/value_cell"
 			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content" />
+			        android:layout_height="wrap_content"
+			        android:gravity="center" />
 			</TableRow>
 		
 		    <TableRow
 		        android:id="@+id/tableRow_past_events"
 		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content" >
+		        android:layout_height="wrap_content"
+		        android:gravity="center" >
 		
 		        <TextView
 		            android:id="@+id/textValuePastEvents"
 		            style="@style/value_cell"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:text="" />
+		            android:text=""
+		            android:gravity="center" />
 		    </TableRow>
 		
 		    <TableRow
 		        android:id="@+id/tableRow_past_speed"
 		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content" >
+		        android:layout_height="wrap_content"
+		        android:gravity="center" >
 		
 		        <TextView
 		            android:id="@+id/textValuePastSpeed"
 		            style="@style/value_cell"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:text="" />
+		            android:text="" 
+		            android:gravity="center"/>
 		    </TableRow>
 		
 		    <TableRow
 		        android:id="@+id/tableRow_past_energy"
 		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content" >
+		        android:layout_height="wrap_content"
+		        android:gravity="center" >
 		        
 		        <TextView
 		            android:id="@+id/textValuePastEnergy"
 		            style="@style/value_cell"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:text="" />
+		            android:text="" 
+		            android:gravity="center"/>
 		    </TableRow>
 		</TableLayout>
 		<TableLayout
@@ -139,50 +147,58 @@
 		    <TableRow
 		        android:id="@+id/tableRow_present_time"
 		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content" >
+		        android:layout_height="wrap_content"
+		        android:gravity="center" >
 		        <TextView
 		            android:id="@+id/textValuePresentTime"
 		            style="@style/value_cell"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:text="Steps/Min" />
+		            android:text="Steps/Min" 
+		            android:gravity="center"/>
 		    </TableRow>
 		
 		    <TableRow
 		        android:id="@+id/tableRow_present_events"
 		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content" >
+		        android:layout_height="wrap_content"
+		        android:gravity="center" >
 		        <TextView
 		            android:id="@+id/textValuePresentEvents"
 		            style="@style/value_cell"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:text="Steps" />
+		            android:text="Steps"
+		            android:gravity="center" />
 		    </TableRow>
 		
 		    <TableRow
 		        android:id="@+id/tableRow_present_speed"
 		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content" >
+		        android:layout_height="wrap_content"
+		        android:gravity="center" >
 		
 		         <TextView
 		            android:id="@+id/textValuePresentSpeed"
 		            style="@style/value_cell"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:text="m/s" />
+		            android:text="m/s"
+		            android:gravity="center" />
 		    </TableRow>
 		
 		    <TableRow
 		        android:id="@+id/tableRow_present_energy"
 		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content" >
+		        android:layout_height="wrap_content"
+		        android:gravity="center" >
 		        <TextView
 		            android:id="@+id/textValuePresentEnergy"
 		            style="@style/value_cell"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:text="Calories" />
+		            android:text="Calories" 
+		            android:gravity="center"/>
 		    </TableRow>
 		</TableLayout>
 	</LinearLayout>
