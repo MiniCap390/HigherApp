@@ -146,6 +146,14 @@ application do (permissions which the user has to accept when installing the app
         <activity android:name="ca.concordia.sensortag.datasample.SettingsActivity"
             	  android:screenOrientation="portrait">
         </activity>
+        
+        <activity android:name="ca.concordia.sensortag.datasample.ViewDetailsActivity"
+            	  android:screenOrientation="portrait">
+        </activity>
+        
+        <activity android:name="ca.concordia.sensortag.datasample.GraphActivity"
+            	  android:screenOrientation="portrait">
+        </activity>
         		  
     </application>
 
