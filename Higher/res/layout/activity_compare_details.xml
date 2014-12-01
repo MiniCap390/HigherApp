@@ -61,7 +61,7 @@
             android:text="@string/act_anal_time" />
 
         <TextView
-            android:id="@+id/textValueTime"
+            android:id="@+id/textTotalTime1"
             style="@style/value_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
             android:text="@string/act_anal_events" />
 
         <TextView
-            android:id="@+id/textValueEvents"
+            android:id="@+id/textSteps1"
             style="@style/value_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -94,12 +94,18 @@
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/textTitleEventFrequency"
-            style="@style/header_cell"
+            android:id="@+id/textTitleSpeed"
+            style="@style/title_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_span="2"
             android:text="@string/act_anal_freq" />
+
+        <TextView
+            android:id="@+id/textSpeed1"
+            style="@style/value_cell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
     </TableRow>
 
     <TableRow
@@ -115,7 +121,7 @@
             android:text="@string/act_anal_energy" />
 
         <TextView
-            android:id="@+id/textValueEnergy"
+            android:id="@+id/textEnergy1"
             style="@style/value_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -135,7 +141,7 @@
             android:text="@string/act_anal_total_distance" />
 
         <TextView
-            android:id="@+id/textValueTotalDistance"
+            android:id="@+id/textTotalDistance1"
             style="@style/value_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -155,7 +161,7 @@
             android:text="@string/act_anal_absolute_distance" />
 
         <TextView
-            android:id="@+id/textValueAbsoluteDistance"
+            android:id="@+id/textAbsoluteDistance1"
             style="@style/value_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -207,7 +213,7 @@
             android:text="@string/act_anal_time" />
 
         <TextView
-            android:id="@+id/second_textValueTime"
+            android:id="@+id/textTotalTime2"
             style="@style/value_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -227,7 +233,7 @@
             android:text="@string/act_anal_events" />
 
         <TextView
-            android:id="@+id/second_textValueEvents"
+            android:id="@+id/textSteps2"
             style="@style/value_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -241,11 +247,17 @@
 
         <TextView
             android:id="@+id/second_textTitleEventFrequency"
-            style="@style/header_cell"
+            style="@style/title_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_span="2"
             android:text="@string/act_anal_freq" />
+
+        <TextView
+            android:id="@+id/textSpeed2"
+            style="@style/value_cell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
     </TableRow>
 
     <TableRow
@@ -261,7 +273,7 @@
             android:text="@string/act_anal_energy" />
 
         <TextView
-            android:id="@+id/second_textValueEnergy"
+            android:id="@+id/textEnergy2"
             style="@style/value_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -281,7 +293,7 @@
             android:text="@string/act_anal_total_distance" />
 
         <TextView
-            android:id="@+id/second_textValueTotalDistance"
+            android:id="@+id/textTotalDistance2"
             style="@style/value_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -301,7 +313,7 @@
             android:text="@string/act_anal_absolute_distance" />
 
         <TextView
-            android:id="@+id/second_textValueAbsoluteDistance"
+            android:id="@+id/textAbsoluteDistance2"
             style="@style/value_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

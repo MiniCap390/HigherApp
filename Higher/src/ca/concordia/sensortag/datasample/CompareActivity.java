@@ -43,7 +43,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class CompareActivity extends Activity implements RecordServiceListener {
-	static public final String TAG = "ViewAct"; // Tag for Android's logcat
+	static public final String TAG = "CompareAct"; // Tag for Android's logcat
 	
 	/* Service */
 	private RecordService.Binder mRecSvc = null;
@@ -53,6 +53,7 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 	
 	//GUI list of steps , Init to non-null
 	private List<String> StepEvents = new ArrayList<String>();
+	private Button mButtonCompare;
 	
 	/**
 	 * Called by Android when the Activity is first created. This sets up the GUI for the Activity,
@@ -131,6 +132,9 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setDisplayShowTitleEnabled(false);
 		
+		mButtonCompare = (Button) findViewById(R.id.Compare_selected_activities);
+		mButtonCompare.setOnClickListener(mOnClickCompare);
+		
 		mListAdapter =
                 new ArrayAdapter<String>(
                         this, // The current context (this activity)
@@ -154,6 +158,22 @@ public class CompareActivity extends Activity implements RecordServiceListener {
         });
 
 	}
+	private Button.OnClickListener mOnClickCompare = new Button.OnClickListener() {
+
+		 
+		@Override
+		public void onClick(View v) {
+			
+			/**
+			 * Called when the Graph button is clicked. Displays position graph
+			 */
+			Log.i(TAG, "Starting Graph activity.");
+			Intent intent = new Intent(CompareActivity.this, CompareDetailsActivity.class);
+			startActivity(intent);
+			
+		}
+		
+	};
 	
 	/**
 	 * GUI AND MENU STUFF
