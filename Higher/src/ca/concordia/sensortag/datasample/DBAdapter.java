@@ -223,8 +223,9 @@ public class DBAdapter {
 	 */
 	private List<DBContainers.StepInfo> getAllCurrentRowStepInfo() {
 		insertBufferRowsStepInfo();
+		String where = DBConstants.STEP_INFO_SESSION_ID + "=" + getCurrentWorkoutID();
 		Cursor c = db.query(true, DBConstants.TABLE_STEP_INFO,
-				DBConstants.STEP_INFO_ALL_KEYS, null, null, null, null, null,
+				DBConstants.STEP_INFO_ALL_KEYS, where, null, null, null, null,
 				null);
 		if (c != null) {
 			c.moveToFirst();
@@ -282,7 +283,7 @@ public class DBAdapter {
 			for (DBContainers.StepInfo current_step : stepContainer) {
 				ContentValues initialValues = new ContentValues();
 				initialValues.put(DBConstants.STEP_INFO_SESSION_ID,
-						1);		//Temp change me to workout session info ** 1 => getCurrentWorkoutID()
+						getCurrentWorkoutID());		//Temp change me to workout session info ** 1 => getCurrentWorkoutID()
 				initialValues.put(DBConstants.STEP_INFO_ELAPSED_TIME,
 						current_step.getTime_stamp());
 				initialValues.put(DBConstants.STEP_INFO_ALTITUDE, 
@@ -516,6 +517,20 @@ public class DBAdapter {
 	public Cursor getAllWorkoutSessions() {
 		Cursor c = db.query(true, DBConstants.TABLE_WORKOUT_SESSION,
 				DBConstants.WORKOUT_SESSION_ALL_KEYS, null, null, null, null, null,
+				null);
+		if (c != null) {
+			c.moveToFirst();
+		}
+		
+		return c;
+	}
+	
+	/**
+	 * @returns A cursor containing all the rows the in WorkoutSession Table
+	 */
+	public Cursor getAllWorkoutSessionInfo() {
+		Cursor c = db.query(true, DBConstants.TABLE_SESSION_INFO,
+				DBConstants.SESSION_INFO_ALL_KEYS, null, null, null, null, null,
 				null);
 		if (c != null) {
 			c.moveToFirst();

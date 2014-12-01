@@ -373,7 +373,7 @@ public class RecordService extends Service {
 
 		String elapsed = formatTime(myDb.getElapsedTime());
 		String body = getString(R.string.notif_service_label_samples) + " "
-				+ myDb.getSamplesStored() + " - "
+				+ myDb.getAllCurrentStepInfo().size() + " - "
 				+ getString(R.string.notif_service_label_elapsed) + " " + elapsed;
 
 		// Defines an Intent that can be used when the Notification is clicked.
@@ -913,6 +913,7 @@ public class RecordService extends Service {
 		
 		myDb.setStatus(DBAdapter.Status.RECORDING);
 		myDb.savePreferences();
+		myDb.start_workout();
 		mStManager.enableUpdates();
 		setStatus(Status.RECORD);
 		return true;
@@ -973,6 +974,8 @@ public class RecordService extends Service {
 
 		myDb.setStatus(DBAdapter.Status.FINISHED);
 		myDb.savePreferences();
+		myDb.stop_workout();
+		myDb.setNewRecording(0,0);
 		mStManager.disableUpdates();
 		setStatus(Status.FINISHED);
 		

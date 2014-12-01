@@ -189,16 +189,32 @@ public class ViewActivity extends Activity implements RecordServiceListener {
 	        	//do nothing
 	            return true;
 	        case R.id.Compare_activity:
-	        	setContentView(R.layout.activity_compare);
+	        	menuClickCompare();
 	            return true;
             default:
             	return super.onOptionsItemSelected(item);
 	    }
 	}
 	
+	/**
+	 * Menu buttons functions
+	 */
 	public void menuClickMain(){
 		Log.i(TAG, "Starting View Steps activity.");
-		Intent intent = new Intent(ViewActivity.this, RecordActivity.class);
+		Intent intent = new Intent(ViewActivity.this, MainActivity.class);
+		intent .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		startActivity(intent);
+	}
+	
+	public void menuClickSettings(){
+		Log.i(TAG, "Starting View Steps activity.");
+		Intent intent = new Intent(ViewActivity.this, SettingsActivity.class);
+		startActivity(intent);
+	}
+	
+	public void menuClickCompare(){
+		Log.i(TAG, "Starting View Steps activity.");
+		Intent intent = new Intent(ViewActivity.this, CompareActivity.class);
 		intent .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		startActivity(intent);
 	}

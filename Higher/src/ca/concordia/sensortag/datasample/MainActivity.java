@@ -362,4 +362,6 @@ public class MainActivity extends Activity implements RecordServiceListener {
 		mPresentEnergy.setText(String.format("%02.2f", energy) + " Cal");
 	}
 	
+	
+	
 }

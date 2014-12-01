@@ -145,7 +145,7 @@
 		            style="@style/value_cell"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:text="" />
+		            android:text="Steps/Min" />
 		    </TableRow>
 		
 		    <TableRow
@@ -157,7 +157,7 @@
 		            style="@style/value_cell"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:text="" />
+		            android:text="Steps" />
 		    </TableRow>
 		
 		    <TableRow
@@ -170,7 +170,7 @@
 		            style="@style/value_cell"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:text="" />
+		            android:text="m/s" />
 		    </TableRow>
 		
 		    <TableRow
@@ -182,7 +182,7 @@
 		            style="@style/value_cell"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
-		            android:text="" />
+		            android:text="Calories" />
 		    </TableRow>
 		</TableLayout>
 	</LinearLayout>
