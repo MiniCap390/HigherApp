@@ -459,29 +459,28 @@ public class DBAdapter {
 	 * of a workout selected by the index
 	 * 
 	 */
-	public List<DBContainers.StepInfo> getAllWorkoutSteps(int _id) {
-		String where = DBConstants.STEP_INFO_SESSION_ID + "=" + _id;
-		
-		Cursor c = db.query(true, DBConstants.TABLE_STEP_INFO,
-				DBConstants.STEP_INFO_ALL_KEYS, where, null, null, null, null,
-				null);
-		
-		List<DBContainers.StepInfo> allWorkoutSteps = new ArrayList<DBContainers.StepInfo>();
-		DBContainers.StepInfo aStep = DBContainers.containers.new StepInfo();
-		
-		if (c.moveToFirst()) {
-			do {
-				aStep.setSession_id(_id);
-				aStep.setTime_stamp(c.getDouble(DBConstants.COL_STEP_INFO_ELAPSED_TIME));
-				aStep.setAltitude(c.getDouble(DBConstants.COL_STEP_INFO_ALTITUDE));
-				
-				allWorkoutSteps.add(aStep);
-			} while (c.moveToNext());
-		} else {
-			Log.d(TAG,"stepInfo Cursor is Empty!");
-		}
-		
-		return allWorkoutSteps;
+	 public List<DBContainers.StepInfo> getAllWorkoutSteps(int _id) {
+		 String where = DBConstants.STEP_INFO_SESSION_ID + "=" + _id;
+
+		 Cursor c = db.query(true, DBConstants.TABLE_STEP_INFO,
+		 DBConstants.STEP_INFO_ALL_KEYS, where, null, null, null, null, null);
+
+		 List<DBContainers.StepInfo> allWorkoutSteps = new ArrayList<DBContainers.StepInfo>();
+
+		 if (c.moveToFirst()) {
+			 do {
+				 DBContainers.StepInfo aStep = DBContainers.containers.new StepInfo();
+				 aStep.setSession_id(_id);
+				 aStep.setTime_stamp(c.getDouble(DBConstants.COL_STEP_INFO_ELAPSED_TIME));
+				 aStep.setAltitude(c.getDouble(DBConstants.COL_STEP_INFO_ALTITUDE));
+	
+				 allWorkoutSteps.add(aStep);
+			 } while (c.moveToNext());
+		 } else {
+		 Log.d(TAG,"stepInfo Cursor is Empty!");
+		 }
+
+		 return allWorkoutSteps;
 	}
 
 	public String getLastStepInfoString() {
@@ -560,28 +559,28 @@ public class DBAdapter {
 	 * @Returns SessionInfo with a the calculated values from SessionInfo
 	 * table of a single workout session
 	 */
-	public SessionInfo getSessionInfo(int _id) {
-		String where = DBConstants.KEY_ROWID + "=" + _id;
-		
-		Cursor c = db.query(true, DBConstants.TABLE_SESSION_INFO,
-				DBConstants.SESSION_INFO_ALL_KEYS, where, null, null, null, null,
-				null);
-		if(c != null) {
-			c.moveToFirst();
-		} else {
-			Log.d(TAG,"sessionInfo Cursor is Empty!");
-		}
-		
-		DBContainers.SessionInfo sessionInfo = DBContainers.containers.new SessionInfo();
-		sessionInfo.setSession_id(c.getInt(DBConstants.COL_KEY_ROWID));
-		sessionInfo.setDate(c.getString(DBConstants.COL_SESSION_INFO_DATE));
-		sessionInfo.setAverage_speed(c.getDouble(DBConstants.COL_SESSION_INFO_AVERAGE_SPEED));
-		sessionInfo.setTotal_energy(c.getDouble(DBConstants.COL_SESSION_INFO_TOTAL_ENERGY));
-		sessionInfo.setTotal_step(c.getInt(DBConstants.COL_SESSION_INFO_TOTAL_STEP));
-		sessionInfo.setTotal_altitude_magnitude(c.getInt(DBConstants.COL_SESSION_INFO_TOTAL_ALTITUDE_MAGNITUDE));
-		sessionInfo.setTotal_altitude(c.getInt(DBConstants.COL_SESSION_INFO_TOTAL_ALTITUDE));
-		
-		return sessionInfo;
+	 public SessionInfo getSessionInfo(int _id) {
+		 String where = DBConstants.KEY_ROWID + "=" + _id;
+
+		 Cursor c = db.query(true, DBConstants.TABLE_SESSION_INFO,
+		 DBConstants.SESSION_INFO_ALL_KEYS, where, null, null, null, null, null);
+		 if(c != null) {
+		 c.moveToFirst();
+		 } else {
+		 Log.d(TAG,"sessionInfo Cursor is Empty!");
+		 }
+
+		 DBContainers.SessionInfo sessionInfo = DBContainers.containers.new SessionInfo();
+		 sessionInfo.setSession_id(c.getInt(DBConstants.COL_KEY_ROWID));
+		 sessionInfo.setDate(c.getString(DBConstants.COL_SESSION_INFO_DATE));
+		 sessionInfo.setAverage_speed(c.getDouble(DBConstants.COL_SESSION_INFO_AVERAGE_SPEED));
+		 sessionInfo.setTotal_duration(c.getDouble(DBConstants.COL_SESSION_INFO_TOTAL_DURATION));
+		 sessionInfo.setTotal_energy(c.getDouble(DBConstants.COL_SESSION_INFO_TOTAL_ENERGY));
+		 sessionInfo.setTotal_step(c.getInt(DBConstants.COL_SESSION_INFO_TOTAL_STEP));
+		 sessionInfo.setTotal_altitude_magnitude(c.getInt(DBConstants.COL_SESSION_INFO_TOTAL_ALTITUDE_MAGNITUDE));
+		 sessionInfo.setTotal_altitude(c.getInt(DBConstants.COL_SESSION_INFO_TOTAL_ALTITUDE));
+
+		 return sessionInfo;
 	}
 	public Cursor getSessionInfoCursor(int _id) {
 		String where = DBConstants.KEY_ROWID + "=" + _id;
