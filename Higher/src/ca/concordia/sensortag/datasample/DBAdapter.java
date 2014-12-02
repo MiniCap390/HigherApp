@@ -44,11 +44,9 @@ public class DBAdapter {
 	 * @param time(ms)
 	 * @return
 	 */
-	private double calculateEnergy(double weight, double time) {
-		//formula reverse-engineered from http://www.dietcombat.com/best-exercise-to-lose-weight
-		//rate = calories/min
-		double rate = (weight*2.2-100)*0.93/15.0 + 6.4;
-		return (double) time * 1000 * rate / 60;
+	private double calculateEnergy(double weight, double altitudeMagnitude) {
+		final  double GRAVITY_ACCEL = 9.81;
+		return weight * GRAVITY_ACCEL * altitudeMagnitude * .239;
 	}
 	
 			//
@@ -57,18 +55,17 @@ public class DBAdapter {
 			// ///////////////////////////////////////////////////////////////////
 
 	private double getTotalAverageSpeed(int total_step, double duration) {
-		return ((total_step)/(duration/1000))*60;
+		return (((total_step)/(duration/1000))*60);
 	}
 
-	private double getTotalEnergy() {		
+	private double getTotalEnergy(double altitudeMagnitude) {		
 		Cursor currentUserSettings = getUserSetting();
 		
 		double weight = currentUserSettings.getDouble(DBConstants.COL_USER_WEIGHT);
-		long time = getRecordDuration();
 		
 		currentUserSettings.close();
 		
-		return calculateEnergy(weight, time);
+		return calculateEnergy(weight, altitudeMagnitude);
 	}
 
 	private double getTotalAltitudeMagnitude(Cursor allCurrentSteps) {
@@ -348,7 +345,7 @@ public class DBAdapter {
 			double average_speed = getTotalAverageSpeed(totalStep, duration); // In steps/MIN
 			double totalAltitudeMagnitude = getTotalAltitudeMagnitude(allCurrentSteps); // In wtv it is in StepInfo
 			double totalAltitude = getTotalAltitude(allCurrentSteps); // In wtv it is in StepInfo
-			double totalEnergy = getTotalEnergy(); 
+			double totalEnergy = getTotalEnergy(totalAltitudeMagnitude); 
 			
 			ContentValues initialValues = new ContentValues();
 			initialValues.put(DBConstants.KEY_ROWID, session_id);
@@ -599,8 +596,8 @@ public class DBAdapter {
 		 sessionInfo.setTotal_duration(c.getDouble(DBConstants.COL_SESSION_INFO_TOTAL_DURATION));
 		 sessionInfo.setTotal_energy(c.getDouble(DBConstants.COL_SESSION_INFO_TOTAL_ENERGY));
 		 sessionInfo.setTotal_step(c.getInt(DBConstants.COL_SESSION_INFO_TOTAL_STEP));
-		 sessionInfo.setTotal_altitude_magnitude(c.getInt(DBConstants.COL_SESSION_INFO_TOTAL_ALTITUDE_MAGNITUDE));
-		 sessionInfo.setTotal_altitude(c.getInt(DBConstants.COL_SESSION_INFO_TOTAL_ALTITUDE));
+		 sessionInfo.setTotal_altitude_magnitude(c.getDouble(DBConstants.COL_SESSION_INFO_TOTAL_ALTITUDE_MAGNITUDE));
+		 sessionInfo.setTotal_altitude(c.getDouble(DBConstants.COL_SESSION_INFO_TOTAL_ALTITUDE));
 
 		 return sessionInfo;
 	}
@@ -705,7 +702,7 @@ public class DBAdapter {
 		double average_speed = getTotalAverageSpeed(totalStep, duration); // In steps/sec
 		double totalAltitudeMagnitude = getTotalAltitudeMagnitude(allCurrentSteps); // In wtv it is in StepInfo
 		double totalAltitude = getTotalAltitude(allCurrentSteps); // In wtv it is in StepInfo
-		double totalEnergy = getTotalEnergy();
+		double totalEnergy = getTotalEnergy(totalAltitudeMagnitude);
 		
 		allCurrentSteps.close();
 		

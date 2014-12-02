@@ -92,13 +92,13 @@ public class ViewDetailsActivity extends Activity {
 		mDate.setText(session.getDate());
 		mSteps.setText(String.valueOf(session.getTotal_step()));
 //		mSpeed.setText(String.valueOf(session.getAverage_speed()));
-		mEnergy.setText(String.valueOf(session.getTotal_energy()));
+//		mEnergy.setText(String.valueOf(session.getTotal_energy()));
 //		mDistance.setText(String.valueOf(session.getTotal_altitude()));
 //		mDisplacement.setText(String.valueOf(session.getTotal_altitude()));
 		mDuration.setText(formatTime(session.getTotal_duration()));
 		
 		mSpeed.setText(String.format("%02.2f", session.getAverage_speed()));
-//		mEnergy.setText(String.format("%02.2f", session.getTotal_energy()));
+		mEnergy.setText(String.format("%02.2f", session.getTotal_energy()));
 		mDistance.setText(String.format("%02.2f", session.getTotal_altitude()));
 		mDisplacement.setText(String.format("%02.2f", session.getTotal_altitude()));
 //		mDuration.setText(String.format("%02.2f", session.getTotal_duration()));

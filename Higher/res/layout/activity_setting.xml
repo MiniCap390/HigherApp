@@ -84,6 +84,6 @@
 	    android:textSize="16sp"
 	    android:textColor="#ffffff"	 
 	    android:background="@drawable/setting_button_background"
-	    android:onClick="setGender"/>
+	    android:onClick="setCompareRange"/>
 </LinearLayout>
 </RelativeLayout>

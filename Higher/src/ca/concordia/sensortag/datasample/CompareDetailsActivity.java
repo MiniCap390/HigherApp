@@ -96,7 +96,7 @@ public class CompareDetailsActivity extends Activity {
 		txtTotalTime1.setText(formatTime(session1.getTotal_duration()));
 		txtSteps1.setText(String.valueOf(session1.getTotal_step()));
 		txtSpeed1.setText(String.format("%02.2f", session1.getAverage_speed()));
-		txtTotalEnergy1.setText(String.valueOf(session1.getTotal_energy()));
+		txtTotalEnergy1.setText(String.format("%02.2f", session1.getTotal_energy()));
 		txtTotalDistance1.setText(String.format("%02.2f", session1.getTotal_altitude()));
 		txtAbsoluteDistance1.setText(String.format("%02.2f", session1.getTotal_altitude_magnitude()));
 		
@@ -104,7 +104,7 @@ public class CompareDetailsActivity extends Activity {
 		txtTotalTime2.setText(formatTime(session2.getTotal_duration()));
 		txtSteps2.setText(String.valueOf(session2.getTotal_step()));
 		txtSpeed2.setText(String.format("%02.2f", session2.getAverage_speed()));
-		txtTotalEnergy2.setText(String.valueOf(session2.getTotal_energy()));
+		txtTotalEnergy2.setText(String.format("%02.2f", session2.getTotal_energy()));
 		txtTotalDistance2.setText(String.format("%02.2f", session2.getTotal_altitude()));
 		txtAbsoluteDistance2.setText(String.format("%02.2f", session2.getTotal_altitude_magnitude()));
 

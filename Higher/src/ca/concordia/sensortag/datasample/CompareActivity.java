@@ -236,7 +236,7 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 	
 	public void menuClickMain(){
 		Log.i(TAG, "Starting Main activity.");
-		Intent intent = new Intent(CompareActivity.this, CompareActivity.class);
+		Intent intent = new Intent(CompareActivity.this, MainActivity.class);
 		intent .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		startActivity(intent);
 	}
