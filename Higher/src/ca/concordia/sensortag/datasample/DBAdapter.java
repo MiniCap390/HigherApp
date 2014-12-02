@@ -83,6 +83,7 @@ public class DBAdapter {
 				.getDouble(DBConstants.COL_STEP_INFO_ALTITUDE);
 		double altitudeChange = 0;
 		if (allCurrentSteps.moveToNext()) {
+			allCurrentSteps.moveToFirst();
 			do {
 				currentAltitude = allCurrentSteps
 						.getDouble(DBConstants.COL_STEP_INFO_ALTITUDE);
@@ -102,17 +103,15 @@ public class DBAdapter {
 	private double getTotalAltitude(Cursor allCurrentSteps) {
 
 		double totalAltitude = 0;
+		//Don't need to read the first altitude value as it's calibrated to 0
 
-		if (allCurrentSteps.moveToFirst()) {
-
+		
+		//Move to last cursor, get the last altitude recorded
+		if (allCurrentSteps.moveToLast()) {
 			totalAltitude = allCurrentSteps
 					.getDouble(DBConstants.COL_STEP_INFO_ALTITUDE);
-
-			if (allCurrentSteps.moveToLast()) {
-				totalAltitude -= allCurrentSteps
-						.getDouble(DBConstants.COL_STEP_INFO_ALTITUDE);
-			}
 		}
+		
 		return totalAltitude;
 	}
 	
