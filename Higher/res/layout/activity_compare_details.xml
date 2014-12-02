@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:background="@drawable/ui_background">
     
     <LinearLayout
@@ -19,8 +19,8 @@
     	android:textSize="32sp"
      	android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp"
     	android:text="Workout Details"
     	android:background="@drawable/workout_details_background"
         android:textColor="#F8F8FF"
@@ -66,8 +66,7 @@
     android:id="@+id/first_table_layout"
     style="@style/table_analyze"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
+    android:layout_height="fill_parent"
     android:layout_below="@+id/past_present_Layout"
     android:background="@android:color/white"
     android:stretchColumns="1" >
@@ -83,7 +82,7 @@
             android:id="@+id/textTitleTime"
             style="@style/title_cell"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:gravity="center" 
             android:text="@string/act_anal_time" />
 
@@ -99,7 +98,7 @@
             style="@style/value_cell"
             android:background="@drawable/border"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:text=""
             android:gravity="center"
             android:layout_weight="1" />
@@ -108,7 +107,7 @@
             style="@style/value_cell"
             android:background="@drawable/border"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:text="" 
             android:gravity="center"
             android:layout_weight="1"/>
@@ -126,7 +125,7 @@
             android:id="@+id/textTitleEvents"
             style="@style/title_cell"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:gravity="center"
             android:text="@string/act_anal_events" />
 
@@ -143,7 +142,7 @@
             style="@style/value_cell"
             android:background="@drawable/border"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:text="" 
             android:gravity="center"
             android:layout_weight="1"/>
@@ -152,7 +151,7 @@
             style="@style/value_cell"
             android:background="@drawable/border"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:text="" 
             android:gravity="center"
             android:layout_weight="1"/>
@@ -170,7 +169,7 @@
             android:id="@+id/textTitleSpeed"
             style="@style/title_cell"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:text="@string/act_anal_freq" />
 
     </TableRow>
@@ -185,7 +184,7 @@
             style="@style/value_cell"
             android:background="@drawable/border"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:text="" 
             android:gravity="center"
             android:layout_weight="1"/>
@@ -194,7 +193,7 @@
             style="@style/value_cell"
             android:background="@drawable/border"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:text=""
             android:gravity="center"
             android:layout_weight="1" />
@@ -212,7 +211,7 @@
             android:id="@+id/textTitleEnergy"
             style="@style/title_cell"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:gravity="center"
             android:text="@string/act_anal_energy" />
 
@@ -228,7 +227,7 @@
             style="@style/value_cell"
             android:background="@drawable/border"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:text="" 
             android:gravity="center"
             android:layout_weight="1"/>
@@ -237,7 +236,7 @@
             style="@style/value_cell"
             android:background="@drawable/border"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:text="" 
             android:gravity="center"
             android:layout_weight="1"/>
@@ -254,7 +253,7 @@
             android:id="@+id/textTitleTotalDistance"
             style="@style/title_cell"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:text="@string/act_anal_total_distance" 
             android:gravity="center"/>
 
@@ -296,7 +295,7 @@
             android:id="@+id/textTitleAbsoluteDistance"
             style="@style/title_cell"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="34dp"
             android:text="@string/act_anal_absolute_distance" 
             android:gravity="center"/>
 
