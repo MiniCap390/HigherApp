@@ -128,11 +128,12 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO Auto-generated method stub
 				if (mChanged1){
 					mSessionId1 = (int) id;
+					mChanged1 = false;
 				}else{
 					mSessionId2 = (int) id;
+					mChanged1 = true;
 				}
 				return;
 			}
@@ -144,24 +145,41 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 			}
         	
         });
-        /*
+
         listView.setOnItemLongClickListener(new OnItemLongClickListener(){
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				if(mSessionId1 == 0){
-				mSessionId1 = (int) id;
-						return false;
+				if (mChanged1){
+					mSessionId1 = (int) id;
+					mChanged1 = false;
 				}else{
 					mSessionId2 = (int) id;
-					return false;
+					mChanged1 = true;
 				}
+				return true;
 
 			}
         	
         });
-		*/
+        
+        listView.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				if (mChanged1){
+					mSessionId1 = (int) id;
+					mChanged1 = false;
+				}else{
+					mSessionId2 = (int) id;
+					mChanged1 = true;
+				}
+				return;
+			}
+        });
+        
 		mButtonCompare = (Button) findViewById(R.id.Compare_selected_activities);
 		mButtonCompare.setOnClickListener(mOnClickCompare);
 
@@ -171,7 +189,9 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 		 
 		@Override
 		public void onClick(View v) {
-			if( mSessionId1 == 0 && mSessionId2 == 0){
+
+			Log.i(TAG, "mSessionId1: "+ mSessionId1 + " mSessionId2: "+ mSessionId2);
+			if( mSessionId1 == 0 || mSessionId2 == 0){
 				//do nothing
 				Toast toast = Toast.makeText(getApplicationContext(), 
 									"Choose 2 sessions to compare", 
