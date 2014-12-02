@@ -101,6 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
+            android:gravity="center"
             android:layout_weight="1" />
         <TextView
             android:id="@+id/textTotalTime2"
@@ -109,6 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="" 
+            android:gravity="center"
             android:layout_weight="1"/>
 
     </TableRow>
@@ -143,6 +145,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="" 
+            android:gravity="center"
             android:layout_weight="1"/>
         <TextView
             android:id="@+id/textSteps2"
@@ -151,6 +154,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="" 
+            android:gravity="center"
             android:layout_weight="1"/>
 
     </TableRow>
@@ -183,6 +187,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="" 
+            android:gravity="center"
             android:layout_weight="1"/>
         <TextView
             android:id="@+id/textSpeed2"
@@ -191,6 +196,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
+            android:gravity="center"
             android:layout_weight="1" />
 
     </TableRow>
@@ -224,6 +230,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="" 
+            android:gravity="center"
             android:layout_weight="1"/>
         <TextView
             android:id="@+id/textEnergy2"
@@ -232,6 +239,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="" 
+            android:gravity="center"
             android:layout_weight="1"/>
     </TableRow>
 
@@ -264,6 +272,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="" 
+            android:gravity="center"
             android:layout_weight="1"/>
         <TextView
             android:id="@+id/textTotalDistance2"
@@ -272,6 +281,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="" 
+            android:gravity="center"
             android:layout_weight="1"/>
     </TableRow>
 
@@ -304,6 +314,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="" 
+            android:gravity="center"
             android:layout_weight="1"/>
         <TextView
             android:id="@+id/textAbsoluteDistance2"
@@ -312,6 +323,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="" 
+            android:gravity="center"
             android:layout_weight="1"/>
     </TableRow>
 </TableLayout>
