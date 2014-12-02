@@ -55,6 +55,8 @@ public class GraphActivity extends Activity {
 		GraphView posGraph = new LineGraphView(this, "Position");
 		Log.i(TAG, "Just created posGraph");
 		posGraph.addSeries( stepSeries );
+		posGraph.setScrollable(true);
+		posGraph.setScalable(true);
 		
 		LinearLayout layout = (LinearLayout) findViewById(R.id.graph);
 		layout.addView(posGraph);
