@@ -30,6 +30,9 @@ public class GraphActivity extends Activity {
 	private TextView mDate;
 	
 	private void setupGui(){
+
+		// Show the "back"/"up" button on the Action Bar (top left corner)
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -57,6 +60,7 @@ public class GraphActivity extends Activity {
 		posGraph.addSeries( stepSeries );
 		posGraph.setScrollable(true);
 		posGraph.setScalable(true);
+		posGraph.getGraphViewStyle().setNumHorizontalLabels(8);
 		
 		LinearLayout layout = (LinearLayout) findViewById(R.id.graph);
 		layout.addView(posGraph);

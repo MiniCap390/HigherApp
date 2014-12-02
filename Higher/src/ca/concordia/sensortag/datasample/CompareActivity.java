@@ -49,6 +49,8 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 	private int mSessionId1 = 0;
 	private int mSessionId2 = 0;
 	private boolean mChanged1 = false;
+	private TextView mFirst;
+	private TextView mSecond;
 	
 	/**
 	 * Called by Android when the Activity is first created. This sets up the GUI for the Activity,
@@ -111,52 +113,38 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setDisplayShowTitleEnabled(false);
 				
+		mFirst = (TextView) findViewById(R.id.select_first_workout);
+		mSecond = (TextView) findViewById(R.id.select_second_workout);
 		Cursor c = mRecSvc.getAllWorkoutSessionsCursor();
 				
 		String[] from = new String[] {"date"};
 		int[] to = new int[] {R.id.list_item_step_textview};
 				
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(getApplicationContext(),
+		final SimpleCursorAdapter adapter = new SimpleCursorAdapter(getApplicationContext(),
 				R.layout.list_item_step, c, from, to, 0);
 
 		final ListView listView = (ListView) findViewById(R.id.compare_list);
 		listView.setAdapter(adapter);
 
         listView.setChoiceMode(listView.CHOICE_MODE_MULTIPLE);
-        listView.setOnItemSelectedListener( new OnItemSelectedListener(){
-
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					int position, long id) {
-				if (mChanged1){
-					mSessionId1 = (int) id;
-					mChanged1 = false;
-				}else{
-					mSessionId2 = (int) id;
-					mChanged1 = true;
-				}
-				return;
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-				// TODO Auto-generated method stub
-				
-			}
-        	
-        });
-
         listView.setOnItemLongClickListener(new OnItemLongClickListener(){
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				String date = ((TextView) view).getText().toString();
 				if (mChanged1){
 					mSessionId1 = (int) id;
 					mChanged1 = false;
+
+					mFirst.setText(String.valueOf(mSessionId1) + ": " 
+							+ date);
 				}else{
 					mSessionId2 = (int) id;
 					mChanged1 = true;
+					
+					mSecond.setText(String.valueOf(mSessionId2) + ": " 
+							+ date);
 				}
 				return true;
 
@@ -169,12 +157,21 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+
+				String date = ((TextView) view).getText().toString();
+				
 				if (mChanged1){
 					mSessionId1 = (int) id;
 					mChanged1 = false;
+
+					mFirst.setText(String.valueOf(mSessionId1) + ": " 
+							+ date);
 				}else{
 					mSessionId2 = (int) id;
 					mChanged1 = true;
+					
+					mSecond.setText(String.valueOf(mSessionId2) + ": " 
+							+ date);
 				}
 				return;
 			}
