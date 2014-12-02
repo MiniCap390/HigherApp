@@ -18,6 +18,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class GraphActivity extends Activity {
 	static public final String TAG = "GraphAct"; // Tag for Android's logcat
@@ -26,6 +27,7 @@ public class GraphActivity extends Activity {
 	/* Service */
 	private RecordService.Binder mRecSvc = null;
 	BluetoothDevice mBtDevice = null;
+	private TextView mDate;
 	
 	private void setupGui(){
 		
@@ -56,6 +58,9 @@ public class GraphActivity extends Activity {
 		
 		LinearLayout layout = (LinearLayout) findViewById(R.id.graph);
 		layout.addView(posGraph);
+	
+		mDate = (TextView) findViewById(R.id.workout_date);
+		mDate.setText(mRecSvc.getSessionInfo(mSessionIndex).getDate());
 	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

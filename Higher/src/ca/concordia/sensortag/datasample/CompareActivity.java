@@ -1,12 +1,9 @@
 package ca.concordia.sensortag.datasample;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.ListActivity;
-import android.app.LoaderManager;
 import ca.concordia.sensortag.datasample.RecordService.RecordServiceListener;
 import ca.concordia.sensortag.datasample.RecordService.Status;
 import android.bluetooth.BluetoothDevice;
@@ -17,10 +14,7 @@ import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.text.Editable;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,13 +24,10 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -57,6 +48,7 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 	private Button mButtonCompare;
 	private int mSessionId1 = 0;
 	private int mSessionId2 = 0;
+	private boolean mChanged1 = false;
 	
 	/**
 	 * Called by Android when the Activity is first created. This sets up the GUI for the Activity,
@@ -131,6 +123,28 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 		listView.setAdapter(adapter);
 
         listView.setChoiceMode(listView.CHOICE_MODE_MULTIPLE);
+        listView.setOnItemSelectedListener( new OnItemSelectedListener(){
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				if (mChanged1){
+					mSessionId1 = (int) id;
+				}else{
+					mSessionId2 = (int) id;
+				}
+				return;
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+				
+			}
+        	
+        });
+        /*
         listView.setOnItemLongClickListener(new OnItemLongClickListener(){
 
 			@Override
@@ -147,7 +161,7 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 			}
         	
         });
-		
+		*/
 		mButtonCompare = (Button) findViewById(R.id.Compare_selected_activities);
 		mButtonCompare.setOnClickListener(mOnClickCompare);
 
@@ -157,7 +171,13 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 		 
 		@Override
 		public void onClick(View v) {
-			
+			if( mSessionId1 == 0 && mSessionId2 == 0){
+				//do nothing
+				Toast toast = Toast.makeText(getApplicationContext(), 
+									"Choose 2 sessions to compare", 
+									Toast.LENGTH_SHORT);
+				toast.show();
+			}else{
 			/**
 			 * Called when Compare is clicked on
 			 */
@@ -166,6 +186,7 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 			intent.putExtra("SESSION_ID1", (int) mSessionId1);
 			intent.putExtra("SESSION_ID2", (int) mSessionId2);
 			startActivity(intent);
+			}
 			
 		}
 		
