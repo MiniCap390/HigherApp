@@ -346,11 +346,11 @@ public class MainActivity extends Activity implements RecordServiceListener {
 		List<DBContainers.StepInfo> current_step_infos = mRecSvc.getAllCurrentStepInfo();
 		int numberOfSteps = current_step_infos.size();
 		double lastStepAltitude = current_step_infos.get(numberOfSteps-1).getAltitude();
-		
-		double elapsedTimeSeconds = (mRecSvc.getElapsedTime() * 1000);
+
+		double elapsedTimeSeconds = (mRecSvc.getElapsedTime() / 1000);
 		
 		double avgSpeed = lastStepAltitude/elapsedTimeSeconds;
-		avgSpeed *= 60;
+
 		
 		mPresentAvgSpeed.setText(String.format("%02.2f", avgSpeed) + " m/s");
 		

@@ -57,7 +57,7 @@ public class DBAdapter {
 			// ///////////////////////////////////////////////////////////////////
 
 	private double getTotalAverageSpeed(int total_step, double duration) {
-		return ((total_step)/duration);
+		return ((total_step)/(duration/1000))*60;
 	}
 
 	private double getTotalEnergy() {		
@@ -340,8 +340,11 @@ public class DBAdapter {
 		
 		int session_id = getCurrentWorkoutID();
 		int totalStep = getTotalStep();
-		double duration = getTotalDuration(allCurrentSteps);// In Seconds
-		double average_speed = getTotalAverageSpeed(totalStep, duration); // In steps/sec
+		
+		//NEW UPDATEs
+		double duration = mElapsed_ms;// In ms
+		//UPDATED getTotalAverageSpeed METHOD
+		double average_speed = getTotalAverageSpeed(totalStep, duration); // In steps/MIN
 		double totalAltitudeMagnitude = getTotalAltitudeMagnitude(allCurrentSteps); // In wtv it is in StepInfo
 		double totalAltitude = getTotalAltitude(allCurrentSteps); // In wtv it is in StepInfo
 		double totalEnergy = getTotalEnergy(); 
@@ -677,7 +680,7 @@ public class DBAdapter {
 		
 		int session_id = getCurrentWorkoutID();
 		int totalStep = getTotalStep();
-		double duration = getTotalDuration(allCurrentSteps);// In Seconds
+		double duration = getTotalDuration(allCurrentSteps);// In Seconds--> wtf not use elaspsed time in ms?
 		double average_speed = getTotalAverageSpeed(totalStep, duration); // In steps/sec
 		double totalAltitudeMagnitude = getTotalAltitudeMagnitude(allCurrentSteps); // In wtv it is in StepInfo
 		double totalAltitude = getTotalAltitude(allCurrentSteps); // In wtv it is in StepInfo

@@ -926,6 +926,7 @@ public class RecordService extends Service {
 		// before it's closed manually (except extreme circumstances)
 		startForeground(R.string.id_notif_svc_record, makeNotification());
 		startNotificationUpdateTimer();
+		mStManager.calibrateHeight();
 		myDb.setNewRecording(0, 0);
 		myDb.start_workout();
 		updateNotification();

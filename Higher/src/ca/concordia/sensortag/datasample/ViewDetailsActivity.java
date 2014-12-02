@@ -90,7 +90,7 @@ public class ViewDetailsActivity extends Activity {
 		mDuration = (TextView) findViewById(R.id.textValueTime);
 		
 		mDate.setText(session.getDate());
-		mSteps.setText(session.getTotal_step());
+		mSteps.setText(String.valueOf(session.getTotal_step()));
 		mSpeed.setText(String.format("%02.2f", session.getAverage_speed()));
 		mEnergy.setText(String.format("%02.2f", session.getTotal_energy()));
 		mDistance.setText(String.format("%02.2f", session.getTotal_altitude()));
