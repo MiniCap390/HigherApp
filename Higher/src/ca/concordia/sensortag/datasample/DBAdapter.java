@@ -332,36 +332,44 @@ public class DBAdapter {
 	}
 	
 	private void insertRowSessionInfo() {
-		String where = DBConstants.STEP_INFO_SESSION_ID + "=" + getCurrentWorkoutID();
-		Cursor allCurrentSteps = db.query(true, DBConstants.TABLE_STEP_INFO,
-				DBConstants.STEP_INFO_ALL_KEYS, where, null, null, null, null,
-				null);
 		
-		int session_id = getCurrentWorkoutID();
-		int totalStep = getTotalStep();
-		
-		//NEW UPDATEs
-		double duration = mElapsed_ms;// In ms
-		//UPDATED getTotalAverageSpeed METHOD
-		double average_speed = getTotalAverageSpeed(totalStep, duration); // In steps/MIN
-		double totalAltitudeMagnitude = getTotalAltitudeMagnitude(allCurrentSteps); // In wtv it is in StepInfo
-		double totalAltitude = getTotalAltitude(allCurrentSteps); // In wtv it is in StepInfo
-		double totalEnergy = getTotalEnergy(); 
-		
-		ContentValues initialValues = new ContentValues();
-		initialValues.put(DBConstants.KEY_ROWID, session_id);
-		// No date because it is automatically put in
-		initialValues.put(DBConstants.SESSION_INFO_AVERAGE_SPEED, average_speed);
-		initialValues.put(DBConstants.SESSION_INFO_TOTAL_ENERGY, totalEnergy);
-		initialValues.put(DBConstants.SESSION_INFO_TOTAL_ALTITUDE_MAGNITUDE, totalAltitudeMagnitude);
-		initialValues.put(DBConstants.SESSION_INFO_TOTAL_ALTITUDE, totalAltitude);
-		initialValues.put(DBConstants.SESSION_INFO_TOTAL_STEP, totalStep);
-		initialValues.put(DBConstants.SESSION_INFO_TOTAL_DURATION, duration);
-		
-		allCurrentSteps.close();
-		
-		// Insert it into the database.
-		db.insert(DBConstants.TABLE_SESSION_INFO, null, initialValues);
+		if(checkIfStepInfoExists()) {
+			String where = DBConstants.STEP_INFO_SESSION_ID + "=" + getCurrentWorkoutID();
+			Cursor allCurrentSteps = db.query(true, DBConstants.TABLE_STEP_INFO,
+					DBConstants.STEP_INFO_ALL_KEYS, where, null, null, null, null,
+					null);
+			
+			int session_id = getCurrentWorkoutID();
+			int totalStep = getTotalStep();
+			
+			//NEW UPDATEs
+			double duration = mElapsed_ms;// In ms
+			//UPDATED getTotalAverageSpeed METHOD
+			double average_speed = getTotalAverageSpeed(totalStep, duration); // In steps/MIN
+			double totalAltitudeMagnitude = getTotalAltitudeMagnitude(allCurrentSteps); // In wtv it is in StepInfo
+			double totalAltitude = getTotalAltitude(allCurrentSteps); // In wtv it is in StepInfo
+			double totalEnergy = getTotalEnergy(); 
+			
+			ContentValues initialValues = new ContentValues();
+			initialValues.put(DBConstants.KEY_ROWID, session_id);
+			// No date because it is automatically put in
+			initialValues.put(DBConstants.SESSION_INFO_AVERAGE_SPEED, average_speed);
+			initialValues.put(DBConstants.SESSION_INFO_TOTAL_ENERGY, totalEnergy);
+			initialValues.put(DBConstants.SESSION_INFO_TOTAL_ALTITUDE_MAGNITUDE, totalAltitudeMagnitude);
+			initialValues.put(DBConstants.SESSION_INFO_TOTAL_ALTITUDE, totalAltitude);
+			initialValues.put(DBConstants.SESSION_INFO_TOTAL_STEP, totalStep);
+			initialValues.put(DBConstants.SESSION_INFO_TOTAL_DURATION, duration);
+			
+			allCurrentSteps.close();
+			
+			// Insert it into the database.
+			db.insert(DBConstants.TABLE_SESSION_INFO, null, initialValues);
+		} else {
+			if(!deleteCurrentWorkoutSession()) {
+				Log.d(TAG, "Current session failed to delete.");
+			}
+		}
+
 	}
 	
 	/**
@@ -376,6 +384,11 @@ public class DBAdapter {
 		newValues.put(DBConstants.WORKOUT_SESSION_END_TIME, getCurrentTime());
 		
 		db.update(DBConstants.TABLE_WORKOUT_SESSION, newValues, where, null);
+	}
+	
+	private boolean deleteCurrentWorkoutSession()
+	{
+	return db.delete(DBConstants.TABLE_WORKOUT_SESSION, DBConstants.KEY_ROWID + "=" + getCurrentWorkoutID(), null) > 0;
 	}
 	
 	//
@@ -544,6 +557,16 @@ public class DBAdapter {
 		insertBufferRowsStepInfo();
 		List<DBContainers.StepInfo> current_step_container = getAllCurrentRowStepInfo();
 		return current_step_container;
+	}
+	
+	public boolean checkIfStepInfoExists() {
+		String where = DBConstants.STEP_INFO_SESSION_ID + "=" + getCurrentWorkoutID();
+		Cursor steps = db.query(true, DBConstants.TABLE_STEP_INFO,
+		DBConstants.STEP_INFO_ALL_KEYS, where, null, null, null, null,
+		null);
+
+		return steps.getCount() != 0;
+
 	}
 	
 	public boolean checkIfWorkoutSessionsExist () {

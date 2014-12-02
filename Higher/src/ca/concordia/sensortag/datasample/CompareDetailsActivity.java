@@ -93,20 +93,20 @@ public class CompareDetailsActivity extends Activity {
 		txtAbsoluteDistance2 = (TextView) findViewById(R.id.textAbsoluteDistance2);
 
 		txtDate1.setText(String.valueOf(mSessionId1) + ": " +session1.getDate());
-		txtTotalTime1.setText(String.valueOf(session1.getTotal_duration()));
+		txtTotalTime1.setText(formatTime(session1.getTotal_duration()));
 		txtSteps1.setText(String.valueOf(session1.getTotal_step()));
-		txtSpeed1.setText(String.valueOf(session1.getAverage_speed()));
+		txtSpeed1.setText(String.format("%02.2f", session1.getAverage_speed()));
 		txtTotalEnergy1.setText(String.valueOf(session1.getTotal_energy()));
-		txtTotalDistance1.setText(String.valueOf(session1.getTotal_altitude()));
-		txtAbsoluteDistance1.setText(String.valueOf(session1.getTotal_altitude_magnitude()));
+		txtTotalDistance1.setText(String.format("%02.2f", session1.getTotal_altitude()));
+		txtAbsoluteDistance1.setText(String.format("%02.2f", session1.getTotal_altitude_magnitude()));
 		
 		txtDate2.setText(String.valueOf(mSessionId2) + ": " + session2.getDate());
-		txtTotalTime2.setText(String.valueOf(session2.getTotal_duration()));
+		txtTotalTime2.setText(formatTime(session2.getTotal_duration()));
 		txtSteps2.setText(String.valueOf(session2.getTotal_step()));
-		txtSpeed2.setText(String.valueOf(session2.getAverage_speed()));
+		txtSpeed2.setText(String.format("%02.2f", session2.getAverage_speed()));
 		txtTotalEnergy2.setText(String.valueOf(session2.getTotal_energy()));
-		txtTotalDistance2.setText(String.valueOf(session2.getTotal_altitude()));
-		txtAbsoluteDistance2.setText(String.valueOf(session2.getTotal_altitude_magnitude()));
+		txtTotalDistance2.setText(String.format("%02.2f", session2.getTotal_altitude()));
+		txtAbsoluteDistance2.setText(String.format("%02.2f", session2.getTotal_altitude_magnitude()));
 
 	}
 	private ServiceConnection mSvcConnection = new ServiceConnection() {
@@ -129,6 +129,24 @@ public class CompareDetailsActivity extends Activity {
 			mRecSvc = null;
 		}
 	};
+	
+	private String formatTime(double time_ms) {
+		final long HRS_TO_SEC = 3600;
+		final long HRS_TO_MIN = 60;
+		final long MIN_TO_SEC = 60;
+		
+		double time_s = time_ms / 1000;
+		int hours = (int)(time_s / HRS_TO_SEC);
+		
+		double time_s_mod_hour = time_s - (hours * HRS_TO_SEC);
+		int minutes = (int)(time_s_mod_hour / MIN_TO_SEC);
+		
+		double time_s_mod_min = time_s_mod_hour - (minutes * MIN_TO_SEC);
+		int seconds = (int)(time_s_mod_min);
+		
+		return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+	}
+	
 		public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId())
 	    {
