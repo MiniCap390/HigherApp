@@ -91,18 +91,18 @@ public class ViewDetailsActivity extends Activity {
 		
 		mDate.setText(session.getDate());
 		mSteps.setText(String.valueOf(session.getTotal_step()));
-
-//		mSpeed.setText(String.format("%02.2f", session.getAverage_speed()));
+//		mSpeed.setText(String.valueOf(session.getAverage_speed()));
+		mEnergy.setText(String.valueOf(session.getTotal_energy()));
+		mDistance.setText(String.valueOf(session.getTotal_altitude()));
+		mDisplacement.setText(String.valueOf(session.getTotal_altitude()));
+		mDuration.setText(formatTime(session.getTotal_duration()));
+		
+		mSpeed.setText(String.format("%02.2f", session.getAverage_speed()));
 //		mEnergy.setText(String.format("%02.2f", session.getTotal_energy()));
 //		mDistance.setText(String.format("%02.2f", session.getTotal_altitude()));
 //		mDisplacement.setText(String.format("%02.2f", session.getTotal_altitude()));
 //		mDuration.setText(String.format("%02.2f", session.getTotal_duration()));
-
-		mSpeed.setText(String.valueOf(session.getAverage_speed()));
-		mEnergy.setText(String.valueOf(session.getTotal_energy()));
-		mDistance.setText(String.valueOf(session.getTotal_altitude()));
-		mDisplacement.setText(String.valueOf(session.getTotal_altitude()));
-		mDuration.setText(String.valueOf(session.getTotal_duration()));
+		
 	}
 	private ServiceConnection mSvcConnection = new ServiceConnection() {
 		/**
@@ -141,6 +141,24 @@ public class ViewDetailsActivity extends Activity {
 		}
 		
 	};
+	
+	private String formatTime(double time_ms) {
+		final long HRS_TO_SEC = 3600;
+		final long HRS_TO_MIN = 60;
+		final long MIN_TO_SEC = 60;
+		
+		double time_s = time_ms / 1000;
+		int hours = (int)(time_s / HRS_TO_SEC);
+		
+		double time_s_mod_hour = time_s - (hours * HRS_TO_SEC);
+		int minutes = (int)(time_s_mod_hour / MIN_TO_SEC);
+		
+		double time_s_mod_min = time_s_mod_hour - (minutes * MIN_TO_SEC);
+		int seconds = (int)(time_s_mod_min);
+		
+		return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+	}
+	
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId())
 	    {
