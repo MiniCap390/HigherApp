@@ -17,15 +17,12 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 public class GraphActivity extends Activity {
 	static public final String TAG = "GraphAct"; // Tag for Android's logcat
-	private Context mContext;
-	private List<DBContainers.StepInfo> liStepInfo;
 	private int mSessionIndex;
+	private GraphViewData[] stepData;
 	/* Service */
 	private RecordService.Binder mRecSvc = null;
 	BluetoothDevice mBtDevice = null;
@@ -39,22 +36,19 @@ public class GraphActivity extends Activity {
 		
 		List<DBContainers.StepInfo> liStepInfo = mRecSvc.getAllStepInfo(mSessionIndex);
 		
-//		mContext = getApplicationContext();
-//		liStepInfo = mRecSvc.getAllStepInfo(mSessionIndex);
-		
 		//Add steps: altitude & timestamp as series data
-		GraphViewData[] stepData = new GraphViewData[]{   //X, Y
-										new GraphViewData(0.00, 0.00),
-//										new GraphViewData(2.00, 3.00),
-//										new GraphViewData(3.00, 4.00),
-//										new GraphViewData(4.00, 3.00)
-										};
-
-		for (int i = 0; i<liStepInfo.size() - 1; i++){
-			double time = liStepInfo.get(i).getTime_stamp()*1000;
-			stepData[i] = new GraphViewData(time, liStepInfo.get(i).getAltitude());
+		if (liStepInfo.size() != 0){
+			stepData = new GraphViewData[liStepInfo.size()];
+	
+			for (int i = (liStepInfo.size() - 1); i > -1 ; i--){
+				double time = liStepInfo.get(i).getTime_stamp()/1000;
+				double altitude = liStepInfo.get(i).getAltitude();
+				stepData[i] = new GraphViewData(time, altitude);
+				//JAN: this is weird
+			}
+		}else{
+			stepData = new GraphViewData[]{new GraphViewData(0.0, 0.0)};
 		}
-
 		GraphViewSeries stepSeries = new GraphViewSeries( stepData );
 		GraphView posGraph = new LineGraphView(this, "Position");
 		Log.i(TAG, "Just created posGraph");
