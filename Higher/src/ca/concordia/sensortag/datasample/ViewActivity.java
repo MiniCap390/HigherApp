@@ -103,20 +103,6 @@ public class ViewActivity extends Activity {
 		}
 	};
 	
-	/**
-	 * Called after service is connected to get the Workouts from the DB
-	 */
-	private void setList(RecordService.Binder service){
-/*		liSessions.add("Testing testing!");
-		List<String> temp = service.getAllSessions();	//Construct temporary list of events
-		Collections.reverse(temp);					//Reverse the order so that the most recent is first
-		for(String i: temp) {						//Add each element in the new order to the StepEvents list
-			liSessions.add(i);
-			mListAdapter.notifyDataSetChanged();	//Notify the adapter
-		}	
-*/
-	}
-	
 	
 	/**
 	 * Called in onCreate(). Sets up the GUI before the data is shown, and gets references to all

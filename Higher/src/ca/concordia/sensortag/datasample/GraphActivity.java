@@ -25,35 +25,36 @@ public class GraphActivity extends Activity {
 	static public final String TAG = "GraphAct"; // Tag for Android's logcat
 	private Context mContext;
 	private List<DBContainers.StepInfo> liStepInfo;
-	private int mSessionIndex = 0;
+	private int mSessionIndex;
 	/* Service */
 	private RecordService.Binder mRecSvc = null;
 	BluetoothDevice mBtDevice = null;
-	/**
-	public GraphActivity (int index) {
-		mSessionIndex = index;
-		setupGui();
-	}
-	public GraphActivity () {
-		setupGui();
-	}
-	**/
-	public void setupGui(){
+	
+	private void setupGui(){
+		
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			mSessionIndex = extras.getInt("SESSION_ID");
+		}
+		
+		List<DBContainers.StepInfo> liStepInfo = mRecSvc.getAllStepInfo(mSessionIndex);
+		
 //		mContext = getApplicationContext();
 //		liStepInfo = mRecSvc.getAllStepInfo(mSessionIndex);
 		
 		//Add steps: altitude & timestamp as series data
 		GraphViewData[] stepData = new GraphViewData[]{   //X, Y
-										new GraphViewData(1.00, 2.00),
-										new GraphViewData(2.00, 3.00),
-										new GraphViewData(3.00, 4.00),
-										new GraphViewData(4.00, 3.00)};
-		/**
+										new GraphViewData(0.00, 0.00),
+//										new GraphViewData(2.00, 3.00),
+//										new GraphViewData(3.00, 4.00),
+//										new GraphViewData(4.00, 3.00)
+										};
+
 		for (int i = 0; i<liStepInfo.size() - 1; i++){
 			double time = liStepInfo.get(i).getTime_stamp()*1000;
 			stepData[i] = new GraphViewData(time, liStepInfo.get(i).getAltitude());
 		}
-		**/
+
 		GraphViewSeries stepSeries = new GraphViewSeries( stepData );
 		GraphView posGraph = new LineGraphView(this, "Position");
 		Log.i(TAG, "Just created posGraph");
@@ -66,7 +67,6 @@ public class GraphActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_graph);
-		setupGui();
 	}
 	@Override
 	protected void onResume() {
@@ -99,6 +99,7 @@ public class GraphActivity extends Activity {
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			Log.i(TAG, "RecordService connected.");
 			mRecSvc = (RecordService.Binder) service;
+			setupGui();
 		}
 
 		/**

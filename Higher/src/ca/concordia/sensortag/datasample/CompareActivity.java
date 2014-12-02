@@ -28,6 +28,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -54,6 +55,8 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 	//GUI list of steps , Init to non-null
 	private List<String> liSessions = new ArrayList<String>();
 	private Button mButtonCompare;
+	private int mSessionId1 = 0;
+	private int mSessionId2 = 0;
 	
 	/**
 	 * Called by Android when the Activity is first created. This sets up the GUI for the Activity,
@@ -66,7 +69,6 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_compare);
-		setupGui();
 	}
 	
 	/**
@@ -94,9 +96,7 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			Log.i(TAG, "RecordService connected.");
 			mRecSvc = (RecordService.Binder) service;
-			mRecSvc.addStepListener(CompareActivity.this);
-			//Call repopulation of the List
-			setList(mRecSvc);
+			setupGui();
 			
 		}
 
@@ -111,20 +111,6 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 	};
 	
 	/**
-	 * Called after service is connected to get the Workouts from the DB
-	 */
-	private void setList(RecordService.Binder service){
-		liSessions.add("Testing testing!");
-		List<String> temp = service.getAllSessions();	//Construct temporary list of events
-		Collections.reverse(temp);					//Reverse the order so that the most recent is first
-		for(String i: temp) {						//Add each element in the new order to the StepEvents list
-			liSessions.add(i);
-			mListAdapter.notifyDataSetChanged();	//Notify the adapter
-		}	
-	}
-	
-	
-	/**
 	 * Called in onCreate(). Sets up the GUI before the data is shown, and gets references to all
 	 * the GUI elements.
 	 */
@@ -132,31 +118,38 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 		// Show the "back"/"up" button on the Action Bar (top left corner)
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setDisplayShowTitleEnabled(false);
-		
-		mButtonCompare = (Button) findViewById(R.id.Compare_selected_activities);
-		mButtonCompare.setOnClickListener(mOnClickCompare);
-		
-		mListAdapter =
-                new ArrayAdapter<String>(
-                        this, // The current context (this activity)
-                        R.layout.list_item_step, // The name of the layout ID.
-                        R.id.list_item_step_textview, // The ID of the textview to populate.
-                        liSessions);
-		
-		ListView listView = (ListView) findViewById(R.id.compare_list);
-        listView.setAdapter(mListAdapter);
+				
+		Cursor c = mRecSvc.getAllWorkoutSessionsCursor();
+				
+		String[] from = new String[] {"date"};
+		int[] to = new int[] {R.id.list_item_step_textview};
+				
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(getApplicationContext(),
+				R.layout.list_item_step, c, from, to, 0);
+
+		final ListView listView = (ListView) findViewById(R.id.compare_list);
+		listView.setAdapter(adapter);
+
         listView.setChoiceMode(listView.CHOICE_MODE_MULTIPLE);
         listView.setOnItemLongClickListener(new OnItemLongClickListener(){
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				if(mSessionId1 == 0){
+				mSessionId1 = (int) id;
 						return false;
-				// TODO Auto-generated method stub
+				}else{
+					mSessionId2 = (int) id;
+					return false;
+				}
 
 			}
         	
         });
+		
+		mButtonCompare = (Button) findViewById(R.id.Compare_selected_activities);
+		mButtonCompare.setOnClickListener(mOnClickCompare);
 
 	}
 	private Button.OnClickListener mOnClickCompare = new Button.OnClickListener() {
@@ -166,10 +159,12 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 		public void onClick(View v) {
 			
 			/**
-			 * Called when the Graph button is clicked. Displays position graph
+			 * Called when Compare is clicked on
 			 */
-			Log.i(TAG, "Starting Graph activity.");
+			Log.i(TAG, "Starting CompareDetails Activity.");
 			Intent intent = new Intent(CompareActivity.this, CompareDetailsActivity.class);
+			intent.putExtra("SESSION_ID1", (int) mSessionId1);
+			intent.putExtra("SESSION_ID2", (int) mSessionId2);
 			startActivity(intent);
 			
 		}
