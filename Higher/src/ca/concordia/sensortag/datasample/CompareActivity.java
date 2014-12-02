@@ -188,7 +188,7 @@ public class CompareActivity extends Activity implements RecordServiceListener {
 		public void onClick(View v) {
 
 			Log.i(TAG, "mSessionId1: "+ mSessionId1 + " mSessionId2: "+ mSessionId2);
-			if( mSessionId1 == 0 || mSessionId2 == 0){
+			if( (mSessionId1 == 0) || (mSessionId2 == 0) || (mSessionId1 == mSessionId2)){
 				//do nothing
 				Toast toast = Toast.makeText(getApplicationContext(), 
 									"Choose 2 sessions to compare", 
