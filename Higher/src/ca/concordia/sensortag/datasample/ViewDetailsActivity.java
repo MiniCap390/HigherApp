@@ -90,12 +90,12 @@ public class ViewDetailsActivity extends Activity {
 		mDuration = (TextView) findViewById(R.id.textValueTime);
 		
 		mDate.setText(session.getDate());
-		mSteps.setText(session.getTotal_step());
-		mSpeed.setText(String.format("%02.2f", session.getAverage_speed()));
-		mEnergy.setText(String.format("%02.2f", session.getTotal_energy()));
-		mDistance.setText(String.format("%02.2f", session.getTotal_altitude()));
-		mDisplacement.setText(String.format("%02.2f", session.getTotal_altitude()));
-		mDuration.setText(String.format("%02.2f", session.getTotal_duration()));
+		mSteps.setText(String.valueOf(session.getTotal_step()));
+		mSpeed.setText(String.valueOf(session.getAverage_speed()));
+		mEnergy.setText(String.valueOf(session.getTotal_energy()));
+		mDistance.setText(String.valueOf(session.getTotal_altitude()));
+		mDisplacement.setText(String.valueOf(session.getTotal_altitude()));
+		mDuration.setText(String.valueOf(session.getTotal_duration()));
 	}
 	private ServiceConnection mSvcConnection = new ServiceConnection() {
 		/**
