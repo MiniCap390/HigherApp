@@ -128,6 +128,7 @@ public class ViewDetailsActivity extends Activity {
 			 */
 			Log.i(TAG, "Starting Graph activity.");
 			Intent intent = new Intent(ViewDetailsActivity.this, GraphActivity.class);
+			intent.putExtra("SESSION_ID", SESSION_ID);
 			startActivity(intent);
 			
 		}
