@@ -100,15 +100,7 @@ application do (permissions which the user has to accept when installing the app
             </intent-filter>
         </activity>
 
-        <!--
-        This activity reads the recorded data so far, analyses it, and shows the analysed data on-
-        screen.
-        -->
-        <activity
-            android:name="ca.concordia.sensortag.datasample.AnalyzeActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        
+                
          <!--
         This activity reads the recorded data so far, analyses it, and shows the analysed data on-
         screen.
@@ -118,31 +110,6 @@ application do (permissions which the user has to accept when installing the app
             android:screenOrientation="portrait" >
         </activity>
         
-        <!--
-        This is the "main" activity for setting up the Data Sampling application. This is only
-        launched by the DeviceSelectActivity, so we don't have any special properties to give it
-        here, other than to force portrait mode (simply because we haven't created a landscape
-        layout or put code to avoid re-doing SensorTag initialisation when you change from portrait
-        to landscape, which destroys and recreates the activity).
-        -->
-        <activity
-            android:name="ca.concordia.sensortag.datasample.RecordActivity"
-            android:parentActivityName="ca.concordia.sensortag.datasample.DeviceSelectActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        
-        
-        <activity
-            android:name="ca.concordia.sensortag.datasample.TestActivity"
-            android:label="Step Counter Test App"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <!-- Allows this Activity to launch when the application is launched. -->
-                <!--action android:name="android.intent.action.MAIN" /-->
-                <!-- Show this Activity's icon in the Launcher (Home Screen/Application drawer). -->
-                <!--category android:name="android.intent.category.LAUNCHER" /-->
-            </intent-filter>
-        </activity>
         <activity android:name="ca.concordia.sensortag.datasample.SettingsActivity"
             	  android:screenOrientation="portrait">
         </activity>
@@ -155,6 +122,13 @@ application do (permissions which the user has to accept when installing the app
             	  android:screenOrientation="portrait">
         </activity>
         
+        <!--
+        This is the "main" activity for setting up the Higher application. This is only
+        launched by the DeviceSelectActivity, so we don't have any special properties to give it
+        here, other than to force portrait mode (simply because we haven't created a landscape
+        layout or put code to avoid re-doing SensorTag initialisation when you change from portrait
+        to landscape, which destroys and recreates the activity).
+        -->
         <activity android:name="ca.concordia.sensortag.datasample.MainActivity"
             	  android:screenOrientation="portrait">
         </activity>

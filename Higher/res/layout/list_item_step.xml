@@ -8,5 +8,6 @@
     android:layout_marginRight="16dp"
     android:layout_marginLeft="16dp"
     android:textColor="#000"
+    android:textColorHighlight="#2b9bc3"
     android:textAppearance="?android:textAppearanceLarge"
     android:id="@+id/list_item_step_textview" />

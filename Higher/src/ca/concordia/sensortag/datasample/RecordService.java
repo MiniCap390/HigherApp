@@ -378,7 +378,7 @@ public class RecordService extends Service {
 
 		// Defines an Intent that can be used when the Notification is clicked.
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this,
-				RecordActivity.class), 0);
+				MainActivity.class), 0);
 		
 		Notification notif = new Notification.Builder(this)
 				.setSmallIcon(R.drawable.ic_launcher) // Note: this is necessary for it to work!
