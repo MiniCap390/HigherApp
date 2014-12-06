@@ -83,36 +83,44 @@
             style="@style/title_cell"
             android:layout_width="wrap_content"
             android:layout_height="34dp"
-            android:gravity="center" 
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="@dimen/cell_padding_compare"
+            android:paddingTop="@dimen/cell_padding_compare"
             android:text="@string/act_anal_time" />
 
     </TableRow>
     
-        <TableRow
-        android:id="@+id/text_tableRow1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        <LinearLayout
+            android:id="@+id/text_tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
 
         <TextView
             android:id="@+id/textTotalTime1"
             style="@style/value_cell"
-            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="34dp"
-            android:text=""
+            android:layout_weight="1"
+            android:background="@drawable/border"
             android:gravity="center"
-            android:layout_weight="1" />
+            android:paddingBottom="@dimen/cell_padding_compare"
+            android:paddingTop="@dimen/cell_padding_compare"
+            android:text="" />
+
         <TextView
             android:id="@+id/textTotalTime2"
             style="@style/value_cell"
-            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="34dp"
-            android:text="" 
+            android:layout_weight="1"
+            android:background="@drawable/border"
             android:gravity="center"
-            android:layout_weight="1"/>
+            android:paddingBottom="@dimen/cell_padding_compare"
+            android:paddingTop="@dimen/cell_padding_compare"
+            android:text="" />
 
-    </TableRow>
+    </LinearLayout>
 
     <TableRow
         android:id="@+id/tableRow2"
@@ -127,36 +135,43 @@
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:gravity="center"
+            android:paddingBottom="@dimen/cell_padding_compare"
+            android:paddingTop="@dimen/cell_padding_compare"
             android:text="@string/act_anal_events" />
-
 
     </TableRow>
     
     
-    <TableRow
+    <LinearLayout
         android:id="@+id/text_tableRow2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
+
         <TextView
             android:id="@+id/textSteps1"
             style="@style/value_cell"
-            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="34dp"
-            android:text="" 
+            android:layout_weight="1"
+            android:background="@drawable/border"
             android:gravity="center"
-            android:layout_weight="1"/>
+            android:paddingBottom="@dimen/cell_padding_compare"
+            android:paddingTop="@dimen/cell_padding_compare"
+            android:text="" />
+
         <TextView
             android:id="@+id/textSteps2"
             style="@style/value_cell"
-            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="34dp"
-            android:text="" 
+            android:layout_weight="1"
+            android:background="@drawable/border"
             android:gravity="center"
-            android:layout_weight="1"/>
+            android:paddingBottom="@dimen/cell_padding_compare"
+            android:paddingTop="@dimen/cell_padding_compare"
+            android:text="" />
 
-    </TableRow>
+    </LinearLayout>
 
     <TableRow
         android:id="@+id/tableRow3"
@@ -170,11 +185,14 @@
             style="@style/title_cell"
             android:layout_width="wrap_content"
             android:layout_height="34dp"
+            android:gravity="center"
+            android:paddingBottom="@dimen/cell_padding_compare"
+            android:paddingTop="@dimen/cell_padding_compare"
             android:text="@string/act_anal_freq" />
 
     </TableRow>
     
-            <TableRow
+            <LinearLayout
         android:id="@+id/test_tableRow3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
@@ -182,23 +200,28 @@
         <TextView
             android:id="@+id/textSpeed1"
             style="@style/value_cell"
-            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="34dp"
-            android:text="" 
+            android:layout_weight="1"
+            android:background="@drawable/border"
             android:gravity="center"
-            android:layout_weight="1"/>
+            android:paddingBottom="@dimen/cell_padding_compare"
+            android:paddingTop="@dimen/cell_padding_compare"
+            android:text="" />
+
         <TextView
             android:id="@+id/textSpeed2"
             style="@style/value_cell"
-            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="34dp"
-            android:text=""
+            android:layout_weight="1"
+            android:background="@drawable/border"
             android:gravity="center"
-            android:layout_weight="1" />
+            android:paddingBottom="@dimen/cell_padding_compare"
+            android:paddingTop="@dimen/cell_padding_compare"
+            android:text="" />
 
-    </TableRow>
+    </LinearLayout>
 
     <TableRow
         android:id="@+id/tableRow4"
@@ -213,11 +236,12 @@
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:gravity="center"
+            android:paddingBottom="@dimen/cell_padding_compare"
+            android:paddingTop="@dimen/cell_padding_compare"
             android:text="@string/act_anal_energy" />
 
-
     </TableRow>
-            <TableRow
+            <LinearLayout
         android:id="@+id/text_tableRow4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
@@ -225,22 +249,28 @@
         <TextView
             android:id="@+id/textEnergy1"
             style="@style/value_cell"
-            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="34dp"
-            android:text="" 
+            android:layout_weight="1"
+            android:background="@drawable/border"
             android:gravity="center"
-            android:layout_weight="1"/>
+            android:paddingBottom="@dimen/cell_padding_compare"
+            android:paddingTop="@dimen/cell_padding_compare"
+            android:text="" />
+
         <TextView
             android:id="@+id/textEnergy2"
             style="@style/value_cell"
-            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="34dp"
-            android:text="" 
+            android:layout_weight="1"
+            android:background="@drawable/border"
             android:gravity="center"
-            android:layout_weight="1"/>
-    </TableRow>
+            android:paddingBottom="@dimen/cell_padding_compare"
+            android:paddingTop="@dimen/cell_padding_compare"
+            android:text="" />
+
+    </LinearLayout>
 
     <TableRow
         android:id="@+id/tableRow5"
@@ -254,12 +284,13 @@
             style="@style/title_cell"
             android:layout_width="wrap_content"
             android:layout_height="34dp"
-            android:text="@string/act_anal_total_distance" 
-            android:gravity="center"/>
-
+            android:gravity="center"
+            android:paddingBottom="@dimen/cell_padding_compare"
+            android:paddingTop="@dimen/cell_padding_compare"
+            android:text="@string/act_anal_total_distance" />
 
     </TableRow>
-            <TableRow
+            <LinearLayout
         android:id="@+id/text_tableRow5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
@@ -267,22 +298,28 @@
         <TextView
             android:id="@+id/textTotalDistance1"
             style="@style/value_cell"
-            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="" 
+            android:layout_weight="1"
+            android:background="@drawable/border"
             android:gravity="center"
-            android:layout_weight="1"/>
+            android:paddingBottom="@dimen/cell_padding_compare"
+            android:paddingTop="@dimen/cell_padding_compare"
+            android:text="" />
+
         <TextView
             android:id="@+id/textTotalDistance2"
             style="@style/value_cell"
-            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="" 
+            android:layout_weight="1"
+            android:background="@drawable/border"
             android:gravity="center"
-            android:layout_weight="1"/>
-    </TableRow>
+            android:paddingBottom="@dimen/cell_padding_compare"
+            android:paddingTop="@dimen/cell_padding_compare"
+            android:text="" />
+
+    </LinearLayout>
 
     <TableRow
         android:id="@+id/tableRow6"
@@ -296,12 +333,13 @@
             style="@style/title_cell"
             android:layout_width="wrap_content"
             android:layout_height="34dp"
-            android:text="@string/act_anal_absolute_distance" 
-            android:gravity="center"/>
-
+            android:gravity="center"
+            android:paddingBottom="@dimen/cell_padding_compare"
+            android:paddingTop="@dimen/cell_padding_compare"
+            android:text="@string/act_anal_absolute_distance" />
 
     </TableRow>
-    <TableRow
+    <LinearLayout
         android:id="@+id/text_tableRow6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
@@ -309,21 +347,27 @@
         <TextView
             android:id="@+id/textAbsoluteDistance1"
             style="@style/value_cell"
-            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="" 
+            android:layout_weight="1"
+            android:background="@drawable/border"
             android:gravity="center"
-            android:layout_weight="1"/>
+            android:paddingBottom="@dimen/cell_padding_compare"
+            android:paddingTop="@dimen/cell_padding_compare"
+            android:text="" />
+
         <TextView
             android:id="@+id/textAbsoluteDistance2"
             style="@style/value_cell"
-            android:background="@drawable/border"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="" 
+            android:layout_weight="1"
+            android:background="@drawable/border"
             android:gravity="center"
-            android:layout_weight="1"/>
-    </TableRow>
+            android:paddingBottom="@dimen/cell_padding_compare"
+            android:paddingTop="@dimen/cell_padding_compare"
+            android:text="" />
+
+    </LinearLayout>
 </TableLayout>
 </RelativeLayout>

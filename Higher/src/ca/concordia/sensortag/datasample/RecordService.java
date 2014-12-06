@@ -21,7 +21,6 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Handler;
 import android.os.IBinder;
@@ -417,7 +416,6 @@ public class RecordService extends Service {
 	
 	private String formatTime(long time_ms) {
 		final long HRS_TO_SEC = 3600;
-		final long HRS_TO_MIN = 60;
 		final long MIN_TO_SEC = 60;
 		
 		long time_s = time_ms / SEC_TO_MSEC;
@@ -1028,8 +1026,6 @@ public class RecordService extends Service {
 
 		Log.i(TAG, "Clearing all data.");
 		Toast.makeText(this, mAppName + ": Clearing all data.", Toast.LENGTH_SHORT).show();
-		
-		myDb.deleteAllTableValues();
 		
 		myDb.setStatus(DBAdapter.Status.NOT_STARTED);
 		myDb.setNewRecording(myDb.getRecordDuration(), myDb.getRecordMaxSamples());

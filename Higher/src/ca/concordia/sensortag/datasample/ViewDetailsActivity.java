@@ -144,7 +144,6 @@ public class ViewDetailsActivity extends Activity {
 	
 	private String formatTime(double time_ms) {
 		final long HRS_TO_SEC = 3600;
-		final long HRS_TO_MIN = 60;
 		final long MIN_TO_SEC = 60;
 		
 		double time_s = time_ms / 1000;

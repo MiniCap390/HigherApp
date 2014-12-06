@@ -7,7 +7,6 @@
 package ca.concordia.sensortag.datasample;
 
 import java.util.List;
-
 import ca.concordia.sensortag.datasample.RecordService.RecordServiceListener;
 import ca.concordia.sensortag.datasample.RecordService.Status;
 import android.app.Activity;
@@ -19,23 +18,13 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.SystemClock;
-import android.text.Editable;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnFocusChangeListener;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.Chronometer;
-import android.widget.CompoundButton;
 import android.widget.ToggleButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
-import android.widget.EditText;
-import android.widget.Toast;
 
 /**
  * This is the main activity that allows setting up a recording session and recording data. This

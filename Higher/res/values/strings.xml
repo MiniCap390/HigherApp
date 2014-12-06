@@ -28,9 +28,9 @@
     <string name="act_anal_events">Steps taken</string>
     <string name="act_anal_freq">Steps per minute</string>
     <string name="act_anal_average">Average</string>
-    <string name="act_anal_energy">Energy</string>
-    <string name="act_anal_total_distance">Total Distance</string>
-    <string name="act_anal_absolute_distance">Absolute Distance</string>
+    <string name="act_anal_energy">Energy (Calories)</string>
+    <string name="act_anal_total_distance">Total Distance (m)</string>
+    <string name="act_anal_absolute_distance">Absolute Distance (m)</string>
     <string name="act_samp_button_view">Step View</string>
     
     

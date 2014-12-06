@@ -178,7 +178,7 @@ public class DBConstants {
 	public static final String CREATE_SESSION_INFO_SQL =
 			"create table " + TABLE_SESSION_INFO
 			+ " (" + KEY_ROWID + " integer primary key autoincrement, "
-			+ SESSION_INFO_DATE + " text default (date('now','localtime')), "
+			+ SESSION_INFO_DATE + " text default (datetime('now','localtime')), "
 			+ SESSION_INFO_AVERAGE_SPEED + " double not null, "
 			+ SESSION_INFO_TOTAL_ENERGY + " double not null, "
 			+ SESSION_INFO_TOTAL_ALTITUDE_MAGNITUDE + " double not null,"

@@ -1,15 +1,6 @@
 package ca.concordia.sensortag.datasample;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import android.app.Activity;
-import android.app.ListActivity;
-import android.app.LoaderManager;
-import ca.concordia.sensortag.datasample.RecordService.RecordServiceListener;
-import ca.concordia.sensortag.datasample.RecordService.Status;
-import android.bluetooth.BluetoothDevice;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -17,30 +8,15 @@ import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.text.Editable;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnFocusChangeListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
-import android.widget.EditText;
-import android.widget.Toast;
+
 
 public class ViewActivity extends Activity {
 	static public final String TAG = "ViewAct"; // Tag for Android's logcat
@@ -48,8 +24,6 @@ public class ViewActivity extends Activity {
 	/* Service */
 	private RecordService.Binder mRecSvc = null;
 	
-	//GUI list of workouts , Init to non-null
-	private List<String> liSessions = new ArrayList<String>();
 	
 	/**
 	 * Called by Android when the Activity is first created. This sets up the GUI for the Activity,

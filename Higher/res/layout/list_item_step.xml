@@ -4,5 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:gravity="center_vertical"
+    android:gravity="center"
+    android:layout_marginRight="16dp"
+    android:layout_marginLeft="16dp"
+    android:textColor="#000"
+    android:textAppearance="?android:textAppearanceLarge"
     android:id="@+id/list_item_step_textview" />

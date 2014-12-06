@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ca.concordia.sensortag.datasample.DBContainers.SessionInfo;
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -49,10 +50,10 @@ public class DBAdapter {
 		return weight * GRAVITY_ACCEL * altitudeMagnitude * .239;
 	}
 	
-			//
-			// ///////////////////////////////////////////////////////////////////
-			// Function that calculate the values for the SessionInfo Table
-			// ///////////////////////////////////////////////////////////////////
+	//
+	// ///////////////////////////////////////////////////////////////////
+	// Functions that calculate the values for the SessionInfo Table
+	// ///////////////////////////////////////////////////////////////////
 
 	private double getTotalAverageSpeed(int total_step, double duration) {
 		return (((total_step)/(duration/1000))*60);
@@ -100,8 +101,7 @@ public class DBAdapter {
 	private double getTotalAltitude(Cursor allCurrentSteps) {
 
 		double totalAltitude = 0;
-		//Don't need to read the first altitude value as it's calibrated to 0
-
+		// Step 1 is always the point of reference of 0 m
 		
 		//Move to last cursor, get the last altitude recorded
 		if (allCurrentSteps.moveToLast()) {
@@ -109,7 +109,7 @@ public class DBAdapter {
 					.getDouble(DBConstants.COL_STEP_INFO_ALTITUDE);
 		}
 		
-		return totalAltitude;
+		return totalAltitude; // = the altitude at the last step
 	}
 	
 	private int getTotalStep() {
@@ -122,25 +122,21 @@ public class DBAdapter {
 		return count;
 	}
 	
-	private double getTotalDuration(Cursor allCurrentSteps) { // in seconds
+	private double getTotalDuration() { // in seconds
 
-		boolean flag = true;
-		if (allCurrentSteps != null) {
-			flag = allCurrentSteps.moveToLast();
-		}
-		double totalDuration = 0;
-		if (flag) {
-			totalDuration = allCurrentSteps
-					.getDouble(DBConstants.COL_STEP_INFO_ELAPSED_TIME);
-		}
-		return getElapsedTime();//totalDuration;
+		return getElapsedTime();
 	}
 	
-			//
-			// ///////////////////////////////////////////////////////////////////
-			// General Utility methods 
-			// ///////////////////////////////////////////////////////////////////
-	
+	//
+	// ///////////////////////////////////////////////////////////////////
+	// General Utility methods 
+	// ///////////////////////////////////////////////////////////////////
+
+	/**
+	 * @returnS a Cursor containing the user settings of the one
+	 * and only user
+	 * @author Phohawkenics
+	 */
 	private Cursor getUserSetting() {
 		// Hard coded to 1 since only 1 user
 		String where = DBConstants.KEY_ROWID + "=1";
@@ -178,20 +174,8 @@ public class DBAdapter {
 		today.setToNow();
 		return today.format("%k:%M:%S");
 	}
-	
-	/**
-	 * @returns a cursor containing all the rows of the StepInfo Table
-	 *  (might be dead code)
-	 */
-	private Cursor getAllCurrentRowStepInfoCursor() {
-		insertBufferRowsStepInfo();
-		Cursor c = db.query(true, DBConstants.TABLE_STEP_INFO,
-				DBConstants.STEP_INFO_ALL_KEYS, null, null, null, null, null,
-				null);
 
-		return c;
-	}
-
+	@SuppressLint("DefaultLocale")
 	private String formatTime(double time_ms) {
 		final long HRS_TO_SEC = 3600;
 		final long MIN_TO_SEC = 60;
@@ -269,32 +253,10 @@ public class DBAdapter {
 		return current_session_container;
 	}
 	
-	/**
-	 * Inserts all the steps in the buffer in to the StepInfo table
-	 * 
-	 * @author Phohawkenics
-	 */
-	private void insertBufferRowsStepInfo() {
-		if (stepContainer != null) {
-			for (DBContainers.StepInfo current_step : stepContainer) {
-				ContentValues initialValues = new ContentValues();
-				initialValues.put(DBConstants.STEP_INFO_SESSION_ID,
-						getCurrentWorkoutID());		//Temp change me to workout session info ** 1 => getCurrentWorkoutID()
-				initialValues.put(DBConstants.STEP_INFO_ELAPSED_TIME,
-						current_step.getTime_stamp());
-				initialValues.put(DBConstants.STEP_INFO_ALTITUDE, 
-						current_step.getAltitude());
-				// Insert it into the database.
-				db.insert(DBConstants.TABLE_STEP_INFO, null, initialValues);
-			}
-			stepContainer.clear();
-		}
-	}
-	
-			//
-			// ///////////////////////////////////////////////////////////////////
-			// The core insert functions for each table
-			// ///////////////////////////////////////////////////////////////////
+	//
+	// ///////////////////////////////////////////////////////////////////
+	// The core insert functions for each table
+	// ///////////////////////////////////////////////////////////////////
 	
 	
 	private void insertRowIntoUser(String name) {
@@ -318,16 +280,6 @@ public class DBAdapter {
 		db.insert(DBConstants.TABLE_WORKOUT_SESSION, null, initialValues);
 	}
 	
-	private void insertRowStepInfo(double altitude) {
-		ContentValues initialValues = new ContentValues();
-		initialValues.put(DBConstants.STEP_INFO_SESSION_ID, getCurrentWorkoutID());
-		// No start time because it is automatically put in
-		initialValues.put(DBConstants.STEP_INFO_ALTITUDE, altitude);
-		
-		// Insert it into the database.
-		db.insert(DBConstants.TABLE_STEP_INFO, null, initialValues);
-	}
-	
 	private void insertRowSessionInfo() {
 		
 		if(checkIfStepInfoExists()) {
@@ -339,9 +291,7 @@ public class DBAdapter {
 			int session_id = getCurrentWorkoutID();
 			int totalStep = getTotalStep();
 			
-			//NEW UPDATEs
-			double duration = mElapsed_ms;// In ms
-			//UPDATED getTotalAverageSpeed METHOD
+			double duration = getTotalDuration();// In ms
 			double average_speed = getTotalAverageSpeed(totalStep, duration); // In steps/MIN
 			double totalAltitudeMagnitude = getTotalAltitudeMagnitude(allCurrentSteps); // In wtv it is in StepInfo
 			double totalAltitude = getTotalAltitude(allCurrentSteps); // In wtv it is in StepInfo
@@ -367,6 +317,30 @@ public class DBAdapter {
 			}
 		}
 
+	}
+	
+	/**
+	 * Inserts all the steps in the buffer in to the StepInfo table
+	 * This is the only function that handles pushing information to
+	 * the StepInfo Table
+	 * 
+	 * @author Phohawkenics
+	 */
+	private void insertBufferRowsStepInfo() {
+		if (stepContainer != null) {
+			for (DBContainers.StepInfo current_step : stepContainer) {
+				ContentValues initialValues = new ContentValues();
+				initialValues.put(DBConstants.STEP_INFO_SESSION_ID,
+						getCurrentWorkoutID());		//Temp change me to workout session info ** 1 => getCurrentWorkoutID()
+				initialValues.put(DBConstants.STEP_INFO_ELAPSED_TIME,
+						current_step.getTime_stamp());
+				initialValues.put(DBConstants.STEP_INFO_ALTITUDE, 
+						current_step.getAltitude());
+				// Insert it into the database.
+				db.insert(DBConstants.TABLE_STEP_INFO, null, initialValues);
+			}
+			stepContainer.clear();
+		}
 	}
 	
 	/**
@@ -432,30 +406,18 @@ public class DBAdapter {
 		this.insertRowSessionInfo();
 	}
 
-	public void pause_workout() {
-		insertBufferRowsStepInfo();
-	}
-
+	/*
 	public void deleteAllTableValues() {
 		db.execSQL("DELETE FROM " + DBConstants.TABLE_STEP_INFO);
 		
-		/*Might be need for deleting table values during testing
-		 * 
-		 * sqlite_sequence also needs to be cleared to reset
-		 * the autoincrementors of the tables eg. "_id" colomn
-		 * 
-		db.execSQL("DELETE FROM " + DBConstants.TABLE_USER);
-		db.execSQL("DELETE FROM " + DBConstants.TABLE_WORKOUT_SESSION);
-		db.execSQL("DELETE FROM " + DBConstants.TABLE_STEP_INFO);
-		db.execSQL("DELETE FROM " + DBConstants.TABLE_SESSION_INFO);
-		
-		db.execSQL("DELETE FROM sqlite_sequence WHERE name = '"+DBConstants.TABLE_USER+"'");
-		db.execSQL("DELETE FROM sqlite_sequence WHERE name = '"+DBConstants.TABLE_WORKOUT_SESSION+"'");
-		db.execSQL("DELETE FROM sqlite_sequence WHERE name = '"+DBConstants.TABLE_STEP_INFO+"'");
-		db.execSQL("DELETE FROM sqlite_sequence WHERE name = '"+DBConstants.TABLE_SESSION_INFO+"'");
-		*/
-	}
-
+	} */
+	
+	
+	/**
+	 * @param newStep which is the container with all the infomation
+	 * when a step is taken during a workout
+	 * 
+	 */
 	public void bufferStepInfo(DBContainers.StepInfo newStep) {
 		stepContainer.add(newStep);
 		if (stepContainer.size() > BUFFER_SIZE) {
@@ -492,6 +454,10 @@ public class DBAdapter {
 		 return allWorkoutSteps;
 	}
 
+	/**
+	 * @return the information of the last step in StepInfo Table
+	 * as a String to display
+	 */
 	public String getLastStepInfoString() {
 		List<DBContainers.StepInfo> current_step_container = getAllCurrentRowStepInfo();
 		DBContainers.StepInfo current_step = current_step_container
@@ -503,6 +469,10 @@ public class DBAdapter {
 		return lastStepString;
 	}
 
+	/**
+	 * @returns all the steps with the highest Session_Id from StepInfo
+	 * table
+	 */
 	public List<String> getCurrentAllStepInfoString() {
 		insertBufferRowsStepInfo();
 		List<DBContainers.StepInfo> current_step_container = getAllCurrentRowStepInfo();
@@ -523,6 +493,15 @@ public class DBAdapter {
 	}
 	
 	/**
+	 * @returns all the steps with the highest Session_Id from StepInfo
+	 */
+	public List<DBContainers.StepInfo> getAllCurrentStepInfo(){
+		insertBufferRowsStepInfo();
+		List<DBContainers.StepInfo> current_step_container = getAllCurrentRowStepInfo();
+		return current_step_container;
+	}
+	
+	/**
 	 * @returns A cursor containing all the rows the in WorkoutSession Table
 	 */
 	public Cursor getAllWorkoutSessions() {
@@ -532,7 +511,6 @@ public class DBAdapter {
 		if (c != null) {
 			c.moveToFirst();
 		}
-		
 		return c;
 	}
 	
@@ -541,7 +519,7 @@ public class DBAdapter {
 	 */
 	public Cursor getAllWorkoutSessionInfo() {
 		Cursor c = db.query(true, DBConstants.TABLE_SESSION_INFO,
-				DBConstants.SESSION_INFO_ALL_KEYS, null, null, null, null, null,
+				DBConstants.SESSION_INFO_ALL_KEYS, null, null, null, null, "date DESC",
 				null);
 		if (c != null) {
 			c.moveToFirst();
@@ -550,12 +528,30 @@ public class DBAdapter {
 		return c;
 	}
 	
-	public List<DBContainers.StepInfo> getAllCurrentStepInfo(){
-		insertBufferRowsStepInfo();
-		List<DBContainers.StepInfo> current_step_container = getAllCurrentRowStepInfo();
-		return current_step_container;
+	/**
+	 * @returns all rows of WorkoutSession Table in the form of a List<String>
+	 */
+	public List<String> getAllWorkoutSessionsInfo() {
+		List<DBContainers.SessionInfo> current_session_container = getAllCurrentWorkoutSessionInfo();
+		List<String> displayList = new ArrayList<String>();
+		String display;
+
+		for (DBContainers.SessionInfo current_session : current_session_container) {
+
+			display = "";
+			display = display + "Date : "
+					+ current_session.getDate() + "\n"
+					+ "total steps: "+ current_session.getTotal_step() + "\n" ;
+
+			displayList.add(display);
+		}
+
+		return displayList;
 	}
 	
+	/**
+	 * @returns true if Step Info table is not empty
+	 */
 	public boolean checkIfStepInfoExists() {
 		String where = DBConstants.STEP_INFO_SESSION_ID + "=" + getCurrentWorkoutID();
 		Cursor steps = db.query(true, DBConstants.TABLE_STEP_INFO,
@@ -566,6 +562,9 @@ public class DBAdapter {
 
 	}
 	
+	/**
+	 * @returns true is WorkoutSession Table is not empty
+	 */
 	public boolean checkIfWorkoutSessionsExist () {
 		Cursor c = db.query(true, DBConstants.TABLE_WORKOUT_SESSION,
 				DBConstants.WORKOUT_SESSION_ALL_KEYS, null, null, null, null, null,
@@ -575,8 +574,8 @@ public class DBAdapter {
 	}
 	
 	/**
-	 * @Returns SessionInfo with a the calculated values from SessionInfo
-	 * table of a single workout session
+	 * @Returns SessionInfo container with a the calculated values from SessionInfo
+	 * table of a single WorkoutSession
 	 */
 	 public SessionInfo getSessionInfo(int _id) {
 		 String where = DBConstants.KEY_ROWID + "=" + _id;
@@ -601,6 +600,11 @@ public class DBAdapter {
 
 		 return sessionInfo;
 	}
+	/**
+	 * 
+	 * @returns a cursor with the calculated values from SessionInfo
+	 * table of a single WorkoutSession
+	 */
 	public Cursor getSessionInfoCursor(int _id) {
 		String where = DBConstants.KEY_ROWID + "=" + _id;
 		
@@ -688,39 +692,6 @@ public class DBAdapter {
 	}
 	
 	/**
-	 * -@return a SessionInfo container in current calculated Statistics
-	 */
-	public DBContainers.SessionInfo getRealTimeStats() {
-		String where = DBConstants.STEP_INFO_SESSION_ID + "=" + getCurrentWorkoutID();
-		Cursor allCurrentSteps = db.query(true, DBConstants.TABLE_STEP_INFO,
-				DBConstants.STEP_INFO_ALL_KEYS, where, null, null, null, null,
-				null);
-		
-		int session_id = getCurrentWorkoutID();
-		int totalStep = getTotalStep();
-		double duration = getTotalDuration(allCurrentSteps);// In Seconds--> wtf not use elaspsed time in ms?
-		double average_speed = getTotalAverageSpeed(totalStep, duration); // In steps/sec
-		double totalAltitudeMagnitude = getTotalAltitudeMagnitude(allCurrentSteps); // In wtv it is in StepInfo
-		double totalAltitude = getTotalAltitude(allCurrentSteps); // In wtv it is in StepInfo
-		double totalEnergy = getTotalEnergy(totalAltitudeMagnitude);
-		
-		allCurrentSteps.close();
-		
-		DBContainers.SessionInfo realTimeInfo = DBContainers.containers.new SessionInfo();
-		realTimeInfo.setSession_id(session_id);
-		realTimeInfo.setAverage_speed(average_speed);
-		realTimeInfo.setDate(""); // date doesn't exist yet
-		realTimeInfo.setTotal_altitude(totalAltitude);
-		realTimeInfo.setTotal_altitude_magnitude(totalAltitudeMagnitude);
-		realTimeInfo.setTotal_energy(totalEnergy);
-		realTimeInfo.setTotal_duration(duration);
-		realTimeInfo.setTotal_step(totalStep);
-		
-		return realTimeInfo;
-
-	}
-	
-	/**
 	 * Simply creates the row for
 	 * the one and only user, should only be called once
 	 * 
@@ -800,7 +771,7 @@ public class DBAdapter {
 	}
 
 	// ///////////////////////////////////////////////////////////////////
-	// For Preference table
+	// For Preference table adapted version of DataSampling app 
 	// ///////////////////////////////////////////////////////////////////
 	
 	public enum Status {
@@ -1125,24 +1096,6 @@ public class DBAdapter {
 			// Recreate new database:
 			onCreate(_db);
 		}
-	}
-
-	public List<String> getAllWorkoutSessionsInfo() {
-		List<DBContainers.SessionInfo> current_session_container = getAllCurrentWorkoutSessionInfo();
-		List<String> displayList = new ArrayList<String>();
-		String display;
-
-		for (DBContainers.SessionInfo current_session : current_session_container) {
-
-			display = "";
-			display = display + "Date : "
-					+ current_session.getDate() + "\n"
-					+ "total steps: "+ current_session.getTotal_step() + "\n" ;
-
-			displayList.add(display);
-		}
-
-		return displayList;
 	}
 
 }
