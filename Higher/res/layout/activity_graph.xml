@@ -19,7 +19,7 @@
 	   	android:layout_marginBottom="10dp"
 	  	android:layout_marginLeft="25dp"
 	   	android:layout_marginRight="25dp"
-    	android:text="You are Here!"
+    	android:text="Workout Progress"
     	android:background="@drawable/workout_details_background"
         android:textColor="#F8F8FF"
         android:singleLine="true"/>
